@@ -1,52 +1,52 @@
 {
-  "timestamp": "2025-12-28T21:39:27.802Z",
-  "node_version": "v24.12.0",
-  "platform": "linux",
-  "arch": "x64",
-  "results": [
-    {
-      "name": "Minimal Preset",
-      "iterations": 100,
-      "min": 54.38,
-      "max": 67.79,
-      "mean": 60.02,
-      "median": 59.49,
-      "p90": 64.23,
-      "p99": 67.79,
-      "stdDev": 2.75
-    },
-    {
-      "name": "Social Preset",
-      "iterations": 100,
-      "min": 582.54,
-      "max": 954.86,
-      "mean": 693.12,
-      "median": 690.38,
-      "p90": 759.1,
-      "p99": 954.86,
-      "stdDev": 62.99
-    },
-    {
-      "name": "Docs Preset",
-      "iterations": 100,
-      "min": 72.2,
-      "max": 128.39,
-      "mean": 88.92,
-      "median": 87.41,
-      "p90": 103.48,
-      "p99": 128.39,
-      "stdDev": 11.09
-    },
-    {
-      "name": "With Cache",
-      "iterations": 100,
-      "min": 0,
-      "max": 69.22,
-      "mean": 0.7,
-      "median": 0.01,
-      "p90": 0.01,
-      "p99": 69.22,
-      "stdDev": 6.89
-    }
-  ]
+	"timestamp": "2025-12-28T21:39:27.802Z",
+	"node_version": "v24.12.0",
+	"platform": "linux",
+	"arch": "x64",
+	"results": [
+		{
+			"name": "Minimal Preset",
+			"iterations": 100,
+			"min": 54.38,
+			"max": 67.79,
+			"mean": 60.02,
+			"median": 59.49,
+			"p90": 64.23,
+			"p99": 67.79,
+			"stdDev": 2.75
+		},
+		{
+			"name": "Social Preset",
+			"iterations": 100,
+			"min": 582.54,
+			"max": 954.86,
+			"mean": 693.12,
+			"median": 690.38,
+			"p90": 759.1,
+			"p99": 954.86,
+			"stdDev": 62.99
+		},
+		{
+			"name": "Docs Preset",
+			"iterations": 100,
+			"min": 72.2,
+			"max": 128.39,
+			"mean": 88.92,
+			"median": 87.41,
+			"p90": 103.48,
+			"p99": 128.39,
+			"stdDev": 11.09
+		},
+		{
+			"name": "With Cache",
+			"iterations": 100,
+			"min": 0,
+			"max": 69.22,
+			"mean": 0.7,
+			"median": 0.01,
+			"p90": 0.01,
+			"p99": 69.22,
+			"stdDev": 6.89
+		}
+	]
 }
