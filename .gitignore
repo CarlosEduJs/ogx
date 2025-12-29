@@ -38,6 +38,3 @@ yarn-error.log*
 .DS_Store
 *.pem
 .npmrc
-pnpm-lock.yaml
-
-GIT_TAG_STRATEGY.md
