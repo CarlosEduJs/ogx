@@ -40,6 +40,7 @@ export function baseOptions(): BaseLayoutProps {
 				</div>
 			),
 		},
-    links: linksItems,
+    	links: linksItems,
+		githubUrl: "https://github.com/carlosedujs/ogx",
 	};
 }
