@@ -1,4 +1,4 @@
-import type { FC, PropsWithChildren, CSSProperties } from "react";
+import type { CSSProperties, FC, PropsWithChildren } from "react";
 
 type OGXComponentProps = PropsWithChildren<{
 	tw?: string;

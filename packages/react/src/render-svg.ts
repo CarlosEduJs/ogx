@@ -1,6 +1,6 @@
-import type React from "react";
-import { renderToSVG as coreRenderToSVG } from "@ogxjs/core/svg";
 import type { RenderOptions } from "@ogxjs/core";
+import { renderToSVG as coreRenderToSVG } from "@ogxjs/core/svg";
+import type React from "react";
 import { toOGX } from "./to-ogx";
 
 /**

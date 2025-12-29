@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
 import type { OGXElement } from "@ogxjs/core";
-import { Stack, Row, H1, H2, P, Box, Badge, Spacer } from "../../components";
+import { describe, expect, it } from "vitest";
+import { Badge, Box, H1, H2, P, Row, Spacer, Stack } from "../../components";
 import { toOGX } from "../../to-ogx";
 
 describe("Components", () => {

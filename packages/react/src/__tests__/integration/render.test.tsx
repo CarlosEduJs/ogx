@@ -1,7 +1,7 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+import { Box, H1, P, Stack } from "../../components";
 import { render } from "../../render-png";
 import { renderToSVG } from "../../render-svg";
-import { Stack, H1, P, Box } from "../../components";
 
 describe("Render Integration", () => {
 	describe("PNG Rendering", () => {

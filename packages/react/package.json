@@ -1,6 +1,6 @@
 {
 	"name": "@ogxjs/react",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "React adapter for OGX - Build OG images with JSX and Tailwind",
 	"author": "Carlos Eduardo",
 	"repository": {

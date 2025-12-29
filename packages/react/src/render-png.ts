@@ -1,6 +1,6 @@
-import type React from "react";
-import { render as coreRender } from "@ogxjs/core/png";
 import type { RenderOptions } from "@ogxjs/core";
+import { render as coreRender } from "@ogxjs/core/png";
+import type React from "react";
 import { toOGX } from "./to-ogx";
 
 /**

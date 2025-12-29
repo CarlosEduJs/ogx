@@ -1,5 +1,5 @@
-import React from "react";
 import type { OGXChildren, OGXElement } from "@ogxjs/core";
+import React from "react";
 
 /**
  * Transforms a React node tree into an OGX-compatible element tree.
@@ -30,7 +30,8 @@ export function toOGX(node: React.ReactNode): OGXChildren {
 		// Resolve Functional Components
 		if (typeof type === "function") {
 			try {
-				const resolved = (type as Function)(props);
+				const Component = type as (props: unknown) => React.ReactNode;
+				const resolved = Component(props);
 				return toOGX(resolved);
 			} catch (err) {
 				console.error(

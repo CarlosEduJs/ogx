@@ -1,7 +1,7 @@
-import { describe, it, expect } from "vitest";
 import type { OGXElement } from "@ogxjs/core";
+import { describe, expect, it } from "vitest";
+import { H1, Stack } from "../../components";
 import { toOGX } from "../../to-ogx";
-import { Stack, H1 } from "../../components";
 
 describe("toOGX", () => {
 	it("converte React element simples para OGX", () => {
