@@ -375,9 +375,9 @@ async function main() {
 	await runPlatformTests();
 	await runRenderTests();
 
-	console.log("\n" + "=".repeat(40));
+	console.log(`\n${"=".repeat(40)}`);
 	console.log(`Results: ${passed} passed, ${failed} failed`);
-	console.log("=".repeat(40) + "\n");
+	console.log(`${"=".repeat(40)}\n`);
 
 	if (failed > 0) {
 		process.exit(1);
