@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
 	const logoPath = join(process.cwd(), "public/logo.svg");
 
-	await fontRegistry.registerInter([400, 600, 700]);
+	await fontRegistry.registerInterFromUrl([400, 600, 700]);
 	const logo = await loadAsset(logoPath);
 
 	const element = stack(
