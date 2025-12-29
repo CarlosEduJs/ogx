@@ -35,7 +35,7 @@ function calculateStats(name: string, times: number[]): BenchmarkResult {
 	const p99 = sorted[Math.floor(times.length * 0.99)];
 
 	const variance =
-		times.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / times.length;
+		times.reduce((acc, val) => acc + (val - mean) ** 2, 0) / times.length;
 	const stdDev = Math.sqrt(variance);
 
 	return {

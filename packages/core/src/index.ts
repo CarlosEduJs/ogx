@@ -23,7 +23,10 @@ export {
 	stack,
 	svgFromContent,
 } from "./builder";
-
+// Utilities
+export { snapshotCache } from "./cache";
+// Types
+export type { CSSProperties } from "./css";
 // Fonts - Loading and registration
 export { fontRegistry } from "./font-registry";
 export {
@@ -33,12 +36,14 @@ export {
 	loadInterFont,
 	loadInterFromUrl,
 } from "./fonts";
-
 // Rendering - SVG and PNG generation
 export { ogx, ogxToSVG } from "./ogx";
-export { render } from "./render-png";
-export { renderToSVG } from "./render-svg";
-export { parseTailwind } from "./tailwind";
+export type {
+	BlogPresetProps,
+	DocsPresetProps,
+	MinimalPresetProps,
+	SocialPresetProps,
+} from "./presets";
 
 // Presets - Ready-to-use templates
 export {
@@ -48,25 +53,12 @@ export {
 	presets,
 	socialPreset,
 } from "./presets";
-export type {
-	BlogPresetProps,
-	DocsPresetProps,
-	MinimalPresetProps,
-	SocialPresetProps,
-} from "./presets";
-
+export { render } from "./render-png";
+export { renderToSVG } from "./render-svg";
+export { parseTailwind } from "./tailwind";
+export type { Platform } from "./targets";
 // Platform - Target dimensions
 export { getPlatformDimensions } from "./targets";
-export type { Platform } from "./targets";
-
-// Utilities
-export { snapshotCache } from "./cache";
-export { loadAsset, toDataUri } from "./utils/assets";
-export { calculateFittingFontSize } from "./utils/text";
-export type { FitTextOptions } from "./utils/text";
-
-// Types
-export type { CSSProperties } from "./css";
 export type {
 	FontConfig,
 	OGXBaseConfig,
@@ -79,3 +71,6 @@ export type {
 	PresetProps,
 	RenderOptions,
 } from "./types";
+export { loadAsset, toDataUri } from "./utils/assets";
+export type { FitTextOptions } from "./utils/text";
+export { calculateFittingFontSize } from "./utils/text";

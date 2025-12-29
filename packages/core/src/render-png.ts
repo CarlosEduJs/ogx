@@ -1,5 +1,5 @@
-import type { OGXElement, RenderOptions } from "./types";
 import { renderToSVG } from "./render-svg";
+import type { OGXElement, RenderOptions } from "./types";
 
 /**
  * Render an OGX element to PNG image

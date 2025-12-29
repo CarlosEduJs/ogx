@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { ogxResponse } from "../../response";
 import * as core from "@ogxjs/core";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { ogxResponse } from "../../response";
 
 // Mock do @ogxjs/core
 vi.mock("@ogxjs/core", () => ({

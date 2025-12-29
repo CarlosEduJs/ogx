@@ -1,13 +1,13 @@
 import {
 	fontRegistry,
-	ogx,
 	type OGXConfig,
+	ogx,
 	type PresetName,
 } from "@ogxjs/core";
 
 export type NextOGXConfig<T extends PresetName = PresetName> = OGXConfig<T>;
 
-let fontsRegistered = new Set<number>();
+const fontsRegistered = new Set<number>();
 
 /**
  * Generates an OG image and returns it as a standard Web Response.

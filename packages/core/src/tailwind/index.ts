@@ -1,9 +1,9 @@
 export {
-  borderRadius,
-  colors,
-  fontSize,
-  fontWeight,
-  opacity,
-  parseTailwind,
-  spacing,
+	borderRadius,
+	colors,
+	fontSize,
+	fontWeight,
+	opacity,
+	parseTailwind,
+	spacing,
 } from "./parser";
