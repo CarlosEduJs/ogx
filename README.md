@@ -1,5 +1,7 @@
 # OGX
 
+[![OGX Banner](https://ogx-three.vercel.app/og/home)](https://ogx-three.vercel.app)
+
 **High-performance Open Graph image generation with Tailwind CSS.**
 
 Generate dynamic OG images in 60ms with full Tailwind support, built-in caching, and seamless framework integration.
