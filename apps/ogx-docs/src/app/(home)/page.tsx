@@ -1,28 +1,28 @@
+import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
+import {
+	Activity,
+	ArrowRight,
+	Blend,
+	Box,
+	Copy,
+	Cpu,
+	Database,
+	Globe,
+	Layers,
+	Terminal,
+	Wind,
+	Zap,
+} from "lucide-react";
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
-	Terminal,
-	Copy,
-	ArrowRight,
-	Zap,
-	Globe,
-	Cpu,
-	Layers,
-	Box,
-	Wind,
-	Blend,
-	Activity,
-	Database,
-} from "lucide-react";
-import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
-import Image from "next/image";
-import {
-	NextjsLogo,
-	NodejsLogo,
 	BunLogo,
 	DenoLogo,
+	NextjsLogo,
+	NodejsLogo,
 	ReactLogo,
 } from "@/components/logos";
-import type { Metadata } from "next";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 

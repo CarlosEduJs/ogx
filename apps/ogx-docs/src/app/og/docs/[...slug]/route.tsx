@@ -1,6 +1,6 @@
-import { getPageImage, source } from "@/lib/source";
-import { notFound } from "next/navigation";
 import { ogxResponse } from "@ogxjs/next";
+import { notFound } from "next/navigation";
+import { getPageImage, source } from "@/lib/source";
 
 export const revalidate = false;
 export const dynamic = "force-dynamic";
@@ -13,8 +13,7 @@ export async function GET(
 	const page = source.getPage(slug.slice(0, -1));
 	if (!page) notFound();
 
-	const baseUrl =
-		process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 	const logoUrl = `${baseUrl}/logo.svg`;
 
 	return ogxResponse(

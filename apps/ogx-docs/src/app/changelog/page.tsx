@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowUpRight, Calendar, GitBranch } from "lucide-react";
-import { releases } from "./_constantes/releasesData";
+import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
+import { releases } from "./_constantes/releasesData";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -115,14 +115,15 @@ export default function ChangelogPage() {
 															</span>
 														</div>
 														<ul className="space-y-4 pl-0">
-															{change.items.map((item, i) => (
+															{change.items.map((item) => (
 																<li
-																	key={i}
+																	key={item} 
+																	 
 																	className="group/item flex items-start gap-4 text-fd-muted-foreground leading-relaxed transition-colors hover:text-fd-foreground"
 																>
 																	<div className="mt-2.5 w-1.5 h-[2px] bg-fd-border group-hover/item:bg-fd-primary transition-colors" />
 																	<span
-																		className="text-[17px] font-light"
+																		className="text-[17px] font-light"																	
 																		dangerouslySetInnerHTML={{
 																			__html: item.replace(
 																				/`([^`]+)`/g,

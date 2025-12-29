@@ -1,14 +1,15 @@
 import {
-	Monitor,
-	Smartphone,
-	Download,
-	RefreshCcw,
-	Code,
 	Check,
-	Zap,
+	Code,
+	Download,
 	Layout,
+	Monitor,
+	RefreshCcw,
+	Smartphone,
+	Zap,
 } from "lucide-react";
 import { CopyIcon } from "./Common";
+
 interface PlaygroundCanvasProps {
 	activeTab: "edit" | "code";
 	viewport: "desktop" | "mobile";
@@ -94,7 +95,6 @@ export function PlaygroundCanvas({
 							{svg ? (
 								<div
 									className="w-full h-full"
-									// biome-ignore lint/security/noDangerouslySetInnerHtml: Used for SVG preview
 									dangerouslySetInnerHTML={{ __html: svg }}
 								/>
 							) : (

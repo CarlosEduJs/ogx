@@ -1,3 +1,4 @@
+import { join } from "node:path";
 import {
 	absolute,
 	badge,
@@ -10,7 +11,6 @@ import {
 	row,
 	stack,
 } from "@ogxjs/core";
-import { join } from "node:path";
 
 export const revalidate = false;
 export const dynamic = "force-dynamic";

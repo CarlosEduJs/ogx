@@ -1,7 +1,7 @@
-import { Palette, Type, Zap, SwatchBook } from "lucide-react";
-import { ControlGroup, Field } from "./Common";
+import { Palette, SwatchBook, Type, Zap } from "lucide-react";
 import { THEMES } from "../constants";
 import type { PlaygroundState, ThemeName } from "../types";
+import { ControlGroup, Field } from "./Common";
 
 interface PlaygroundSidebarProps {
 	state: PlaygroundState;
@@ -154,7 +154,7 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 											onChange={(e) =>
 												setState((s) => ({
 													...s,
-													fontSizeTitle: Number.parseInt(e.target.value),
+													fontSizeTitle: Number.parseInt(e.target.value, 10),
 												}))
 											}
 										/>
@@ -167,7 +167,7 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 											onChange={(e) =>
 												setState((s) => ({
 													...s,
-													fontSizeTitle: Number.parseInt(e.target.value) || 32,
+													fontSizeTitle: Number.parseInt(e.target.value, 10) || 32,
 												}))
 											}
 										/>
@@ -194,7 +194,7 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 											onChange={(e) =>
 												setState((s) => ({
 													...s,
-													fontSizeDescription: Number.parseInt(e.target.value),
+													fontSizeDescription: Number.parseInt(e.target.value, 10),
 												}))
 											}
 										/>
@@ -208,7 +208,7 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 												setState((s) => ({
 													...s,
 													fontSizeDescription:
-														Number.parseInt(e.target.value) || 12,
+														Number.parseInt(e.target.value, 10) || 12,
 												}))
 											}
 										/>
@@ -235,7 +235,7 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 											onChange={(e) =>
 												setState((s) => ({
 													...s,
-													fontSizeBadge: Number.parseInt(e.target.value),
+													fontSizeBadge: Number.parseInt(e.target.value, 10),
 												}))
 											}
 										/>
@@ -248,7 +248,7 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 											onChange={(e) =>
 												setState((s) => ({
 													...s,
-													fontSizeBadge: Number.parseInt(e.target.value) || 10,
+													fontSizeBadge: Number.parseInt(e.target.value, 10) || 10,
 												}))
 											}
 										/>
@@ -275,7 +275,7 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 											onChange={(e) =>
 												setState((s) => ({
 													...s,
-													fontSizeCategory: Number.parseInt(e.target.value),
+													fontSizeCategory: Number.parseInt(e.target.value, 10),
 												}))
 											}
 										/>
@@ -289,7 +289,7 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 												setState((s) => ({
 													...s,
 													fontSizeCategory:
-														Number.parseInt(e.target.value) || 8,
+														Number.parseInt(e.target.value, 10) || 8,
 												}))
 											}
 										/>

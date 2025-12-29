@@ -8,10 +8,12 @@ interface Release {
 		items: string[];
 	}[];
 	isLatest?: boolean;
+	scope: "ogxjs-core" | "ogxjs-next" | "ogxjs-react" | "ogxjs-playground" | "global";
 }
 
 export const releases: Release[] = [
 	{
+		scope: "global",
 		version: "0.1.0",
 		date: "2025-12-28",
 		title: "Initial Beta Release",

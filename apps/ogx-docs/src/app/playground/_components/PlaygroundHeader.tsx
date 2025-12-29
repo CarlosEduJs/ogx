@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { ArrowLeft, Layout, Code, Share2, Check } from "lucide-react";
+import { ArrowLeft, Check, Code, Layout, Share2 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface PlaygroundHeaderProps {
 	activeTab: "edit" | "code";
@@ -26,12 +26,7 @@ export function PlaygroundHeader({
 				</Link>
 				<div className="h-4 w-px bg-white/10" />
 				<div className="flex items-center gap-2">
-					<Image
-						src="/logo.svg"
-						alt="OGX Logo"
-						width={24}
-						height={24}
-					/>
+					<Image src="/logo.svg" alt="OGX Logo" width={24} height={24} />
 					<span className="font-bold tracking-tight">OGX Playground</span>
 				</div>
 			</div>

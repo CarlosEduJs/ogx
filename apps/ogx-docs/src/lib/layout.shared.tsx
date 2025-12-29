@@ -1,26 +1,26 @@
 import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared";
+import { BookText, Logs, TestTubeDiagonal } from "lucide-react";
 import Image from "next/image";
-import { TestTubeDiagonal, BookText, Logs } from "lucide-react";
 
 export const linksItems: LinkItemType[] = [
 	{
 		text: "Docs",
 		url: "/docs",
 		icon: <BookText className="w-5 h-5" />,
-		active: "url"
-	},  
+		active: "url",
+	},
 	{
 		text: "Playground",
 		url: "/playground",
 		icon: <TestTubeDiagonal className="w-5 h-5" />,
-		active: "url"
+		active: "url",
 	},
 	{
 		text: "Changelog",
 		url: "/changelog",
 		icon: <Logs className="w-5 h-5" />,
-		active: "url"
-	}
+		active: "url",
+	},
 ];
 
 export function baseOptions(): BaseLayoutProps {
@@ -40,8 +40,8 @@ export function baseOptions(): BaseLayoutProps {
 				</div>
 			),
 		},
-    	links: linksItems,
-		
+		links: linksItems,
+
 		githubUrl: "https://github.com/carlosedujs/ogx",
 	};
 }

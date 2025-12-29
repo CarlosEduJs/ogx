@@ -1,16 +1,15 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { Stack, Row, Absolute, H1, P, Badge, Span } from "@ogxjs/react";
+import { Absolute, Badge, H1, P, Row, Span, Stack } from "@ogxjs/react";
 import { renderToSVG } from "@ogxjs/react/svg";
-
-import { THEMES, INITIAL_STATE } from "./constants";
-import type { PlaygroundState } from "./types";
+import { useEffect, useMemo, useState } from "react";
 import {
+	PlaygroundCanvas,
 	PlaygroundHeader,
 	PlaygroundSidebar,
-	PlaygroundCanvas,
 } from "./_components";
+import { INITIAL_STATE, THEMES } from "./constants";
+import type { PlaygroundState } from "./types";
 
 export default function PlaygroundPage() {
 	const [state, setState] = useState<PlaygroundState>(() => {
