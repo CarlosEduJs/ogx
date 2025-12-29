@@ -3,23 +3,48 @@ interface Release {
 	date: string;
 	title: string;
 	description?: string;
+	npmLink: string;
 	changes: {
 		type: "added" | "fixed" | "changed" | "performance";
 		items: string[];
 	}[];
 	isLatest?: boolean;
-	scope: "ogxjs-core" | "ogxjs-next" | "ogxjs-react" | "ogxjs-playground" | "global";
+	scope:
+		| "ogxjs-core"
+		| "ogxjs-next"
+		| "ogxjs-react"
+		| "ogxjs-playground"
+		| "global";
 }
 
 export const releases: Release[] = [
 	{
+		scope: "ogxjs-react",
+		version: "react-v0.1.1",
+		date: "2025-12-29",
+		title: "Type Safety Fix",
+		description: "Improved type safety in the toOGX function.",
+		npmLink: "https://www.npmjs.com/package/@ogxjs/react/v/0.1.1",
+		isLatest: true,
+		changes: [
+			{
+				type: "fixed",
+				items: [
+					"Replaced generic `Function` type with specific typed function `(props: unknown) => React.ReactNode`",
+					"Improved type safety in `toOGX` function",
+					"Resolves Biome linter warnings",
+				],
+			},
+		],
+	},
+	{
 		scope: "global",
-		version: "0.1.0",
+		version: "v0.1.0",
 		date: "2025-12-28",
 		title: "Initial Beta Release",
 		description:
 			"The first public beta of OGX, the high-performance engine for dynamic Open Graph images.",
-		isLatest: true,
+		npmLink: "https://www.npmjs.com/package/@ogxjs/core/v/0.1.0",
 		changes: [
 			{
 				type: "added",
