@@ -1,8 +1,6 @@
 import { getPageImage, source } from "@/lib/source";
 import { notFound } from "next/navigation";
 import { ogxResponse } from "@ogxjs/next";
-import { join } from "node:path";
-import { loadAsset } from "@ogxjs/core";
 
 export const revalidate = false;
 export const dynamic = "force-dynamic";
@@ -15,13 +13,14 @@ export async function GET(
 	const page = source.getPage(slug.slice(0, -1));
 	if (!page) notFound();
 
-	const logoPath = join(process.cwd(), "public/logo.svg");
-	const logo = await loadAsset(logoPath);
+	const baseUrl =
+		process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+	const logoUrl = `${baseUrl}/logo.svg`;
 
 	return ogxResponse(
 		{
 			preset: "docs",
-			logo: logo,
+			logo: logoUrl,
 			title: page.data.title,
 			description: page.data.description,
 			siteName: "OGX Docs",
