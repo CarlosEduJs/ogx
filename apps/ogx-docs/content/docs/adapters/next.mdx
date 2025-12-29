@@ -1,0 +1,183 @@
+---
+title: Next.js Adapter
+description: Powerful OG image generation for Next.js App Router
+---
+
+The `@ogxjs/next` package provides a seamless integration with Next.js, leveraging the new `ImageResponse` and Route Handlers API.
+
+## Installation
+
+```bash
+pnpm add @ogxjs/next @ogxjs/core
+```
+
+## Configuration
+
+To use OGX with Next.js, you need to configure `serverExternalPackages` in your `next.config.mjs`:
+
+```javascript title="next.config.mjs"
+/** @type {import('next').NextConfig} */
+const config = {
+  serverExternalPackages: ["@resvg/resvg-js", "@ogxjs/core"],
+};
+
+export default config;
+```
+
+<Callout type="warn">
+  **Important:** This configuration is required to prevent Next.js from bundling native dependencies used by `@resvg/resvg-js`. Without it, your build will fail.
+</Callout>
+
+## `ogxResponse`
+
+The easiest way to generate OG images in Next.js is using the `ogxResponse` helper. It handles font loading, response headers, and integration with `ImageResponse` for you.
+
+```tsx title="app/og/docs/[...slug]/route.tsx"
+import { ogxResponse } from '@ogxjs/next';
+
+export async function GET(
+  request: Request,
+  { params }: { params: { slug: string[] } }
+) {
+  const title = params.slug.join(' / ');
+
+  return ogxResponse({
+    preset: 'docs',
+    title: title,
+    siteName: 'My Docs',
+    colorScheme: 'dark',
+    // Declarative font registration
+    inter: [400, 700],
+  });
+}
+```
+
+## Using with Custom Layouts
+
+You can also pass a custom OGX element tree (or a React component using `toOGX`) to `ogxResponse`.
+
+```tsx
+import { ogxResponse } from '@ogxjs/next';
+import { stack, h1, p } from '@ogxjs/core';
+
+export async function GET() {
+  const layout = stack('w-full h-full bg-blue-600 p-20', [
+    h1('text-white text-6xl', 'Custom Title'),
+    p('text-blue-200 text-2xl', 'Custom Description')
+  ]);
+
+  return ogxResponse(layout, {
+    inter: [400],
+  });
+}
+```
+
+## Using with `@ogxjs/react`
+
+For a pure JSX experience, combine `@ogxjs/next` with `@ogxjs/react`.
+
+```tsx
+import { ogxResponse } from '@ogxjs/next';
+import { toOGX, Box, Stack } from '@ogxjs/react';
+
+export async function GET() {
+  return ogxResponse(
+    toOGX(
+      <Stack tw="w-full h-full bg-zinc-950 p-20">
+        <Box tw="bg-zinc-900 border border-zinc-800 p-10 rounded-2xl">
+          <h1 tw="text-white text-6xl">Next.js + React</h1>
+        </Box>
+      </Stack>
+    ),
+    { inter: [400, 700] }
+  );
+}
+```
+
+## Static Builds & Local Assets
+
+### Dynamic Routes
+
+When using `ogxResponse`, Next.js may try to statically generate your OG routes during build. Since `ogxResponse` uses `request.url` internally, you need to mark the route as dynamic:
+
+```tsx title="app/og/route.tsx"
+export const dynamic = 'force-dynamic';
+export const revalidate = false;
+
+export async function GET(req: Request) {
+  return ogxResponse({
+    preset: 'docs',
+    title: 'My Page',
+  }, req);
+}
+```
+
+<Callout type="info">
+  Always add `export const dynamic = 'force-dynamic'` to routes using `ogxResponse` to prevent static generation errors.
+</Callout>
+
+### Loading Local Images
+
+During builds, `localhost` URLs don't exist. Use `loadAsset` to load local images:
+
+```tsx title="app/og/route.tsx"
+import { ogxResponse } from '@ogxjs/next';
+import { loadAsset } from '@ogxjs/core';
+import { join } from 'node:path';
+
+export const dynamic = 'force-dynamic';
+
+export async function GET(req: Request) {
+  // Load logo from file system
+  const logoPath = join(process.cwd(), 'public/logo.svg');
+  const logo = await loadAsset(logoPath);
+
+  return ogxResponse({
+    preset: 'docs',
+    logo: logo, // base64 data URL
+    title: 'My Page',
+  }, req);
+}
+```
+
+<Callout type="warn">
+  **Don't use HTTP URLs** like `http://localhost:3000/logo.svg` - they fail during build. Use `loadAsset` with file paths instead.
+</Callout>
+
+## Performance
+
+### Static Generation
+
+For best performance, use static generation with `generateStaticParams`:
+
+```tsx title="app/og/docs/[...slug]/route.tsx"
+export const revalidate = false; // Disable ISR
+
+export function generateStaticParams() {
+  // Pre-generate OG images at build time
+  return pages.map((page) => ({
+    slug: page.slug.split('/'),
+  }));
+}
+```
+
+### Built-in Caching
+
+OGX includes smart caching that reuses images with identical configurations:
+
+```tsx
+return ogxResponse({
+  preset: 'docs',
+  title: 'My Page',
+  cache: true, // Default: true
+});
+```
+
+Images are cached based on a hash of the configuration, so regenerating the same image is instant.
+
+## Features
+
+- **Declarative Fonts**: Just pass `inter: [400, 700]` to automatically load and register the Inter font from a CDN.
+- **Smart Caching**: Automatically sets appropriate `Cache-Control` headers for OG images.
+- **Edge Compatible**: Works perfectly on the Edge runtime and Node.js.
+- **ImageResponse Integration**: Built on top of Next.js's official OG image library.

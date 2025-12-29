@@ -1,0 +1,13 @@
+{
+	"root": true,
+	"pages": [
+		"index",
+		"getting-started",
+		"adapters",
+		"core",
+		"presets",
+		"builder",
+		"tailwind",
+		"examples"
+	]
+}

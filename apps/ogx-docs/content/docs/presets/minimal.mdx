@@ -1,0 +1,35 @@
+---
+title: Minimal Preset
+description: Clean typography on solid backgrounds
+---
+
+The minimal preset focuses on bold typography with minimal distractions.
+
+## Usage
+
+```typescript
+const png = await ogx({
+  preset: 'minimal',
+  title: 'OGX',
+  subtitle: 'Tailwind-first OG images',
+  background: 'bg-zinc-950',
+  textColor: 'text-white',
+});
+```
+
+## Options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `title` | `string` | Yes | Main text (large) |
+| `subtitle` | `string` | No | Secondary text |
+| `background` | `string` | No | Background class |
+| `textColor` | `string` | No | Text color class |
+
+## Features
+
+- Extra-large centered typography
+- Subtle grid pattern background
+- Grain texture for anti-banding
+- Tightest tracking for impact
+- Optional subtitle with muted color

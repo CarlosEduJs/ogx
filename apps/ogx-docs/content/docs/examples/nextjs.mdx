@@ -1,0 +1,66 @@
+---
+title: Next.js Integration
+description: Using OGX with Next.js App Router
+---
+
+## API Route
+
+The easiest way to integrate with Next.js is using the `ogxResponse` helper from `@ogxjs/next`.
+
+```tsx title="app/api/og/route.ts"
+import { ogxResponse } from '@ogxjs/next';
+import { NextRequest } from 'next/server';
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const title = searchParams.get('title') || 'My Site';
+
+  return ogxResponse({
+    preset: 'docs',
+    title,
+    colorScheme: 'dark',
+    inter: [400, 700], // Declarative font loading
+  });
+}
+```
+
+## Page Metadata
+
+Reference the API route in your page metadata:
+
+```typescript title="app/blog/[slug]/page.tsx"
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const post = await getPost(params.slug);
+
+  return {
+    title: post.title,
+    openGraph: {
+      images: [`/api/og?title=${encodeURIComponent(post.title)}`],
+    },
+  };
+}
+```
+
+## Static Generation
+
+For static sites, generate images at build time:
+
+```typescript title="scripts/generate-og.ts"
+import { fontRegistry, ogx } from '@ogxjs/core';
+import { writeFile } from 'fs/promises';
+
+const pages = ['home', 'about', 'contact'];
+
+await fontRegistry.registerInter([400, 700]);
+
+for (const page of pages) {
+  const png = await ogx({
+    preset: 'docs',
+    title: page,
+  });
+
+  await writeFile(`public/og/${page}.png`, png);
+}
+```

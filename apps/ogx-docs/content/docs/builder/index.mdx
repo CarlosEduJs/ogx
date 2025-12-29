@@ -1,0 +1,55 @@
+---
+title: Builder API
+description: Create custom layouts with functional helpers
+---
+
+The Builder API provides functions to construct OGX elements for custom layouts.
+
+## Three Styles
+
+OGX supports multiple coding styles:
+
+### Functional
+
+```typescript
+import { stack, span } from '@ogxjs/core';
+
+stack('bg-zinc-950 p-8', [
+  span('text-xl text-white', 'Hello'),
+]);
+```
+
+### Semantic
+
+```typescript
+import { h1, p, badge } from '@ogxjs/core';
+
+stack('gap-4', [
+  h1('text-white', 'Title'),
+  p('text-zinc-400', 'Description'),
+  badge('New', 'blue'),
+]);
+```
+
+### Fluent
+
+```typescript
+import { fluent, stack } from '@ogxjs/core';
+
+fluent(stack('gap-4'))
+  .bg('zinc-950')
+  .padding('8')
+  .rounded('xl')
+  .element;
+```
+
+## When to Use
+
+- **Presets**: Quick generation with minimal code
+- **Builder API**: Custom layouts, complex designs, reusable components
+
+<Cards>
+  <Card title="Primitives" href="/docs/builder/primitives" />
+  <Card title="Layout Helpers" href="/docs/builder/layout" />
+  <Card title="Fluent API" href="/docs/builder/fluent" />
+</Cards>

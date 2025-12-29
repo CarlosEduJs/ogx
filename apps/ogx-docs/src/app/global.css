@@ -1,0 +1,53 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/purple.css";
+@import "fumadocs-ui/css/preset.css";
+
+@layer utilities {
+	.perspective-2000 {
+		perspective: 2000px;
+	}
+	.preserve-3d {
+		transform-style: preserve-3d;
+	}
+	.translate-z-20 {
+		transform: translateZ(20px);
+	}
+	.-translate-z-20 {
+		transform: translateZ(-20px);
+	}
+	.-translate-z-10 {
+		transform: translateZ(-10px);
+	}
+	.rotate-x-12 {
+		transform: rotateX(12deg);
+	}
+}
+
+/* Architecture Section Highlighting */
+.group\/stack-info:has([data-tier-trigger]:hover) ~ div [data-tier] > div {
+	opacity: 0.2;
+	filter: grayscale(0.8);
+	transition: all 0.5s ease;
+}
+
+.group\/stack-info:has([data-tier-trigger="0"]:hover)
+	~ div
+	[data-tier="0"]
+	> div,
+.group\/stack-info:has([data-tier-trigger="1"]:hover)
+	~ div
+	[data-tier="1"]
+	> div,
+.group\/stack-info:has([data-tier-trigger="2"]:hover)
+	~ div
+	[data-tier="2"]
+	> div,
+.group\/stack-info:has([data-tier-trigger="3"]:hover)
+	~ div
+	[data-tier="3"]
+	> div {
+	opacity: 1;
+	transform: translateY(-16px) rotateX(12deg) scale(1.02);
+	filter: brightness(1.2) grayscale(0);
+	box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+}

@@ -1,0 +1,38 @@
+---
+title: Docs Preset
+description: Professional documentation-style OG images
+---
+
+The docs preset is designed for documentation sites with clear hierarchy and branding.
+
+## Usage
+
+```typescript
+const png = await ogx({
+  preset: 'docs',
+  title: 'Getting Started with OGX',
+  description: 'Learn how to generate OG images',
+  siteName: 'OGX Docs',
+  colorScheme: 'dark',
+  logo: logoBase64,
+});
+```
+
+## Options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `title` | `string` | Yes | Main heading |
+| `description` | `string` | No | Subtitle text |
+| `siteName` | `string` | No | Site name in header |
+| `logo` | `string` | No | Logo URL or base64 |
+| `colorScheme` | `'dark' \| 'light'` | No | Color theme (default: dark) |
+
+## Features
+
+- Grid pattern background
+- Gradient overlay for depth
+- Header with logo and site name
+- Large title with tight tracking
+- Description with muted color
+- Indicator bar footer

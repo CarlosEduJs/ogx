@@ -1,0 +1,143 @@
+---
+title: Troubleshooting
+description: Common issues and solutions
+---
+
+This page covers common issues you might encounter when using OGX and how to resolve them.
+
+## Font Issues
+
+### Fonts Not Rendering
+
+**Symptom:** Text appears as squares or uses a fallback system font.
+
+**Solution:** Register the font before rendering:
+
+```ts
+import { fontRegistry } from "@ogxjs/core";
+
+// Register Inter font with specific weights
+await fontRegistry.registerInter([400, 700]);
+```
+
+> [!IMPORTANT]
+> Fonts must be registered before calling `ogx()` or `render()`.
+
+### Custom Font Not Loading
+
+**Symptom:** Custom font file not found or fails to load.
+
+**Solution:** Ensure the font path is correct and accessible:
+
+```ts
+await fontRegistry.register({
+  name: "MyFont",
+  data: await fs.readFile("./fonts/MyFont-Regular.ttf"),
+  weight: 400,
+  style: "normal",
+});
+```
+
+---
+
+## Next.js Issues
+
+### Module Not Found: @resvg/resvg-js
+
+**Symptom:** Build error mentioning `@resvg/resvg-js` cannot be resolved.
+
+**Solution:** Add it to `serverExternalPackages` in your `next.config.ts`:
+
+```ts
+// next.config.ts
+const config = {
+  serverExternalPackages: ["@resvg/resvg-js"],
+};
+export default config;
+```
+
+### Edge Runtime Not Supported
+
+**Symptom:** Error when trying to use OGX on Vercel Edge Functions.
+
+**Solution:** OGX uses `@resvg/resvg-js` which requires Node.js runtime. Use the Node.js runtime instead:
+
+```ts
+// app/og/route.ts
+export const runtime = "nodejs"; // Not "edge"
+```
+
+---
+
+## Tailwind Issues
+
+### Classes Not Being Applied
+
+**Symptom:** Tailwind classes have no effect on the rendered image.
+
+**Solution:** Use the `tw` prop instead of `className`:
+
+```tsx
+// ❌ Wrong
+<div className="bg-blue-500">...</div>
+
+// ✅ Correct
+<div tw="bg-blue-500">...</div>
+```
+
+### Unknown Tailwind Class
+
+**Symptom:** A Tailwind class is not recognized or has no effect.
+
+**Solution:** Check if the class is supported by Satori. Some classes (like `backdrop-blur`) are not supported. See the [Tailwind Support](/docs/tailwind) page for the full list.
+
+---
+
+## Memory Issues
+
+### Out of Memory on Large Images
+
+**Symptom:** Process crashes with OOM when generating many images.
+
+**Solution:** 
+1. Reduce image dimensions if possible
+2. Process images in batches, not all at once
+3. Increase Node.js memory limit:
+
+```bash
+NODE_OPTIONS="--max-old-space-size=4096" node index.js
+```
+
+---
+
+## Type Errors
+
+### Property 'tw' does not exist
+
+**Symptom:** TypeScript complains about the `tw` prop.
+
+**Solution:** Ensure `@ogxjs/react` types are included in your project. Add to your `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "types": ["@ogxjs/react"]
+  }
+}
+```
+
+Or import the package at the top of your file:
+
+```ts
+import "@ogxjs/react"; // This augments the React types
+```
+
+---
+
+## Still Stuck?
+
+If you're still having issues:
+
+1. Check the [GitHub Issues](https://github.com/carlosedujs/ogx/issues)
+2. Search the [Discussions](https://github.com/carlosedujs/ogx/discussions)
+3. Open a new issue with a minimal reproduction

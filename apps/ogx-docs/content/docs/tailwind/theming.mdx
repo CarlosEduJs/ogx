@@ -1,0 +1,78 @@
+---
+title: Theming
+description: Custom color themes and design tokens
+---
+
+## Theme Config
+
+Pass a theme object to customize semantic colors:
+
+```typescript
+import { render } from '@ogxjs/core';
+
+const png = await render(element, {
+  theme: {
+    background: '#0a0a0a',
+    foreground: '#fafafa',
+    primary: '#6366f1',
+    secondary: '#a855f7',
+    accent: '#22d3ee',
+    muted: '#71717a',
+  },
+});
+```
+
+![Theme Showcase](/showcase/theme.png)
+
+## Using Theme Colors
+
+Reference theme colors in Tailwind classes:
+
+```typescript
+stack('bg-background text-foreground', [
+  span('text-primary', 'Highlighted'),
+  span('text-muted', 'Secondary text'),
+]);
+```
+
+## Brand Themes
+
+Create reusable theme presets:
+
+```typescript
+const themes = {
+  dark: {
+    background: '#0a0a0a',
+    foreground: '#fafafa',
+    primary: '#6366f1',
+  },
+  light: {
+    background: '#ffffff',
+    foreground: '#0a0a0a',
+    primary: '#4f46e5',
+  },
+  brand: {
+    background: '#1e1b4b',
+    foreground: '#e0e7ff',
+    primary: '#818cf8',
+  },
+};
+
+const png = await render(element, {
+  theme: themes.brand,
+});
+```
+
+## Per-Preset Theming
+
+Override colors in preset calls:
+
+```typescript
+const png = await ogx({
+  preset: 'docs',
+  title: 'Custom Theme',
+  theme: {
+    primary: '#10b981',
+  },
+});
+```

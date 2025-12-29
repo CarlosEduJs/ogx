@@ -1,0 +1,6 @@
+{
+  "tailwindCSS.experimental.classAttributes": [
+    "tw"
+  ],
+  "editor.defaultFormatter": "biomejs.biome"
+}

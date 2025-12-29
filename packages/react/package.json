@@ -1,0 +1,70 @@
+{
+	"name": "@ogxjs/react",
+	"version": "0.1.0",
+	"description": "React adapter for OGX - Build OG images with JSX and Tailwind",
+	"author": "Carlos Eduardo",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/carlosedujs/ogx.git",
+		"directory": "packages/react"
+	},
+	"homepage": "https://ogx.dev",
+	"bugs": "https://github.com/carlosedujs/ogx/issues",
+	"license": "MIT",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./jsx": {
+			"types": "./dist/jsx.d.ts"
+		},
+		"./svg": {
+			"types": "./dist/render-svg.d.ts",
+			"import": "./dist/render-svg.js"
+		},
+		"./png": {
+			"types": "./dist/render-png.d.ts",
+			"import": "./dist/render-png.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"dependencies": {
+		"@ogxjs/core": "workspace:*"
+	},
+	"devDependencies": {
+		"@testing-library/react": "^16.3.1",
+		"@types/react": "^19.0.0",
+		"@types/react-dom": "^19.0.0",
+		"@vitest/ui": "^4.0.16",
+		"react": "^19.0.0",
+		"typescript": "5.9.2",
+		"vitest": "^4.0.16"
+	},
+	"peerDependencies": {
+		"react": ">=18.0.0"
+	},
+	"scripts": {
+		"build": "tsc && cp src/jsx.d.ts dist/jsx.d.ts",
+		"dev": "tsc --watch",
+		"check-types": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:ui": "vitest --ui"
+	},
+	"keywords": [
+		"react",
+		"jsx",
+		"og-image",
+		"opengraph",
+		"social-image"
+	],
+	"publishConfig": {
+		"access": "public"
+	}
+}

@@ -1,0 +1,58 @@
+---
+title: render()
+description: Low-level rendering for custom layouts
+---
+
+The core library provides two rendering engines: one for Node.js/Server environments and one for Browser/Client-side previews.
+
+## Node.js Rendering (PNG)
+
+Use the `/png` module for high-performance PNG generation.
+
+```typescript
+import { fontRegistry, stack, span } from '@ogxjs/core';
+import { render } from '@ogxjs/core/png';
+
+await fontRegistry.registerInter([400, 700]);
+
+const png = await render(
+  stack('w-full h-full bg-zinc-950 p-16 items-center justify-center', [
+    span('text-6xl font-bold text-white', 'Custom Layout'),
+  ])
+);
+```
+
+## Browser Rendering (SVG)
+
+Use the `/svg` module for lightweight browser previews. This module has zero Node.js dependencies.
+
+```typescript
+import { renderToSVG } from '@ogxjs/core/svg';
+
+const svg = await renderToSVG(element);
+```
+```
+
+## Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `width` | `number` | 1200 | Image width |
+| `height` | `number` | 630 | Image height |
+| `fonts` | `SatoriFont[]` | Registry fonts | Custom fonts |
+
+## With Theme
+
+Pass a custom theme for semantic colors:
+
+```typescript
+const png = await render(element, {
+  theme: {
+    background: '#0a0a0a',
+    foreground: '#fafafa',
+    primary: '#6366f1',
+  },
+});
+```
+
+Theme colors are accessible via classes like `bg-background`, `text-primary`.

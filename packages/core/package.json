@@ -1,0 +1,71 @@
+{
+	"name": "@ogxjs/core",
+	"version": "0.1.0",
+	"description": "High-performance Open Graph image generator with Tailwind CSS support",
+	"author": "Carlos Eduardo",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/carlosedujs/ogx.git",
+		"directory": "packages/core"
+	},
+	"homepage": "https://ogx.dev",
+	"bugs": "https://github.com/carlosedujs/ogx/issues",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./svg": {
+			"types": "./dist/render-svg.d.ts",
+			"import": "./dist/render-svg.js"
+		},
+		"./png": {
+			"types": "./dist/render-png.d.ts",
+			"import": "./dist/render-png.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsc && mkdir -p dist/fonts/inter && cp src/fonts/inter/*.ttf dist/fonts/inter/",
+		"dev": "tsc --watch",
+		"check-types": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:ui": "vitest --ui",
+		"test:integration": "node src/__tests__/integration/integration.test.ts",
+		"test:pure": "node src/__tests__/pure/engine.test.ts",
+		"bench": "tsx src/__tests__/benchmarks/comprehensive-bench.ts"
+	},
+	"dependencies": {
+		"@resvg/resvg-js": "^2.6.2",
+		"satori": "^0.12.1"
+	},
+	"devDependencies": {
+		"@types/bun": "^1.2.4",
+		"@types/node": "^20.19.27",
+		"@vercel/og": "^0.8.6",
+		"@vitest/ui": "^4.0.16",
+		"bun-types": "^1.3.5",
+		"tsx": "^4.21.0",
+		"vitest": "^4.0.16"
+	},
+	"peerDependencies": {
+		"typescript": ">=5.0.0"
+	},
+	"keywords": [
+		"og-image",
+		"opengraph",
+		"satori",
+		"tailwind",
+		"social-image"
+	],
+	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	}
+}

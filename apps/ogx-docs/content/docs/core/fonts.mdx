@@ -1,0 +1,75 @@
+---
+title: Fonts
+description: Font registration and management
+---
+
+OGX requires fonts to be registered before rendering. The `fontRegistry` provides a simple API for this.
+
+## Strategies: CDN vs. Local
+
+OGX provides two ways to load fonts. Choosing the right one depends on your deployment environment and technical requirements.
+
+### 1. Automatic CDN Loading (Recommended for Cloud)
+
+This is the default for framework adapters like `@ogxjs/next`. It uses `fetch` to load fonts from a high-speed CDN.
+
+```typescript
+import { fontRegistry } from '@ogxjs/core';
+
+// Fetches from https://fonts.bunny.net
+await fontRegistry.registerInterFromUrl([400, 700]);
+```
+
+- **Pros**: Zero-config; "Works on my machine" and in production; Compatible with **Vercel Edge**, **Cloudflare Workers**, and all bundlers (Vite/Webpack).
+- **Cons**: Requires internet access during first render (or until cached); External dependency.
+
+### 2. Local Font Files (Recommended for Static/Offline)
+
+If you have Inter font files locally in your project, use the standard `registerInter` method.
+
+```typescript
+import { fontRegistry } from '@ogxjs/core';
+
+// Attempts to read files from ./fonts/inter within the package or project
+await fontRegistry.registerInter([400, 700]);
+```
+
+- **Pros**: 100% offline; No external requests; Privacy-first; Slightly faster if files are on local disk.
+- **Cons**: **Bundler Treachery**—Next.js and Vite often move assets during build, causing "file not found" errors in production unless you configure `assets` correctly.
+
+---
+
+## Technical Background: Why this matters?
+
+Generating OG images on the fly usually happens in **Serverless Functions** or **Edge Runtimes**. 
+
+1. **Path Resolution**: In these environments, the traditional "current directory" (`__dirname`) doesn't always exist or point to where you think it does.
+2. **Bundling**: Tools like Webpack/Vite try to optimize assets, but Satori needs raw `ArrayBuffer` data. If the bundler doesn't "see" the font file, it won't be included in the deployment.
+
+> [!IMPORTANT]
+> If you are using **Next.js**, we strongly recommend **CDN Loading**. It eliminates 99% of path-related bugs in production.
+
+## Custom Local Fonts
+
+To register any other font, load the file as a buffer and pass it to the registry:
+
+```typescript
+import { fontRegistry, loadFont } from '@ogxjs/core';
+
+// loadFont is a browser-safe wrapper that uses node:fs in Node
+const data = await loadFont('./public/fonts/Custom.ttf');
+
+fontRegistry.register({
+  name: 'CustomFont',
+  data,
+  weight: 400
+});
+```
+
+## Get Registered Fonts
+
+Access all registered fonts for custom render calls:
+
+```typescript
+const fonts = fontRegistry.getFonts();
+```

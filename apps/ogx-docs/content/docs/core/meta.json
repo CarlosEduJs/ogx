@@ -1,0 +1,14 @@
+{
+	"root": true,
+	"title": "Core API",
+	"pages": [
+		"...",
+		"ogx-function",
+		"render",
+		"fonts",
+		"assets",
+		"cache",
+		"platforms",
+		"performance"
+	]
+}

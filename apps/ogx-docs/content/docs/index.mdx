@@ -1,0 +1,75 @@
+---
+title: Introduction
+description: Tailwind-first OG image generation for modern web apps
+---
+
+OGX is a TypeScript framework for generating Open Graph images using a Tailwind-like syntax. It's built to eliminate the friction between design and implementation for social sharing metadata.
+
+![OGX Showcase](/showcase/premium.png)
+
+## Philosophy
+
+OGX is built on three core pillars:
+
+1.  **Tailwind as the Language**: We believe utility classes are the most ergonomic way to build layouts for the web. OGX brings this same experience to image generation.
+2.  **Framework Agnostic Core**: The engine works everywhere—Node.js, Edge, or the Browser. High-level adapters provide a native experience for your favorite framework.
+3.  **Developer Experience First**: From declarative font loading to automatic caching, every API is designed to get out of your way.
+
+## Why OGX?
+
+Generating OG images used to be a choice between two evils: **Puppeteer** (heavy, slow, resource-intensive) or **Canvas/Satori** (manual, verbose, hard to style).
+
+OGX provides the best of both worlds: the performance of a native renderer with the ease of use of a modern CSS framework.
+
+### What OGX Fixes
+
+-   **Manual Tailwind Parsing**: Stop manually converting Tailwind classes to Satori-compatible style objects. OGX handles the parsing and conversion for you.
+-   **Messy Architectures**: Instead of 200 lines of nested objects for a simple layout, use the **Fluent Builder API** or **JSX** to create clean, readable code.
+-   **Resource Management**: Static Node.js imports and local font files often leak or break in Serverless/Edge environments. OGX uses dynamic imports and browser-safe fallbacks by default.
+
+## Technical Stack
+
+OGX stands on the shoulders of giants:
+
+-   **[Satori](https://github.com/vercel/satori)**: The engine that converts HTML/CSS to SVG.
+-   **[Resvg](https://github.com/yisibl/resvg-js)**: A high-performance Rust-based SVG to PNG converter (server-only).
+-   **Tailwind Parser**: Our custom utility that transforms TW classes into inline styles.
+-   **CDN Font Loading**: Simplified registration of fonts like Inter directly from Google Fonts or CDNs.
+
+### Browser Compatible
+
+Unlike most OG image generators, OGX can run **directly in the browser** for live previews. The core rendering engine has zero Node.js dependencies when using the `/svg` module path.
+
+## Quick Example
+
+```typescript
+import { fontRegistry } from '@ogxjs/core';
+import { ogx } from '@ogxjs/core/png';
+
+// Register fonts once
+await fontRegistry.registerInter([400, 700]);
+
+// Build a documentation-style image in seconds
+const png = await ogx({
+  preset: 'docs',
+  title: 'Introduction',
+  description: 'Tailwind-first OG image generation',
+  colorScheme: 'dark',
+});
+```
+
+Want to see it in action? Try the **[Interactive Playground](/playground)** to experiment with layouts in real-time.
+
+## Architecture
+
+OGX is organized into three layers:
+
+-   **@ogxjs/core**: The engine. Handles layout building, tailwind parsing, and image rendering.
+-   **Adapters**: Framework-specific wrappers (`@ogxjs/next`, `@ogxjs/react`) for zero-config integration.
+-   **Presets**: Battle-tested templates for common use cases (Blogs, Docs, Social).
+
+<Cards>
+  <Card title="Installation" href="/docs/getting-started/installation" />
+  <Card title="Explore Adapters" href="/docs/adapters" />
+  <Card title="View Presets" href="/docs/presets" />
+</Cards>

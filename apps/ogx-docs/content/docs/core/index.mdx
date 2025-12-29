@@ -1,0 +1,120 @@
+---
+title: Core API
+description: Low-level APIs for maximum control over OG image generation
+---
+
+The `@ogxjs/core` package is the foundation of the OGX ecosystem. It provides the rendering engine, utilities, and low-level APIs that power all framework adapters.
+
+## When to Use Core
+
+Use `@ogxjs/core` directly when you need:
+
+- **Maximum Control**: Fine-grained control over every aspect of image generation
+- **Custom Integrations**: Building your own framework adapter or tooling
+- **Server-Side Rendering**: Generating images in API routes, serverless functions, or edge workers
+- **Browser Previews**: Creating live SVG previews without any Node.js dependencies
+
+## Module Structure
+
+The core package is split into specialized modules:
+
+### `/png` - Server-Only Rendering
+
+For generating PNG images in Node.js environments:
+
+```typescript
+import { render, ogx } from '@ogxjs/core/png';
+import { fontRegistry } from '@ogxjs/core';
+
+await fontRegistry.registerInter([400, 700]);
+
+const png = await ogx({
+  preset: 'docs',
+  title: 'My Page',
+  description: 'Built with OGX'
+});
+```
+
+### `/svg` - Browser-Safe Rendering
+
+For generating SVG previews in the browser:
+
+```typescript
+import { renderToSVG } from '@ogxjs/core/svg';
+import { stack, span } from '@ogxjs/core';
+
+const svg = await renderToSVG(
+  stack('w-full h-full bg-zinc-950 p-20', [
+    span('text-6xl font-bold text-white', 'Hello World')
+  ])
+);
+```
+
+## Key Features
+
+### Tailwind-First Syntax
+
+Write layouts using familiar utility classes instead of verbose style objects:
+
+```typescript
+import { stack, row, span } from '@ogxjs/core';
+
+const layout = stack('w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 p-16', [
+  row('items-center gap-4 mb-8', [
+    span('text-2xl font-bold text-white', 'OGX Engine')
+  ])
+]);
+```
+
+### Font Management
+
+Simplified font loading with the `fontRegistry`:
+
+```typescript
+import { fontRegistry } from '@ogxjs/core';
+
+// Load from CDN
+await fontRegistry.registerInter([400, 700]);
+
+// Or load custom fonts
+await fontRegistry.register({
+  name: 'CustomFont',
+  url: 'https://example.com/font.ttf',
+  weight: 600
+});
+```
+
+### Platform Presets
+
+Target specific social platforms with optimized dimensions:
+
+```typescript
+import { render } from '@ogxjs/core/png';
+
+const png = await render(element, {
+  platform: 'twitter' // Auto-sets to 1200x600
+});
+```
+
+### ⚡ Performance
+
+- **Lazy Loading**: Dependencies are loaded only when needed
+- **Caching**: Built-in font and asset caching
+- **Edge Compatible**: Works in Cloudflare Workers, Vercel Edge, and other edge runtimes
+
+## Core Concepts
+
+<Cards>
+  <Card title="Rendering" href="/docs/core/render" description="Convert layouts to SVG or PNG" />
+  <Card title="Fonts" href="/docs/core/fonts" description="Load and manage custom fonts" />
+  <Card title="Platforms" href="/docs/core/platforms" description="Target specific social platforms" />
+  <Card title="ogx() Function" href="/docs/core/ogx-function" description="High-level preset-based rendering" />
+  <Card title="Assets" href="/docs/core/assets" description="Handle images and external resources" />
+  <Card title="Caching" href="/docs/core/cache" description="Optimize performance with caching" />
+</Cards>
+
+## Next Steps
+
+- **New to OGX?** Start with the [Quick Start Guide](/docs/getting-started/quick-start)
+- **Using React?** Check out the [React Adapter](/docs/adapters/react)
+- **Need templates?** Explore [Presets](/docs/presets)

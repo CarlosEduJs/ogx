@@ -1,0 +1,57 @@
+---
+title: Cache
+description: In-memory caching for performance
+---
+
+OGX includes a built-in cache that stores rendered images by content hash.
+
+## How It Works
+
+When `cache: true` (default), OGX:
+
+1. Generates a SHA-256 hash of **your** config
+2. Checks if an image exists for that hash
+3. Returns cached image or renders a new one
+
+## Usage
+
+Caching is enabled by default:
+
+```typescript
+const png = await ogx({
+  preset: 'docs',
+  title: 'Cached Image',
+  cache: true, // default
+});
+```
+
+Disable for dynamic content:
+
+```typescript
+const png = await ogx({
+  preset: 'social',
+  title: 'Always Fresh',
+  cache: false,
+});
+```
+
+## Direct Access
+
+For advanced use cases, access the cache directly:
+
+```typescript
+import { snapshotCache } from '@ogxjs/core';
+
+// Check if cached
+const cached = snapshotCache.get(configHash);
+
+// Store manually
+snapshotCache.set(configHash, pngBuffer);
+
+// Clear all
+snapshotCache.clear();
+```
+
+## Performance
+
+Cached renders return in under 1ms. First renders typically take 50-200ms depending on complexity.

@@ -1,0 +1,42 @@
+---
+title: Social Preset
+description: Vibrant social media cards with gradients
+---
+
+The social preset creates eye-catching cards for social media with gradient backgrounds.
+
+## Usage
+
+```typescript
+const png = await ogx({
+  preset: 'social',
+  title: 'Launching OGX v1.0',
+  brand: 'OGX',
+  handle: '@ogx_lib',
+  fromColor: '#6366f1',
+  toColor: '#8b5cf6',
+  logo: logoBase64,
+});
+```
+
+## Options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `title` | `string` | Yes | Main headline |
+| `brand` | `string` | No | Brand name in header |
+| `handle` | `string` | No | Username or handle |
+| `avatar` | `string` | No | Avatar in footer badge |
+| `logo` | `string` | No | Logo in header |
+| `fromColor` | `string` | No | Gradient start color |
+| `toColor` | `string` | No | Gradient end color |
+| `gradient` | `'to-r' \| 'to-br' \| 'to-b'` | No | Gradient direction |
+
+## Features
+
+- Customizable gradient background
+- Subtle grain texture for quality
+- Header with brand logo and name
+- Large bold title
+- Glass-effect footer badge
+- OKLCH color support for vibrant gradients

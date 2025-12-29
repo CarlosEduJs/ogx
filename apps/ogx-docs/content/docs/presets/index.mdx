@@ -1,0 +1,69 @@
+---
+title: Presets Overview
+description: Ready-to-use templates for common use cases
+---
+
+Presets are pre-designed layouts that handle common OG image patterns. They accept props and return a fully styled image.
+
+## Available Presets
+
+| Preset | Description |
+|--------|-------------|
+| [Docs](/docs/presets/docs) | Documentation sites with title, description, and branding |
+| [Blog](/docs/presets/blog) | Blog posts with author, date, and category |
+| [Social](/docs/presets/social) | Gradient backgrounds with handle and branding |
+| [Minimal](/docs/presets/minimal) | Clean typography on solid backgrounds |
+
+### Previews
+
+#### Documentation
+![Docs Preset](/showcase/docs.png)
+
+#### Blog
+![Blog Preset](/showcase/blog.png)
+
+#### Social
+![Social Preset](/showcase/social.png)
+
+#### Minimal
+![Minimal Preset](/showcase/minimal.png)
+
+## Basic Usage
+
+```typescript
+import { fontRegistry, ogx } from '@ogxjs/core';
+
+await fontRegistry.registerInter([400, 700]);
+
+const png = await ogx({
+  preset: 'docs',
+  title: 'My Page',
+  // preset-specific options...
+});
+```
+
+## Common Options
+
+All presets support these options:
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `colorScheme` | `'dark' \| 'light'` | Color theme |
+| `logo` | `string` | Logo URL or base64 |
+| `slots` | `object` | Override header/footer |
+
+## Custom Slots
+
+Override default elements:
+
+```typescript
+import { ogx, span } from '@ogxjs/core';
+
+const png = await ogx({
+  preset: 'docs',
+  title: 'Custom Header',
+  slots: {
+    header: span('text-sm text-zinc-500', 'Custom Header'),
+  },
+});
+```

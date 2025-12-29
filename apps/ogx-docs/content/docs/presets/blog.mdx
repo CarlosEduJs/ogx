@@ -1,0 +1,43 @@
+---
+title: Blog Preset
+description: Blog post OG images with author and metadata
+---
+
+The blog preset is designed for blog posts with author information and metadata.
+
+## Usage
+
+```typescript
+const png = await ogx({
+  preset: 'blog',
+  title: 'How to Build a Modern API',
+  author: 'Carlos',
+  authorAvatar: avatarBase64,
+  category: 'Tutorial',
+  date: 'Dec 27, 2024',
+  readingTime: '5 min read',
+  coverImage: imageUrl,
+  colorScheme: 'dark',
+});
+```
+
+## Options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `title` | `string` | Yes | Post title |
+| `author` | `string` | No | Author name |
+| `authorAvatar` | `string` | No | Avatar URL or base64 |
+| `category` | `string` | No | Category badge |
+| `date` | `string` | No | Publication date |
+| `readingTime` | `string` | No | Reading time |
+| `coverImage` | `string` | No | Right-side image |
+| `colorScheme` | `'dark' \| 'light'` | No | Color theme |
+
+## Features
+
+- Two-column layout with optional cover image
+- Category badge with accent color
+- Author section with avatar
+- Metadata row with date and reading time
+- Gradient transition to cover image

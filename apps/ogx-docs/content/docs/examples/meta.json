@@ -1,0 +1,5 @@
+{
+	"root": true,
+	"title": "Examples",
+	"pages": ["...", "nextjs", "react-vanilla", "batch", "custom-layouts"]
+}

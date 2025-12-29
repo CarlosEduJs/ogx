@@ -1,0 +1,55 @@
+---
+title: Primitives
+description: Low-level element creation functions
+---
+
+Primitives are the building blocks for all OGX layouts.
+
+## h()
+
+The base function for creating any element:
+
+```typescript
+import { h } from '@ogxjs/core';
+
+h('div', 'bg-zinc-950 p-4', [
+  h('span', 'text-white', 'Hello'),
+]);
+```
+
+## div() and span()
+
+Shortcuts for common elements:
+
+```typescript
+import { div, span } from '@ogxjs/core';
+
+div('p-4 bg-white', [
+  span('text-black', 'Content'),
+]);
+```
+
+## img()
+
+For images:
+
+```typescript
+import { img } from '@ogxjs/core';
+
+img(logoBase64, 'w-12 h-12 rounded-full');
+```
+
+Images can be URLs or base64 strings.
+
+## Semantic Typography
+
+Pre-styled text elements:
+
+```typescript
+import { h1, p } from '@ogxjs/core';
+
+h1('text-white', 'Main Title');
+p('text-zinc-400', 'Paragraph text');
+```
+
+`h1` applies `text-4xl font-bold` by default. `p` applies `text-base`.

@@ -1,0 +1,5 @@
+{
+	"root": true,
+	"title": "Adapters",
+	"pages": ["index", "react", "next", "multi-platform"]
+}

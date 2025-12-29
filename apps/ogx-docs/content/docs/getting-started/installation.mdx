@@ -1,0 +1,72 @@
+---
+title: Installation
+description: Install OGX in your project
+---
+
+## Requirements
+
+- Node.js 18+ or Bun
+- TypeScript 5.0+
+
+## Install
+
+### Core Package
+```bash
+pnpm add @ogxjs/core
+```
+
+### Framework Adapters (Optional)
+```bash
+# For Next.js App Router
+pnpm add @ogxjs/next
+
+# For React (Browser or Server)
+pnpm add @ogxjs/react
+```
+
+## Dependencies
+
+OGX includes `satori` for SVG rendering. The PNG conversion (`@resvg/resvg-js`) is only loaded when you use the `/png` module, keeping browser bundles lightweight.
+
+## Module Paths
+
+OGX uses **conditional exports** to separate browser-safe code from Node.js-only code:
+
+### Browser (Client-Side)
+For live previews, playgrounds, or any browser environment:
+
+```typescript
+import { renderToSVG } from '@ogxjs/core/svg';
+// or
+import { renderToSVG } from '@ogxjs/react/svg';
+```
+
+### Server (Node.js/Edge)
+For generating PNG images in API routes or server-side rendering:
+
+```typescript
+import { render, ogx } from '@ogxjs/core/png';
+// or
+import { render } from '@ogxjs/react/png';
+```
+
+> **Why separate paths?** The PNG rendering uses `@resvg/resvg-js`, which includes Node.js native modules. By splitting the exports, we ensure your browser bundles stay small and don't try to import server-only dependencies.
+
+## TypeScript
+
+OGX is written in TypeScript and provides full type definitions. For the best experience, ensure your `tsconfig.json` includes:
+
+```json
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "esModuleInterop": true
+  }
+}
+```
+
+## Next Steps
+
+<Cards>
+  <Card title="Quick Start" href="/docs/getting-started/quick-start" />
+</Cards>

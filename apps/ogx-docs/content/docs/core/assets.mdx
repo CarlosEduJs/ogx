@@ -1,0 +1,71 @@
+---
+title: Assets
+description: Loading images and fonts
+---
+
+## loadAsset()
+
+Load images for use in OG images:
+
+```typescript
+import { loadAsset } from '@ogxjs/core';
+
+const logo = await loadAsset('./assets/logo.svg');
+const avatar = await loadAsset('https://example.com/avatar.png');
+```
+
+Returns a base64 data URL ready for use with `img()`.
+
+## Supported Formats
+
+- SVG (recommended for logos)
+- PNG
+- JPEG
+- WebP
+
+## Local Files
+
+```typescript
+import { loadAsset, ogx } from '@ogxjs/core';
+import { join } from 'path';
+
+const logo = await loadAsset(join(process.cwd(), 'public/logo.svg'));
+
+const png = await ogx({
+  preset: 'docs',
+  title: 'My Page',
+  logo,
+});
+```
+
+## Remote URLs
+
+```typescript
+const avatar = await loadAsset('https://github.com/user.png');
+```
+
+## Inline SVG
+
+For dynamic SVGs, convert directly:
+
+```typescript
+import { svgFromContent } from '@ogxjs/core';
+
+const svg = `<svg>...</svg>`;
+const dataUrl = svgFromContent(svg);
+```
+
+## Caching
+
+Assets are not cached by default. For production, cache loaded assets:
+
+```typescript
+const assetCache = new Map<string, string>();
+
+async function getCachedAsset(path: string) {
+  if (!assetCache.has(path)) {
+    assetCache.set(path, await loadAsset(path));
+  }
+  return assetCache.get(path)!;
+}
+```

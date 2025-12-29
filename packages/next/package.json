@@ -1,0 +1,50 @@
+{
+	"name": "@ogxjs/next",
+	"version": "0.1.0",
+	"description": "Next.js adapter for OGX - High-performance OG image generation",
+	"author": "Carlos Eduardo",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/carlosedujs/ogx.git",
+		"directory": "packages/next"
+	},
+	"homepage": "https://ogx.dev",
+	"bugs": "https://github.com/carlosedujs/ogx/issues",
+	"license": "MIT",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"dependencies": {
+		"@ogxjs/core": "workspace:*"
+	},
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc --watch",
+		"check-types": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:ui": "vitest --ui"
+	},
+	"devDependencies": {
+		"@vitest/ui": "^4.0.16",
+		"vitest": "^4.0.16"
+	},
+	"keywords": [
+		"nextjs",
+		"og-image",
+		"opengraph",
+		"social-image"
+	],
+	"publishConfig": {
+		"access": "public"
+	}
+}

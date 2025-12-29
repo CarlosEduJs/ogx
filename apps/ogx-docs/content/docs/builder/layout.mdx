@@ -1,0 +1,72 @@
+---
+title: Layout Helpers
+description: Functions for common layout patterns
+---
+
+Layout helpers simplify creating flex-based layouts.
+
+## stack()
+
+Vertical flex container (column):
+
+```typescript
+import { stack } from '@ogxjs/core';
+
+stack('gap-4 p-8', [
+  // children stack vertically
+]);
+```
+
+## row()
+
+Horizontal flex container:
+
+```typescript
+import { row } from '@ogxjs/core';
+
+row('gap-4 items-center', [
+  // children align horizontally
+]);
+```
+
+## absolute()
+
+Positioned overlay:
+
+```typescript
+import { absolute } from '@ogxjs/core';
+
+// Full-size overlay
+absolute('bg-black/50');
+
+// With children
+absolute('p-4', [
+  span('text-white', 'Overlay content'),
+]);
+```
+
+## grid()
+
+Flex-wrap grid:
+
+```typescript
+import { grid } from '@ogxjs/core';
+
+grid('gap-4', [
+  // wraps when full
+]);
+```
+
+## spacer()
+
+Flexible space:
+
+```typescript
+import { row, spacer, span } from '@ogxjs/core';
+
+row('', [
+  span('', 'Left'),
+  spacer(),
+  span('', 'Right'),
+]);
+```

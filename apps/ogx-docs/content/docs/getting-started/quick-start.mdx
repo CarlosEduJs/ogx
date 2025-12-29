@@ -1,0 +1,61 @@
+---
+title: Quick Start
+description: Generate your first OG image in minutes
+---
+
+## Using Presets
+
+The fastest way to generate an OG image is with a preset:
+
+```typescript
+import { fontRegistry } from '@ogxjs/core';
+import { ogx } from '@ogxjs/core/png';
+
+// Register fonts (required once)
+await fontRegistry.registerInter([400, 700]);
+
+// Generate image (Node.js/Bun only)
+const png = await ogx({
+  preset: 'docs',
+  title: 'My Documentation',
+  description: 'Learn how to use our API',
+  siteName: 'My Docs',
+});
+
+// png is a Buffer, save or serve it
+await Bun.write('og.png', png);
+```
+
+## Available Presets
+
+| Preset | Best For |
+|--------|----------|
+| `docs` | Documentation sites |
+| `blog` | Blog posts with author info |
+| `social` | Social media cards with gradients |
+| `minimal` | Simple, bold typography |
+
+## Custom Layouts
+
+For full control, use the `render` function with the Builder API:
+
+```typescript
+import { fontRegistry, stack, span } from '@ogxjs/core';
+import { render } from '@ogxjs/core/png';
+
+await fontRegistry.registerInter([400, 700]);
+
+const png = await render(
+  stack('w-full h-full bg-zinc-950 p-16 justify-center items-center', [
+    span('text-6xl font-bold text-white', 'Hello World'),
+  ])
+);
+```
+
+## Next Steps
+
+<Cards>
+  <Card title="Core API" href="/docs/core" />
+  <Card title="Presets" href="/docs/presets" />
+  <Card title="Builder API" href="/docs/builder" />
+</Cards>

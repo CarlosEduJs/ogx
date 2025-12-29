@@ -1,0 +1,170 @@
+---
+title: Migration from @vercel/og
+description: Migrate from @vercel/og to OGX
+---
+
+Migrating from `@vercel/og` to OGX is straightforward. This guide covers the key differences and provides side-by-side examples.
+
+## Why Migrate?
+
+| Feature | @vercel/og | OGX |
+|:--------|:-----------|:----|
+| **Performance** | ~800ms | ~60ms (13x faster) |
+| **Caching** | Manual | Built-in |
+| **Presets** | None | Ready-to-use templates |
+| **Tailwind** | Limited | Full JIT support |
+| **Runtime** | Edge-only | Universal (Node, Bun, Deno) |
+
+## Installation
+
+Replace `@vercel/og` with `@ogxjs/next`:
+
+```bash
+# Remove old package
+pnpm remove @vercel/og
+
+# Add OGX
+pnpm add @ogxjs/next @ogxjs/core
+```
+
+## API Mapping
+
+### Basic Response
+
+**Before (@vercel/og):**
+
+```tsx
+import { ImageResponse } from "@vercel/og";
+
+export async function GET() {
+  return new ImageResponse(
+    <div style={{ display: "flex", fontSize: 48 }}>Hello World</div>,
+    { width: 1200, height: 630 }
+  );
+}
+```
+
+**After (OGX):**
+
+```ts
+import { ogxResponse } from "@ogxjs/next";
+
+export async function GET(req: Request) {
+  return ogxResponse({
+    preset: "minimal",
+    title: "Hello World",
+  }, req);
+}
+```
+
+### Custom JSX Layout
+
+If you need full JSX control, use `@ogxjs/react`:
+
+**Before (@vercel/og):**
+
+```tsx
+import { ImageResponse } from "@vercel/og";
+
+export async function GET() {
+  return new ImageResponse(
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#000",
+        color: "#fff",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <h1 style={{ fontSize: 64 }}>My Title</h1>
+      <p style={{ fontSize: 32, color: "#888" }}>Subtitle here</p>
+    </div>,
+    { width: 1200, height: 630 }
+  );
+}
+```
+
+**After (OGX):**
+
+```tsx
+import { render } from "@ogxjs/react/png";
+
+export async function GET() {
+  const png = await render(
+    <div tw="flex flex-col items-center justify-center bg-black text-white w-full h-full">
+      <h1 tw="text-6xl font-bold">My Title</h1>
+      <p tw="text-3xl text-zinc-400">Subtitle here</p>
+    </div>
+  );
+
+  return new Response(png, {
+    headers: { "Content-Type": "image/png" },
+  });
+}
+```
+
+> [!TIP]
+> Notice how OGX uses Tailwind classes via the `tw` prop instead of inline styles.
+
+## Key Differences
+
+### 1. No ImageResponse
+
+OGX doesn't use `ImageResponse`. Instead:
+- Use `ogxResponse()` for quick preset-based images
+- Use `render()` + `Response` for custom JSX
+
+### 2. Tailwind First
+
+OGX is designed around Tailwind. Use `tw` prop instead of `style`:
+
+```tsx
+// @vercel/og
+<div style={{ backgroundColor: "#1a1a1a", padding: 40 }}>
+
+// OGX
+<div tw="bg-zinc-900 p-10">
+```
+
+### 3. Built-in Fonts
+
+OGX includes Inter font by default. No need to load font files manually:
+
+```ts
+// @vercel/og - manual font loading
+const font = await fetch("https://...").then(r => r.arrayBuffer());
+
+// OGX - built-in
+await fontRegistry.registerInter([400, 700]);
+```
+
+### 4. Caching
+
+OGX has built-in caching:
+
+```ts
+await ogx({
+  preset: "docs",
+  title: "Cached",
+  cache: true, // 85x faster on repeated calls
+});
+```
+
+## Next.js Configuration
+
+Add to your `next.config.ts`:
+
+```ts
+const config = {
+  serverExternalPackages: ["@resvg/resvg-js"],
+};
+export default config;
+```
+
+## That's It!
+
+You've migrated to OGX. Enjoy faster OG image generation with less code!

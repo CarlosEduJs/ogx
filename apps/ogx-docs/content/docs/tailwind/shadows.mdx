@@ -1,0 +1,56 @@
+---
+title: Shadows
+description: Box shadow utilities
+---
+
+## Built-in Shadows
+
+| Class | Description |
+|-------|-------------|
+| `shadow-sm` | Small subtle shadow |
+| `shadow` | Default shadow |
+| `shadow-md` | Medium shadow |
+| `shadow-lg` | Large shadow |
+| `shadow-xl` | Extra large shadow |
+| `shadow-2xl` | Largest shadow |
+
+## Usage
+
+```typescript
+stack('bg-white shadow-lg rounded-xl p-8', [
+  span('text-zinc-900', 'Card content'),
+]);
+```
+
+## Premium Shadow
+
+Multi-layer shadow for depth:
+
+```typescript
+stack('shadow-premium', [
+  // Three-layer soft shadow effect
+]);
+```
+
+The premium shadow applies:
+- Primary shadow at 25% opacity
+- Secondary shadow at 10% opacity  
+- Tertiary diffuse shadow at 5% opacity
+
+## Colored Shadows
+
+Use arbitrary values for colored shadows:
+
+```typescript
+'shadow-[0_20px_50px_-12px_rgba(99,102,241,0.25)]'
+```
+
+## With Fluent API
+
+```typescript
+fluent(stack('p-8'))
+  .bg('white')
+  .rounded('xl')
+  .shadow('lg')
+  .element;
+```

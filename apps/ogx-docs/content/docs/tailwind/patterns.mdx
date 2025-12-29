@@ -1,0 +1,56 @@
+---
+title: Patterns
+description: Background patterns and textures
+---
+
+OGX includes built-in background patterns for visual depth.
+
+## Grid
+
+```typescript
+'bg-grid-white/10-40'  // color/opacity-size
+'bg-grid-zinc-500/5-24'
+```
+
+![Grid Pattern](/showcase/grid.png)
+
+Parameters:
+- Color: any Tailwind color
+- Opacity: 5, 10, 20, etc.
+- Size: grid cell size in pixels
+
+## Dots
+
+```typescript
+'bg-dots-white/10-20'
+'bg-dots-slate-500/5-16'
+```
+
+## Lines
+
+```typescript
+'bg-lines-white/10-32'
+```
+
+## Grain
+
+Noise texture to prevent gradient banding:
+
+```typescript
+'bg-grain'      // 5% opacity default
+'bg-grain/10'   // 10% opacity
+'bg-grain/15'   // 15% opacity
+```
+
+## Combined Example
+
+```typescript
+stack('relative', [
+  absolute('bg-gradient-to-br from-indigo-500 to-purple-500'),
+  absolute('bg-grid-white/10-40'),
+  absolute('bg-grain/5'),
+  // content...
+]);
+```
+
+This creates a gradient with a grid overlay and grain texture.

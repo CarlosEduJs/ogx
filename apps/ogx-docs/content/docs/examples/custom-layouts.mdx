@@ -1,0 +1,90 @@
+---
+title: Custom Layouts
+description: Building custom OG image layouts
+---
+
+## Hero Card
+
+A centered hero layout with logo and tagline:
+
+```typescript
+import { render, stack, span, img, absolute } from '@ogxjs/core';
+
+const png = await render(
+  stack('w-full h-full bg-zinc-950 items-center justify-center', [
+    absolute('bg-gradient-to-br from-indigo-500/20 to-purple-500/20'),
+    absolute('bg-grain/5'),
+
+    stack('items-center gap-8', [
+      img(logo, 'w-24'),
+      span('text-6xl font-bold text-white', 'My Product'),
+      span('text-2xl text-zinc-400', 'The tagline goes here'),
+    ]),
+  ])
+);
+```
+
+## Feature Highlight
+
+Showcase a specific feature:
+
+```typescript
+import { render, stack, row, span, badge } from '@ogxjs/core';
+
+const png = await render(
+  stack('w-full h-full bg-zinc-950 p-20 justify-between', [
+    row('gap-3', [
+      badge('New', 'blue'),
+      badge('v2.0', 'green'),
+    ]),
+
+    stack('gap-4', [
+      span('text-6xl font-bold text-white', 'Dark Mode Support'),
+      span('text-xl text-zinc-400', 
+        'Automatic theme detection with seamless transitions'),
+    ]),
+
+    span('text-sm text-zinc-600', 'myproduct.com'),
+  ])
+);
+```
+
+## Two-Column
+
+Split layout with text and image:
+
+```typescript
+import { render, row, stack, span, img } from '@ogxjs/core';
+
+const png = await render(
+  row('w-full h-full bg-zinc-950', [
+    stack('flex-1 p-16 justify-center gap-6', [
+      span('text-5xl font-bold text-white', 'Learn TypeScript'),
+      span('text-xl text-zinc-400', 
+        'From basics to advanced patterns'),
+    ]),
+
+    img(coverImage, 'flex-1 object-cover'),
+  ])
+);
+```
+
+## Glass Card
+
+Frosted glass effect:
+
+```typescript
+import { render, stack, span, absolute, fluent } from '@ogxjs/core';
+
+const png = await render(
+  stack('w-full h-full bg-zinc-950 items-center justify-center', [
+    absolute('bg-gradient-to-br from-blue-500 to-purple-600'),
+
+    fluent(stack('items-center gap-4 p-12'))
+      .bg('white/10')
+      .rounded('2xl')
+      .border('white/20')
+      .element,
+  ])
+);
+```

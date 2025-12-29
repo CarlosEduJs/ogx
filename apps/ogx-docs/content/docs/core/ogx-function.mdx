@@ -1,0 +1,55 @@
+---
+title: ogx()
+description: The main function for generating OG images with presets
+---
+
+The `ogx` function is the primary way to generate OG images using built-in presets.
+
+## Signature
+
+```typescript
+function ogx(config: OGXConfig): Promise<Buffer>
+```
+
+## Usage
+
+```typescript
+import { fontRegistry, ogx } from '@ogxjs/core';
+
+await fontRegistry.registerInter([400, 700]);
+
+const png = await ogx({
+  preset: 'docs',
+  title: 'My Page Title',
+  description: 'Page description here',
+  siteName: 'My Site',
+  colorScheme: 'dark',
+});
+```
+
+## Common Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `preset` | `'docs' \| 'blog' \| 'social' \| 'minimal'` | Template to use |
+| `title` | `string` | Main heading |
+| `colorScheme` | `'dark' \| 'light'` | Color theme |
+| `width` | `number` | Image width (default: 1200) |
+| `height` | `number` | Image height (default: 630) |
+| `cache` | `boolean` | Enable caching (default: true) |
+
+Each preset has additional options. See the [Presets](/docs/presets) section for details.
+
+## Platform Targeting
+
+Generate images optimized for specific platforms:
+
+```typescript
+const png = await ogx({
+  preset: 'social',
+  title: 'My Post',
+  platform: 'instagram', // 1080x1080
+});
+```
+
+Available platforms: `meta`, `twitter`, `instagram`, `pinterest`, `youtube`, `marketplace`.

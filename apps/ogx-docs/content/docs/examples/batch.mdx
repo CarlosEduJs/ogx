@@ -1,0 +1,95 @@
+---
+title: Batch Generation
+description: Generate multiple images efficiently
+---
+
+## Multi-Platform
+
+Generate images for all platforms at once:
+
+```typescript
+import { fontRegistry, ogx, getPlatformDimensions } from '@ogxjs/core';
+import { writeFile, mkdir } from 'fs/promises';
+
+const platforms = ['meta', 'twitter', 'instagram', 'pinterest'] as const;
+
+await fontRegistry.registerInter([400, 700]);
+await mkdir('output', { recursive: true });
+
+const results = await Promise.all(
+  platforms.map(async (platform) => {
+    const png = await ogx({
+      preset: 'social',
+      title: 'Product Launch',
+      platform,
+      cache: false,
+    });
+
+    await writeFile(`output/${platform}.png`, png);
+    return { platform, size: png.length };
+  })
+);
+
+console.log(results);
+// [
+//   { platform: 'meta', size: 45231 },
+//   { platform: 'twitter', size: 42102 },
+//   ...
+// ]
+```
+
+## Blog Posts
+
+Generate OG images for all posts:
+
+```typescript
+import { fontRegistry, ogx } from '@ogxjs/core';
+
+interface Post {
+  slug: string;
+  title: string;
+  author: string;
+  date: string;
+}
+
+async function generateBlogImages(posts: Post[]) {
+  await fontRegistry.registerInter([400, 700]);
+
+  return Promise.all(
+    posts.map(async (post) => {
+      const png = await ogx({
+        preset: 'blog',
+        title: post.title,
+        author: post.author,
+        date: post.date,
+      });
+
+      return { slug: post.slug, buffer: png };
+    })
+  );
+}
+```
+
+## With Progress
+
+Track progress for large batches:
+
+```typescript
+async function generateWithProgress(items: string[]) {
+  await fontRegistry.registerInter([400, 700]);
+
+  let completed = 0;
+
+  for (const title of items) {
+    const png = await ogx({
+      preset: 'minimal',
+      title,
+    });
+
+    await writeFile(`output/${slugify(title)}.png`, png);
+
+    completed++;
+    console.log(`Progress: ${completed}/${items.length}`);
+  }
+}
+```

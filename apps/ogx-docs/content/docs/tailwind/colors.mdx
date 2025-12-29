@@ -1,0 +1,73 @@
+---
+title: Colors
+description: Color support including modern color spaces
+---
+
+OGX supports the full Tailwind color palette plus modern color formats.
+
+## Tailwind Palette
+
+All standard Tailwind colors work:
+
+```typescript
+'bg-zinc-950'
+'text-indigo-500'
+'border-slate-200'
+```
+
+## Opacity
+
+Use slash syntax for opacity:
+
+```typescript
+'bg-black/50'     // 50% opacity
+'text-white/80'   // 80% opacity
+'border-zinc-500/20'
+```
+
+## OKLCH
+
+Modern perceptually uniform colors:
+
+```typescript
+'bg-[oklch(65%_0.25_260)]'
+```
+
+## HSL
+
+HSL format support:
+
+```typescript
+'bg-[hsl(220,90%,60%)]'
+```
+
+## Hex
+
+Arbitrary hex colors:
+
+```typescript
+'bg-[#6366f1]'
+'text-[#fafafa]'
+```
+
+## Theme Colors
+
+Define semantic colors via theme config:
+
+```typescript
+const png = await render(element, {
+  theme: {
+    background: '#0a0a0a',
+    foreground: '#fafafa',
+    primary: '#6366f1',
+  },
+});
+```
+
+Use them as:
+
+```typescript
+'bg-background'
+'text-foreground'
+'border-primary'
+```

@@ -1,0 +1,52 @@
+---
+title: Fluent API
+description: Chainable style modifications
+---
+
+The Fluent API allows chaining style methods for a more expressive syntax.
+
+## Usage
+
+```typescript
+import { fluent, stack } from '@ogxjs/core';
+
+const element = fluent(stack('items-center'))
+  .bg('zinc-950')
+  .padding('8')
+  .rounded('xl')
+  .shadow('lg')
+  .element; // get the final element
+```
+
+## Available Methods
+
+### Layout
+
+| Method | Example | Result |
+|--------|---------|--------|
+| `gap(val)` | `.gap('4')` | `gap-4` |
+| `padding(val)` | `.padding('8')` | `p-8` |
+| `px(val)` | `.px('4')` | `px-4` |
+| `py(val)` | `.py('4')` | `py-4` |
+| `margin(val)` | `.margin('4')` | `m-4` |
+| `mt(val)` | `.mt('4')` | `mt-4` |
+| `rounded(val)` | `.rounded('xl')` | `rounded-xl` |
+
+### Flex
+
+| Method | Example | Result |
+|--------|---------|--------|
+| `center()` | `.center()` | `items-center justify-center` |
+| `itemsCenter()` | `.itemsCenter()` | `items-center` |
+| `justifyCenter()` | `.justifyCenter()` | `justify-center` |
+| `justifyBetween()` | `.justifyBetween()` | `justify-between` |
+
+### Style
+
+| Method | Example | Result |
+|--------|---------|--------|
+| `bg(color)` | `.bg('zinc-950')` | `bg-zinc-950` |
+| `text(color)` | `.text('white')` | `text-white` |
+| `border(color)` | `.border('white/10')` | `border border-white/10` |
+| `shadow(size)` | `.shadow('lg')` | `shadow-lg` |
+| `opacity(val)` | `.opacity('50')` | `opacity-50` |
