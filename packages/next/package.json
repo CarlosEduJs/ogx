@@ -8,7 +8,7 @@
 		"url": "https://github.com/carlosedujs/ogx.git",
 		"directory": "packages/next"
 	},
-	"homepage": "https://ogx.dev",
+	"homepage": "https://ogx-three.vercel.app",
 	"bugs": "https://github.com/carlosedujs/ogx/issues",
 	"license": "MIT",
 	"type": "module",

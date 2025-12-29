@@ -67,9 +67,9 @@ import "@ogxjs/react";
 
 ## Learn More
 
-- [OGX Documentation](https://ogx.dev/docs)
-- [React Adapter Guide](https://ogx.dev/docs/adapters/react)
-- [Playground](https://ogx.dev/playground)
+- [OGX Documentation](https://ogx-three.vercel.app/docs)
+- [React Adapter Guide](https://ogx-three.vercel.app/docs/adapters/react)
+- [Playground](https://ogx-three.vercel.app/playground)
 
 ## Notes
 

@@ -59,13 +59,13 @@ export async function GET(req: Request) {
 				{/* Links */}
 				<div className="flex flex-col gap-4 sm:flex-row">
 					<Link
-						href="https://ogx.dev/docs"
+						href="https://ogx-three.vercel.app/docs"
 						className="flex h-12 items-center justify-center rounded-full bg-white px-6 font-medium text-black transition-transform hover:scale-105"
 					>
 						Documentation
 					</Link>
 					<Link
-						href="https://ogx.dev/playground"
+						href="https://ogx-three.vercel.app/playground"
 						className="flex h-12 items-center justify-center rounded-full border border-zinc-700 px-6 font-medium text-white transition-colors hover:bg-zinc-800"
 					>
 						Try Playground

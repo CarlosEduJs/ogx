@@ -43,7 +43,7 @@ export async function GET(req: Request) {
 
 ## Documentation
 
-Visit [ogx.dev](https://ogx.dev) for full documentation, examples, and playground.
+Visit [ogx.dev](https://ogx-three.vercel.app) for full documentation, examples, and playground.
 
 ## Examples
 

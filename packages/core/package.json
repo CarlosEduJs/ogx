@@ -8,7 +8,7 @@
 		"url": "https://github.com/carlosedujs/ogx.git",
 		"directory": "packages/core"
 	},
-	"homepage": "https://ogx.dev",
+	"homepage": "https://ogx-three.vercel.app",
 	"bugs": "https://github.com/carlosedujs/ogx/issues",
 	"type": "module",
 	"main": "./dist/index.js",

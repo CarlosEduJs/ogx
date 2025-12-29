@@ -69,9 +69,9 @@ export default config;
 
 ## Learn More
 
-- [OGX Documentation](https://ogx.dev/docs)
-- [Next.js Adapter Guide](https://ogx.dev/docs/adapters/next)
-- [Performance Tips](https://ogx.dev/docs/core/performance)
+- [OGX Documentation](https://ogx-three.vercel.app/docs)
+- [Next.js Adapter Guide](https://ogx-three.vercel.app/docs/adapters/next)
+- [Performance Tips](https://ogx-three.vercel.app/docs/core/performance)
 
 ## Deploy
 
