@@ -19,6 +19,9 @@
 			"suspicious": {
 				"noExplicitAny": "off"
 			},
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
+			},
 			"style": {
 				"noNonNullAssertion": "off"
 			}

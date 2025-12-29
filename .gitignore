@@ -39,3 +39,5 @@ yarn-error.log*
 *.pem
 .npmrc
 pnpm-lock.yaml
+
+GIT_TAG_STRATEGY.md
