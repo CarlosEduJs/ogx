@@ -77,6 +77,7 @@ export default function PlaygroundPage() {
 		const categorySize = isMobile
 			? state.fontSizeCategory * 0.9
 			: state.fontSizeCategory;
+			
 
 		return (
 			<Stack
