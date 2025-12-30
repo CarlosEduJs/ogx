@@ -70,6 +70,23 @@ export const img = (
 	src: string,
 	tw?: TailwindUtility | TailwindUtility[],
 	props?: Omit<OGXElementProps, "tw" | "src">,
+) => {
+	if (!validateImageUrl(src)) {
+		throw new Error(
+			`OGX Security: Invalid or unsafe image URL "${src}". Private networks and unsafe protocols are blocked in production.`,
+		);
+	}
+	return h("img", { src, tw: normalizeTW(tw), ...props });
+};
+
+/**
+ * Create an img element WITHOUT URL validation.
+ * @warning Only use this if you are absolutely sure the URL is safe.
+ */
+export const unsafe_img = (
+	src: string,
+	tw?: TailwindUtility | TailwindUtility[],
+	props?: Omit<OGXElementProps, "tw" | "src">,
 ) => h("img", { src, tw: normalizeTW(tw), ...props });
 
 /** Create a vertical stack (flex-col) */

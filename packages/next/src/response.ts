@@ -65,7 +65,13 @@ export async function ogxResponse<T extends PresetName>(
 		});
 	} catch (error) {
 		console.error("OGX Response Error:", error);
-		return new Response(JSON.stringify({ error: String(error) }), {
+
+		const isProd = process.env.NODE_ENV === "production";
+		const errorMessage = isProd
+			? "An internal error occurred while generating the image."
+			: String(error);
+
+		return new Response(JSON.stringify({ error: errorMessage }), {
 			status: 500,
 			headers: { "Content-Type": "application/json" },
 		});
