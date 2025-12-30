@@ -22,6 +22,7 @@ export {
 	span,
 	stack,
 	svgFromContent,
+	validateImageUrl,
 } from "./builder";
 // Utilities
 export { snapshotCache } from "./cache";

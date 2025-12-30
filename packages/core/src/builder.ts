@@ -348,6 +348,57 @@ export const badge = (
  * External Asset Helpers
  */
 
+const BLOCKED_HOSTS = ["0.0.0.0", "169.254.169.254", "::1"];
+const ALLOWED_PROTOCOLS = ["https:", "http:", "data:"];
+
+/**
+ * Validate a URL to prevent SSRF attacks.
+ * >- In production, blocks localhost, private IPs, and metadata endpoints.
+ * >- In development, allows localhost for local testing.
+ *
+ * @param url - URL to validate
+ * @returns true if URL is safe to use
+ *
+ * @example
+ * ```ts
+ * validateImageUrl("https://example.com/image.png") // --> true
+ * validateImageUrl("http://localhost/image.png") // --> true in dev, false in prod
+ * validateImageUrl("http://169.254.169.254/metadata") // --> false
+ * ```
+ */
+export function validateImageUrl(url: string): boolean {
+	if (url.startsWith("data:")) return true;
+
+	try {
+		const parsed = new URL(url);
+		if (!ALLOWED_PROTOCOLS.includes(parsed.protocol)) return false;
+
+		const isProd = process.env.NODE_ENV === "production";
+		if (isProd) {
+			// Block metadata endpoints
+			if (BLOCKED_HOSTS.includes(parsed.hostname)) return false;
+
+			// Block localhost and loopback --> localhost, 127.0.0.1
+			if (parsed.hostname === "localhost" || parsed.hostname === "127.0.0.1")
+				return false;
+
+			// Block .local domains --> .local
+			if (parsed.hostname.endsWith(".local")) return false;
+
+			// Block private IPv4 ranges --> 10.x, 172.16-31.x, 192.168.x
+			if (/^(10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.)/.test(parsed.hostname))
+				return false;
+
+			// Block private IPv6 ranges --> fc00::/7, fe80::/10
+			if (/^(fc|fd|fe[89ab])[0-9a-f]{1,2}:/i.test(parsed.hostname))
+				return false;
+		}
+		return true;
+	} catch {
+		return false;
+	}
+}
+
 /** Helper to use a raw SVG string directly in img */
 export function svgFromContent(svg: string): string {
 	return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
@@ -355,5 +406,10 @@ export function svgFromContent(svg: string): string {
 
 /** Proxy/Alias for URLs */
 export function imgFromUrl(url: string): string {
+	if (!validateImageUrl(url)) {
+		throw new Error(
+			`OGX: Invalid or unsafe URL "${url}". URLs must use http/https protocols and cannot point to private networks in production.`,
+		);
+	}
 	return url;
 }
