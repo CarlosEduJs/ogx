@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
+		<div className="flex min-h-screen items-center justify-center bg-linear-to-br from-zinc-950 via-zinc-900 to-zinc-950">
 			<main className="mx-auto max-w-2xl space-y-12 p-8">
 				{/* Header */}
 				<div className="space-y-4 text-center">
