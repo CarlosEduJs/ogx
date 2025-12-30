@@ -1,7 +1,22 @@
 #!/bin/bash
 
-if [[ $VERCEL_ENV == "production"  ]] ; then 
-  git log -1 --pretty=oneline --abbrev-commit | grep -w "build" && exit 1 || exit 0
+# Skip builds from GitHub Actions CI
+if [[ "$VERCEL_GIT_COMMIT_MESSAGE" == *"ci:"* ]] || [[ "$VERCEL_GIT_COMMIT_MESSAGE" == *"fix(ci)"* ]]; then
+  echo "🚫 Skipping Vercel build - CI commit detected"
+  exit 0
+fi
+
+# Only build in production if commit message contains [build]
+if [[ $VERCEL_ENV == "production" ]]; then 
+  if echo "$VERCEL_GIT_COMMIT_MESSAGE" | grep -q "\[build\]"; then
+    echo "Building - [build] tag found"
+    exit 1
+  else
+    echo "Skipping build - no [build] tag"
+    exit 0
+  fi
 else
-  exit 1
+  # Skip preview builds
+  echo "Skipping preview build"
+  exit 0
 fi
