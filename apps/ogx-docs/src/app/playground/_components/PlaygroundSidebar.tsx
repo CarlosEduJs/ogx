@@ -167,7 +167,8 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 											onChange={(e) =>
 												setState((s) => ({
 													...s,
-													fontSizeTitle: Number.parseInt(e.target.value, 10) || 32,
+													fontSizeTitle:
+														Number.parseInt(e.target.value, 10) || 32,
 												}))
 											}
 										/>
@@ -194,7 +195,10 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 											onChange={(e) =>
 												setState((s) => ({
 													...s,
-													fontSizeDescription: Number.parseInt(e.target.value, 10),
+													fontSizeDescription: Number.parseInt(
+														e.target.value,
+														10,
+													),
 												}))
 											}
 										/>
@@ -248,7 +252,8 @@ export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 											onChange={(e) =>
 												setState((s) => ({
 													...s,
-													fontSizeBadge: Number.parseInt(e.target.value, 10) || 10,
+													fontSizeBadge:
+														Number.parseInt(e.target.value, 10) || 10,
 												}))
 											}
 										/>

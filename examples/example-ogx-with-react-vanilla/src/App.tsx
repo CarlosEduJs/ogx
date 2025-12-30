@@ -10,7 +10,7 @@ function App() {
 	);
 	const [svg, setSvg] = useState<string>("");
 	const [isRendering, setIsRendering] = useState(false);
-	
+
 	const layout = useMemo(
 		() => (
 			<Stack tw="w-[1200px] h-[630px] bg-zinc-950 p-24 justify-center items-start">
@@ -84,7 +84,9 @@ function App() {
 			<main className="main">
 				<div className="sidebar">
 					<div className="section">
-						<label htmlFor="title" className="label">Title</label>
+						<label htmlFor="title" className="label">
+							Title
+						</label>
 						<input
 							id="title"
 							className="input"
@@ -95,7 +97,9 @@ function App() {
 					</div>
 
 					<div className="section">
-						<label htmlFor="description" className="label">Description</label>
+						<label htmlFor="description" className="label">
+							Description
+						</label>
 						<textarea
 							id="description"
 							className="textarea"
