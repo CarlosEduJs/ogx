@@ -1,0 +1,85 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - 'core-v*'
+      - 'next-v*'
+      - 'react-v*'
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build all packages
+        run: pnpm build
+
+      - name: Determine package to publish
+        id: package
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          
+          if [[ $TAG == core-v* ]]; then
+            echo "packages=core" >> $GITHUB_OUTPUT
+            echo "scope=@ogxjs/core" >> $GITHUB_OUTPUT
+          elif [[ $TAG == next-v* ]]; then
+            echo "packages=next" >> $GITHUB_OUTPUT
+            echo "scope=@ogxjs/next" >> $GITHUB_OUTPUT
+          elif [[ $TAG == react-v* ]]; then
+            echo "packages=react" >> $GITHUB_OUTPUT
+            echo "scope=@ogxjs/react" >> $GITHUB_OUTPUT
+          elif [[ $TAG == v* ]]; then
+            echo "packages=all" >> $GITHUB_OUTPUT
+            echo "scope=all packages" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "Publishing: $TAG"
+
+      - name: Publish @ogxjs/core
+        if: steps.package.outputs.packages == 'core' || steps.package.outputs.packages == 'all'
+        run: pnpm --filter @ogxjs/core publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @ogxjs/next
+        if: steps.package.outputs.packages == 'next' || steps.package.outputs.packages == 'all'
+        run: pnpm --filter @ogxjs/next publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @ogxjs/react
+        if: steps.package.outputs.packages == 'react' || steps.package.outputs.packages == 'all'
+        run: pnpm --filter @ogxjs/react publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          tag_name: ${{ steps.package.outputs.tag }}
+          name: ${{ steps.package.outputs.scope }} ${{ steps.package.outputs.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
