@@ -44,8 +44,8 @@ export async function ogx<T extends PresetName>(
 		);
 	}
 
-	// Check cache
-	const hash = cache ? snapshotCache.getHash(config) : null;
+	// Check cache -> using SHA-256 for better collision resistance
+	const hash = cache ? await snapshotCache.getHashAsync(config) : null;
 	if (hash) {
 		const cached = snapshotCache.get(hash);
 		if (cached) return cached as any;
@@ -127,9 +127,9 @@ export async function ogxToSVG<T extends PresetName>(
 		);
 	}
 
-	// Check cache
+	// Check cache -> using SHA-256 for better collision resistance
 	const hash = cache
-		? snapshotCache.getHash({ ...config, format: "svg" })
+		? await snapshotCache.getHashAsync({ ...config, format: "svg" })
 		: null;
 	if (hash) {
 		const cached = snapshotCache.get(hash);

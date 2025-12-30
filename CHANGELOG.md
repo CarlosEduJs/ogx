@@ -12,6 +12,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Migration guide from `@vercel/og`
 - Troubleshooting documentation
 
+## [@ogxjs/core 0.1.1] - 2025-12-30
+
+### Security
+- Added URL validation to prevent SSRF attacks in production environments
+  - Blocks localhost, private IPs (10.x, 172.16-31.x, 192.168.x), and metadata endpoints (169.254.169.254)
+  - Allows localhost in development for local testing
+  - Applied to `imgFromUrl()` and `loadFontFromUrl()`
+- Added 10-second timeout for external font loading to prevent DoS
+- Added validation for arbitrary Tailwind values
+  - Limited to 100 characters to prevent DoS
+  - Blocks potentially dangerous patterns (`javascript:`, `data:text/html`, `<script>`)
+- Improved cache hash algorithm
+  - Implemented SHA-256 via `getHashAsync()` for better collision resistance
+  - Kept djb2 as sync fallback (deprecated)
+
+### Added
+- Exported `validateImageUrl()` function for public use
+- Added `size` getter to `SnapshotCache` for monitoring
+
 ## [@ogxjs/react 0.1.1] - 2025-12-29
 
 ### Fixed

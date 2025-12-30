@@ -23,24 +23,51 @@ export class SnapshotCache {
 	}
 
 	/**
-	 * Calculate a hash for a configuration object
+	 * Serialize config to string for hashing
 	 */
-	getHash(config: any): string {
-		// Stringify config
-		const str = JSON.stringify(config, (key, value) => {
+	private serializeConfig(config: any): string {
+		return JSON.stringify(config, (key, value) => {
 			if (typeof value === "function") return undefined;
 			if (key === "debug") return undefined;
 			return value;
 		});
+	}
 
-		// Basic hash for browser/fallback
-		let hash = 0;
+	/**
+	 * Calculate a secure hash for a configuration object using SHA-256
+	 * Uses Web Crypto API -> available in Node 18+ and browsers
+	 */
+	async getHashAsync(config: any): Promise<string> {
+		const str = this.serializeConfig(config);
+
+		try {
+			// Use Web Crypto API for SHA-256
+			const encoder = new TextEncoder();
+			const data = encoder.encode(str);
+			const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+			const hashArray = Array.from(new Uint8Array(hashBuffer));
+			return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+		} catch {
+			// Fallback to djb2 if crypto is not available
+			return this.getHash(config);
+		}
+	}
+
+	/**
+	 * Calculate a hash for a configuration object (sync fallback)
+	 * Uses djb2 algorithm - fast but has higher collision probability
+	 * @deprecated Use getHashAsync for better collision resistance
+	 */
+	getHash(config: any): string {
+		const str = this.serializeConfig(config);
+
+		// djb2 hash (32-bit) - fallback for sync usage
+		let hash = 5381;
 		for (let i = 0; i < str.length; i++) {
 			const char = str.charCodeAt(i);
-			hash = (hash << 5) - hash + char;
-			hash |= 0; // Convert to 32bit integer
+			hash = ((hash << 5) + hash) ^ char;
 		}
-		return `hash-${hash}`;
+		return `djb2-${(hash >>> 0).toString(16)}`;
 	}
 
 	/**
@@ -73,6 +100,13 @@ export class SnapshotCache {
 	 */
 	clear(): void {
 		this.cache.clear();
+	}
+
+	/**
+	 * Get cache size (for monitoring)
+	 */
+	get size(): number {
+		return this.cache.size;
 	}
 }
 

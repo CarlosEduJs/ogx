@@ -21,20 +21,49 @@ export async function loadFont(path: string): Promise<ArrayBuffer> {
 }
 
 /**
- * Load a font from a URL
+ * Load a font from a URL with timeout protection
+ * @param url - Font URL to load
+ * @param timeoutMs - Timeout in milliseconds (default: 10000)
  */
-export async function loadFontFromUrl(url: string): Promise<ArrayBuffer> {
+export async function loadFontFromUrl(
+	url: string,
+	timeoutMs = 10000,
+): Promise<ArrayBuffer> {
 	if (fontCache.has(url)) {
 		return fontCache.get(url)!;
 	}
 
-	const response = await fetch(url);
-	if (!response.ok) {
-		throw new Error(`Failed to load font from ${url}: ${response.statusText}`);
+	// Validate URL to prevent SSRF
+	const { validateImageUrl } = await import("./builder");
+	if (!validateImageUrl(url)) {
+		throw new Error(
+			`OGX: Invalid or unsafe font URL "${url}". URLs must use http/https protocols and cannot point to private networks in production.`,
+		);
 	}
-	const data = await response.arrayBuffer();
-	fontCache.set(url, data);
-	return data;
+
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+	try {
+		const response = await fetch(url, { signal: controller.signal });
+		if (!response.ok) {
+			throw new Error(
+				`Failed to load font from ${url}: ${response.statusText}`,
+			);
+		}
+		const data = await response.arrayBuffer();
+		fontCache.set(url, data);
+		return data;
+	} catch (error) {
+		if ((error as Error).name === "AbortError") {
+			throw new Error(
+				`OGX: Font loading timed out after ${timeoutMs}ms for URL: ${url}`,
+			);
+		}
+		throw error;
+	} finally {
+		clearTimeout(timeoutId);
+	}
 }
 
 /**

@@ -1039,7 +1039,34 @@ function parseArbitrary(
 	}
 }
 
+/** Maximum length for arbitrary values to prevent DoS --> 100 chars */
+const MAX_ARBITRARY_VALUE_LENGTH = 100;
+
+/** Patterns that could indicate malicious input */
+const DANGEROUS_PATTERNS =
+	/javascript:|data:text\/html|<script|<\/script|expression\s*\(/i;
+
 function parseArbitraryValue(value: string): string | number {
+	// Security: Limit value length to prevent DoS --> 100 chars
+	if (value.length > MAX_ARBITRARY_VALUE_LENGTH) {
+		if (process.env.NODE_ENV !== "production") {
+			console.warn(
+				`OGX: Arbitrary value exceeds ${MAX_ARBITRARY_VALUE_LENGTH} chars, truncating: "${value.slice(0, 20)}..."`,
+			);
+		}
+		value = value.slice(0, MAX_ARBITRARY_VALUE_LENGTH);
+	}
+
+	// Security: Block potentially dangerous patterns
+	if (DANGEROUS_PATTERNS.test(value)) {
+		if (process.env.NODE_ENV !== "production") {
+			console.warn(
+				`OGX: Potentially dangerous arbitrary value blocked: "${value}"`,
+			);
+		}
+		return 0;
+	}
+
 	// If it's a CSS value with units, return as string
 	if (/^\d+(\.\d+)?(px|rem|em|%|vw|vh)$/.test(value)) {
 		return value;
