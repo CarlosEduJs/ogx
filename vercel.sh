@@ -2,7 +2,7 @@
 
 # Skip builds from GitHub Actions CI
 if [[ "$VERCEL_GIT_COMMIT_MESSAGE" == *"ci:"* ]] || [[ "$VERCEL_GIT_COMMIT_MESSAGE" == *"fix(ci)"* ]]; then
-  echo "🚫 Skipping Vercel build - CI commit detected"
+  echo "Skipping Vercel build - CI commit detected"
   exit 0
 fi
 
