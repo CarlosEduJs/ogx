@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [@ogxjs/react 0.1.2] - 2025-12-30
+
+### Security
+- Sanitized error logs in `toOGX()` function to prevent information disclosure
+  - Detailed error messages (including stack traces) now only appear in development
+  - Production environments receive no error logs to avoid exposing internal details
+
+### Added
+- Added `@types/node` to devDependencies for proper TypeScript support
+
 ### Added
 - Performance benchmarks documentation
 - Migration guide from `@vercel/og`
