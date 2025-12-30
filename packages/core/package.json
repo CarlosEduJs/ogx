@@ -1,6 +1,6 @@
 {
 	"name": "@ogxjs/core",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "High-performance Open Graph image generator with Tailwind CSS support",
 	"author": "Carlos Eduardo",
 	"repository": {
