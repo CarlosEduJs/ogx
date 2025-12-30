@@ -34,11 +34,14 @@ export function toOGX(node: React.ReactNode): OGXChildren {
 				const resolved = Component(props);
 				return toOGX(resolved);
 			} catch (err) {
-				console.error(
-					"OGX: Failed to resolve functional component:",
-					type.name,
-					err,
-				);
+				// Only log detailed errors in development to avoid information disclosure
+				if (process.env.NODE_ENV !== "production") {
+					console.error(
+						"OGX: Failed to resolve functional component:",
+						type.name,
+						err,
+					);
+				}
 				return null;
 			}
 		}
