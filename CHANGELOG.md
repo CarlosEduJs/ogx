@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [@ogxjs/core 0.1.2] - 2025-12-30
+
+### Security
+- Added automatic URL validation in `img()` helper to prevent SSRF attacks
+  - Validates URLs by default, blocking private networks and metadata endpoints in production
+  - Throws descriptive error for unsafe URLs
+- Added `unsafe_img()` helper for explicit bypass cases (use with caution)
+
+### Added
+- Exported `unsafe_img()` function for advanced use cases
+
+## [@ogxjs/next 0.1.1] - 2025-12-30
+
+### Security
+- Sanitized error messages in `ogxResponse()` to prevent information disclosure
+  - Production environments receive generic error messages
+  - Development environments still show detailed errors for debugging
+
+### Added
+- Added `@types/node` to devDependencies for proper TypeScript support
+
 ## [@ogxjs/react 0.1.2] - 2025-12-30
 
 ### Security
