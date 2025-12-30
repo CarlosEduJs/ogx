@@ -1,6 +1,6 @@
 import { Badge, H1, P, Row, Span, Stack } from "@ogxjs/react";
 import { renderToSVG } from "@ogxjs/react/svg";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -10,29 +10,31 @@ function App() {
 	);
 	const [svg, setSvg] = useState<string>("");
 	const [isRendering, setIsRendering] = useState(false);
+	
+	const layout = useMemo(
+		() => (
+			<Stack tw="w-[1200px] h-[630px] bg-zinc-950 p-24 justify-center items-start">
+				<Row tw="items-center gap-3 mb-8">
+					<Badge color="purple">REACT</Badge>
+					<Span tw="text-zinc-500 font-mono text-sm tracking-widest uppercase">
+						Open Graph
+					</Span>
+				</Row>
 
-	// OGX Layout
-	const layout = (
-		<Stack tw="w-[1200px] h-[630px] bg-zinc-950 p-24 justify-center items-start">
-			<Row tw="items-center gap-3 mb-8">
-				<Badge color="purple">REACT</Badge>
-				<Span tw="text-zinc-500 font-mono text-sm tracking-widest uppercase">
-					Open Graph
-				</Span>
-			</Row>
+				<H1 tw="text-white text-7xl font-bold tracking-tight max-w-[900px]">
+					{title}
+				</H1>
+				<P tw="mt-6 text-zinc-400 text-2xl max-w-[800px] font-light">
+					{description}
+				</P>
 
-			<H1 tw="text-white text-7xl font-bold tracking-tight max-w-[900px]">
-				{title}
-			</H1>
-			<P tw="mt-6 text-zinc-400 text-2xl max-w-[800px] font-light">
-				{description}
-			</P>
-
-			<Stack tw="absolute bottom-24 left-24">
-				<Span tw="text-white font-bold text-lg uppercase">OGX Engine</Span>
-				<Span tw="text-zinc-500 text-sm mt-1">Rendered in browser</Span>
+				<Stack tw="absolute bottom-24 left-24">
+					<Span tw="text-white font-bold text-lg uppercase">OGX Engine</Span>
+					<Span tw="text-zinc-500 text-sm mt-1">Rendered in browser</Span>
+				</Stack>
 			</Stack>
-		</Stack>
+		),
+		[title, description],
 	);
 
 	// Update preview on changes
@@ -54,7 +56,7 @@ function App() {
 
 		const timer = setTimeout(updatePreview, 300);
 		return () => clearTimeout(timer);
-	}, [title, description]);
+	}, [layout]);
 
 	const downloadSVG = () => {
 		const blob = new Blob([svg], { type: "image/svg+xml" });
@@ -82,8 +84,9 @@ function App() {
 			<main className="main">
 				<div className="sidebar">
 					<div className="section">
-						<label className="label">Title</label>
+						<label htmlFor="title" className="label">Title</label>
 						<input
+							id="title"
 							className="input"
 							value={title}
 							onChange={(e) => setTitle(e.target.value)}
@@ -92,8 +95,9 @@ function App() {
 					</div>
 
 					<div className="section">
-						<label className="label">Description</label>
+						<label htmlFor="description" className="label">Description</label>
 						<textarea
+							id="description"
 							className="textarea"
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
@@ -131,7 +135,7 @@ function App() {
 						<div dangerouslySetInnerHTML={{ __html: svg }} />
 					</div>
 
-					<button onClick={downloadSVG} className="download-btn">
+					<button type="button" onClick={downloadSVG} className="download-btn">
 						Download SVG
 					</button>
 				</div>

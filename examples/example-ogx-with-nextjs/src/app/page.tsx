@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
 	return (
@@ -25,14 +26,15 @@ export default function Home() {
 							1200 × 630
 						</div>
 					</div>
-					<img
+					<Image
 						src="/og"
 						alt="OG Preview"
 						className="w-full rounded-xl border border-zinc-800"
+						width={1200}
+						height={630}
 					/>
 				</div>
-
-				{/* Code Example */}
+				
 				<div className="overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/50 backdrop-blur">
 					<div className="border-b border-zinc-800 px-6 py-3">
 						<span className="text-sm font-mono text-zinc-500">
