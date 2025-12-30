@@ -12,6 +12,8 @@ jobs:
   publish:
     name: Publish to npm
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for creating GitHub releases
     
     steps:
       - name: Checkout
