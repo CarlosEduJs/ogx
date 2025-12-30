@@ -1,6 +1,6 @@
 {
 	"name": "@ogxjs/next",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Next.js adapter for OGX - High-performance OG image generation",
 	"author": "Carlos Eduardo",
 	"repository": {
@@ -35,6 +35,7 @@
 		"test:ui": "vitest --ui"
 	},
 	"devDependencies": {
+		"@types/node": "^20.0.0",
 		"@vitest/ui": "^4.0.16",
 		"vitest": "^4.0.16"
 	},

@@ -22,6 +22,7 @@ export {
 	span,
 	stack,
 	svgFromContent,
+	unsafe_img,
 	validateImageUrl,
 } from "./builder";
 // Utilities
