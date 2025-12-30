@@ -10,7 +10,7 @@ interface PlaygroundSidebarProps {
 
 export function PlaygroundSidebar({ state, setState }: PlaygroundSidebarProps) {
 	return (
-		<aside className="w-full md:w-[400px] bg-zinc-950 flex flex-col overflow-y-auto shrink-0 custom-scrollbar">
+		<aside className="w-full md:w-100 bg-zinc-950 flex flex-col overflow-y-auto shrink-0 custom-scrollbar">
 			<div className="p-8 space-y-10">
 				<div>
 					<h2 className="text-xs font-mono font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4">
