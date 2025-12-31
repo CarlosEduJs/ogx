@@ -72,10 +72,13 @@ export default function HomePage() {
 
 				<div className="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 					<div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-8">
-						<div className="group flex items-center gap-2 px-4 py-1.5 rounded-full bg-fd-primary/5 border border-fd-primary/20 text-[10px] font-mono tracking-[0.2em] text-fd-primary uppercase transition-all hover:bg-fd-primary/10 cursor-default">
+						<Link
+							href="/changelog"
+							className="group flex items-center gap-2 px-4 py-1.5 rounded-full bg-fd-primary/5 border border-fd-primary/20 text-[10px] font-mono tracking-[0.2em] text-fd-primary uppercase transition-all hover:bg-fd-primary/10 cursor-default"
+						>
 							<span className="w-1.5 h-1.5 rounded-full bg-fd-primary animate-pulse" />
-							v0.1.0 Beta Runtime Ready
-						</div>
+							v0.1.2 Beta Runtime Ready
+						</Link>
 
 						<div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 group/title">
 							<Image
