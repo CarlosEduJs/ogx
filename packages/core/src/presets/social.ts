@@ -74,7 +74,7 @@ export const socialPreset: Preset<SocialPresetProps> = (props) => {
 							brand
 								? span(
 										[
-											"text-2xl font-black tracking-tighter drop-shadow-lg",
+											"text-2xl font-black tracking-tighter",
 											isDark ? "text-white" : "text-zinc-950",
 										],
 										brand.toUpperCase(),
@@ -100,7 +100,6 @@ export const socialPreset: Preset<SocialPresetProps> = (props) => {
 							isDark ? "text-white" : "text-zinc-950",
 							"leading-[1.05]",
 							"tracking-tight",
-							"drop-shadow-lg",
 						],
 						title,
 					),
@@ -113,8 +112,8 @@ export const socialPreset: Preset<SocialPresetProps> = (props) => {
 								[
 									"items-center gap-4 p-3 pr-6 rounded-full self-start shadow-lg",
 									isDark
-										? "bg-black/20 border border-white/20 backdrop-blur-sm"
-										: "bg-white/40 border border-black/10 backdrop-blur-sm",
+										? "bg-black/20 border border-white/20"
+										: "bg-white/40 border border-black/10",
 								],
 								[
 									avatar

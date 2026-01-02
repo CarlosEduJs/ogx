@@ -43,6 +43,7 @@ async function testDocsPreset() {
 		siteName: "OGX Docs",
 		colorScheme: "dark",
 		logo: logoBase64,
+		detailsOG: true,
 	});
 
 	await writeFile(join(OUTPUT_DIR, "docs-preset.png"), png);
