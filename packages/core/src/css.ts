@@ -4,8 +4,14 @@
  */
 export interface CSSProperties {
 	// Layout
-	display?: "flex" | "none";
-	position?: "relative" | "absolute";
+	display?:
+		| "flex"
+		| "none"
+		| "block"
+		| "inline"
+		| "inline-flex"
+		| "inline-block";
+	position?: "relative" | "absolute" | "fixed" | "static" | "sticky";
 	flexDirection?: "row" | "row-reverse" | "column" | "column-reverse";
 	flexWrap?: "nowrap" | "wrap" | "wrap-reverse";
 	flexGrow?: number;
@@ -18,6 +24,7 @@ export interface CSSProperties {
 		| "center"
 		| "space-between"
 		| "space-around"
+		| "space-evenly"
 		| "stretch";
 	alignSelf?:
 		| "auto"
@@ -66,7 +73,7 @@ export interface CSSProperties {
 	// Border
 	border?: string;
 	borderWidth?: number | string;
-	borderStyle?: "solid" | "dashed";
+	borderStyle?: "solid" | "dashed" | "dotted" | "double" | "none";
 	borderColor?: string;
 	borderTop?: string;
 	borderRight?: string;
@@ -104,12 +111,37 @@ export interface CSSProperties {
 
 	// Visual
 	opacity?: number;
-	overflow?: "visible" | "hidden";
+	overflow?: "visible" | "hidden" | "auto" | "scroll";
+	overflowX?: "visible" | "hidden" | "auto" | "scroll";
+	overflowY?: "visible" | "hidden" | "auto" | "scroll";
 	boxShadow?: string;
 	transform?: string;
 	transformOrigin?: string;
-	objectFit?: "contain" | "cover" | "none";
+	objectFit?: "contain" | "cover" | "none" | "fill" | "scale-down";
 	objectPosition?: string;
 	filter?: string;
 	clipPath?: string;
+
+	// Z-index
+	zIndex?: number | string;
+
+	// Aspect ratio
+	aspectRatio?: string;
+
+	// Additional layout
+	justifyItems?: "start" | "end" | "center" | "stretch";
+	justifySelf?: "auto" | "start" | "end" | "center" | "stretch";
+
+	// Interactions (for completeness)
+	pointerEvents?: "none" | "auto";
+	userSelect?: "none" | "text" | "all" | "auto";
+
+	// Border width sides
+	borderTopWidth?: number | string;
+	borderRightWidth?: number | string;
+	borderBottomWidth?: number | string;
+	borderLeftWidth?: number | string;
+
+	// Word wrap
+	overflowWrap?: "normal" | "break-word";
 }

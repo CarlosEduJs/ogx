@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [@ogxjs/core 0.2.0-alpha.1] - 2026-01-02 "Turbo"
+
+### Performance - Parser v2 "Turbo"
+- O(1) Static Class Lookup: Replaced O(n) if/else chain with Map-based lookup tables (~170 classes)
+- Modular Prefix Handlers: Refactored dynamic class parsing into modular handlers for better maintainability
+- Multi-Level Caching: Added class-level and string-level caches for maximum performance
+  - Class cache: Individual parsed classes are cached and reused across elements
+  - String cache: Full `tw` strings are cached to skip redundant parsing
+- Expected improvement: ~10x faster parsing for typical workloads
+
+### ⚡ Performance - Cache System v2
+- Fast Sync Hash: Replaced async SHA-256 with sync FNV-1a (~20x faster)
+  - New `fnv1a()` and `fastHash()` functions
+  - `hashObject()` for quick object hashing
+- LRU Cache: Implemented proper LRU eviction with O(1) operations
+  - Memory-bounded with configurable max size
+  - Optional TTL support
+  - Full statistics (hits, misses, hit rate)
+- Snapshot Cache V2: Refactored image cache using new LRU implementation
+
+### DX - Performance Tools
+- Timer API: New timing utilities for measuring OGX performance
+  - `Timer` class with start/end/measure methods
+  - Global `timing` singleton for easy access
+  - Formatted reports for debugging
+- Quick Timing: `quickTime()` and `quickTimeSync()` for one-off measurements
+- Benchmarking: `benchmark()` and `benchmarkSync()` for statistical measurements
+
+### Added
+- New exports: `cache/*`, `perf/*`, `tailwind/parser-v2`
+- Extended `CSSProperties` type with `borderStyle: "dotted" | "double" | "none"`
+- Presets - Universal Theme Support: Fixed `colorScheme` propagation and implementation across all presets
+  - Unified light/dark theme behavior in `docs`, `blog`, `minimal`, and `social`
+  - Added missing theme support to `minimal` and `social` presets
+  - Improved light-mode contrast for secondary text and metadata
+- Docs Preset - Enhanced Customization: Added `detailsOG` prop to toggle background grid and gradient effects
+
+### Fixed
+- Deprecated `parseTailwind` from `tailwind/parser.ts` (use v2 instead)
+- `SnapshotCache.getHash()` is now sync (async version deprecated)
+- Presets - Layout Refinement: Fixed title wrapping and alignment issues in `docs` preset
+  - Added `flex-col` and `break-all` to `h1` for better word breaking
+  - Expanded content container width to match headers/badges
+- Core - Prop Propagation: Fixed bug in `ogx()` where `colorScheme` was not passed to preset functions
+
+
 ## [@ogxjs/core 0.1.2] - 2025-12-30
 
 ### Security

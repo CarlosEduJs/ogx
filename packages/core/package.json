@@ -1,7 +1,7 @@
 {
 	"name": "@ogxjs/core",
-	"version": "0.1.2",
-	"description": "High-performance Open Graph image generator with Tailwind CSS support",
+	"version": "0.2.0-alpha.1",
+	"description": "High-performance Open Graph image generator with Tailwind CSS support - v0.2.0 Turbo",
 	"author": "Carlos Eduardo",
 	"repository": {
 		"type": "git",
@@ -25,6 +25,18 @@
 		"./png": {
 			"types": "./dist/render-png.d.ts",
 			"import": "./dist/render-png.js"
+		},
+		"./cache": {
+			"types": "./dist/cache/index.d.ts",
+			"import": "./dist/cache/index.js"
+		},
+		"./perf": {
+			"types": "./dist/perf/index.d.ts",
+			"import": "./dist/perf/index.js"
+		},
+		"./tailwind": {
+			"types": "./dist/tailwind/index.d.ts",
+			"import": "./dist/tailwind/index.js"
 		}
 	},
 	"files": [

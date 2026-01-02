@@ -25,6 +25,7 @@ export async function GET(
 			siteName: "OGX Docs",
 			colorScheme: "dark",
 			inter: [400, 700],
+			detailsOG: true,
 		},
 		req,
 	);

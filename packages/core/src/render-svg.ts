@@ -22,6 +22,8 @@ export async function renderToSVG(
 	element: OGXElement,
 	options: RenderOptions = {},
 ): Promise<string> {
+	const profile = process.env.OGX_PROFILE === "1";
+	const tStart = profile ? performance.now() : 0;
 	const platformDims = options.platform
 		? getPlatformDimensions(options.platform)
 		: null;
@@ -56,14 +58,26 @@ export async function renderToSVG(
 		colorScheme: options.colorScheme,
 	} as const;
 
+	const tTransformStart = profile ? performance.now() : 0;
 	const transformedElement = transformElement(element, debug, fullOptions);
+	const tTransformEnd = profile ? performance.now() : 0;
 
-	return await satori(transformedElement as React.ReactNode, {
+	const svg = await satori(transformedElement as React.ReactNode, {
 		width,
 		height,
 		fonts: resolvedFonts.map(fontToSatoriFont),
 		debug,
 	});
+
+	if (profile) {
+		const tEnd = performance.now();
+		// Log coarse-grained timings for debugging hot paths
+		console.log(
+			`[OGX PROFILE] renderToSVG transform=${(tTransformEnd - tTransformStart).toFixed(2)}ms satori=${(tEnd - tTransformEnd).toFixed(2)}ms total=${(tEnd - tStart).toFixed(2)}ms`,
+		);
+	}
+
+	return svg;
 }
 
 /**

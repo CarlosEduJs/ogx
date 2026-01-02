@@ -17,6 +17,8 @@ export interface DocsPresetProps {
 		header?: OGXElement;
 		footer?: OGXElement;
 	};
+	/** Details Image */
+	detailsOG?: boolean;
 }
 
 /**
@@ -30,6 +32,7 @@ export const docsPreset: Preset<DocsPresetProps> = (props) => {
 		siteName,
 		colorScheme = "dark",
 		slots = {},
+		detailsOG = false,
 	} = props;
 
 	const isDark = colorScheme === "dark";
@@ -44,17 +47,20 @@ export const docsPreset: Preset<DocsPresetProps> = (props) => {
 		],
 		[
 			// Background Accent (Subtle Grid + Glow)
-			absolute([
-				isDark ? "bg-grid-white/5-64" : "bg-grid-zinc-900/5-64",
-				"inset-0",
-			]),
-			absolute([
-				"inset-0",
-				isDark
-					? "bg-gradient-to-tr from-zinc-950 via-transparent to-indigo-500/10"
-					: "bg-gradient-to-tr from-white via-transparent to-indigo-500/5",
-			]),
-			absolute(["bg-grain/10"]), // Quality Boost: Dithering
+			...(detailsOG
+				? [
+						absolute([
+							isDark ? "bg-grid-white/5-64" : "bg-grid-zinc-900/5-64",
+							"inset-0",
+						]),
+						absolute([
+							"inset-0",
+							isDark
+								? "bg-gradient-to-tr from-zinc-950 via-transparent to-indigo-500/10"
+								: "bg-gradient-to-tr from-white via-transparent to-indigo-500/5",
+						]),
+					]
+				: []),
 
 			// Content Layout
 			stack("flex-1 gap-12 relative", [
@@ -62,13 +68,13 @@ export const docsPreset: Preset<DocsPresetProps> = (props) => {
 				slots.header ??
 					row("items-center justify-between", [
 						row("items-center gap-4", [
-							logo ? img(logo, "w-10 h-10 rounded-lg shadow-sm") : null,
+							logo ? img(logo, "w-10 h-10") : null,
 							siteName
 								? span(
 										[
 											"text-2xl",
 											"font-bold",
-											isDark ? "text-white" : "text-zinc-900",
+											isDark ? "text-white" : "text-zinc-950",
 											"tracking-tight",
 										],
 										siteName,
@@ -78,35 +84,35 @@ export const docsPreset: Preset<DocsPresetProps> = (props) => {
 
 						div(
 							[
-								"px-5 py-1 rounded-full border text-xs font-semibold",
+								"px-3 py-1 rounded-full border text-xs font-semibold",
 								isDark
-									? "bg-white/5 border-white/10 text-zinc-400"
+									? "border-white/10 text-zinc-400"
 									: "bg-zinc-100 border-zinc-200 text-zinc-600",
 							],
-							"DOCUMENTATION",
+							"DOCS",
 						),
 					]),
 
 				// Main content
-				stack("flex-1 justify-center gap-8", [
+				stack("flex-1 justify-center gap-8 w-full", [
 					h1(
 						[
 							"text-8xl",
 							"font-black",
 							isDark ? "text-white" : "text-zinc-950",
 							"leading-[1.1]",
-							"tracking-tight", // Quality Boost
+							"tracking-tight",
+							"break-all",
 						],
 						title,
 					),
 					description
 						? p(
 								[
-									"text-4xl",
-									isDark ? "text-zinc-400" : "text-zinc-500",
-									"max-w-[900px]",
+									"text-3xl",
+									isDark ? "text-zinc-400" : "text-zinc-600",
 									"leading-relaxed",
-									"font-semibold",
+									"font-medium",
 								],
 								description,
 							)

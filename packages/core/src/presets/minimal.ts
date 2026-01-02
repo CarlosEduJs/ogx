@@ -1,4 +1,4 @@
-import { absolute, h1, p, stack } from "../builder";
+import { h1, p, stack } from "../builder";
 import type { OGXElement, Preset } from "../types";
 
 export interface MinimalPresetProps {
@@ -10,6 +10,8 @@ export interface MinimalPresetProps {
 	background?: string;
 	/** Text color (Tailwind class or hex) */
 	textColor?: string;
+	/** Color scheme */
+	colorScheme?: "dark" | "light";
 	/** Custom slot overrides */
 	slots?: {
 		content?: OGXElement;
@@ -23,8 +25,9 @@ export const minimalPreset: Preset<MinimalPresetProps> = (props) => {
 	const {
 		title,
 		subtitle,
-		background = "bg-zinc-950",
-		textColor = "text-white",
+		colorScheme = "dark",
+		background = colorScheme === "dark" ? "bg-zinc-950" : "bg-white",
+		textColor = colorScheme === "dark" ? "text-white" : "text-zinc-950",
 		slots = {},
 	} = props;
 
@@ -41,27 +44,18 @@ export const minimalPreset: Preset<MinimalPresetProps> = (props) => {
 			"h-full",
 			"items-center",
 			"justify-center",
-			"p-24",
+			"p-16",
 			"relative",
 			bgClass as any,
 		],
 		[
-			// Subtle Background Texture
-			absolute([
-				"inset-0 opacity-[0.03]",
-				background.includes("light") || background === "bg-white"
-					? "bg-grid-black-32"
-					: "bg-grid-white-32",
-			]),
-			absolute(["bg-grain/5"]), // Quality Boost: Dithering
-
 			// Content
 			stack(
-				"items-center justify-center relative",
+				"items-center justify-center relative gap-6",
 				slots.content ?? [
 					h1(
 						[
-							"text-9xl",
+							"text-8xl",
 							"font-black",
 							"text-center",
 							"tracking-tightest", // Quality Boost
@@ -73,12 +67,12 @@ export const minimalPreset: Preset<MinimalPresetProps> = (props) => {
 					subtitle
 						? p(
 								[
-									"text-3xl",
+									"text-2xl",
 									"text-center",
-									"mt-10",
+									"mt-2",
 									"opacity-40",
 									"font-medium",
-									"tracking-wide",
+									"tracking-tight",
 									textClass as any,
 								],
 								subtitle.toUpperCase(),

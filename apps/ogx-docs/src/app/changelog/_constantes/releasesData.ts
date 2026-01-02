@@ -23,6 +23,55 @@ interface Release {
 export const releases: Release[] = [
 	{
 		scope: "ogxjs-core",
+		version: "core-v0.2.0-alpha.1",
+		date: "2026-01-02",
+		title: "Turbo",
+		npmLink: "https://www.npmjs.com/package/@ogxjs/core/v/0.2.0-alpha.1",
+		changes: [
+			{
+				type: "performance",
+				items: [
+					"O(1) Static Class Lookup: Replaced O(n) if/else chain with Map-based lookup tables (~170 classes)",
+					"Modular Prefix Handlers: Refactored dynamic class parsing into modular handlers for better maintainability",
+					"Multi-Level Caching: Added class-level and string-level caches for maximum performance",
+					"Class cache: Individual parsed classes are cached and reused across elements",
+					'String cache: Full <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">tw</code> strings are cached to skip redundant parsing',
+					"Expected improvement: ~10x faster parsing for typical workloads",
+					"Fast Sync Hash: Replaced async SHA-256 with sync FNV-1a (~20x faster)",
+					'New <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">fnv1a()</code> and <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">fastHash()</code> functions',
+					'<code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">hashObject()</code> for quick object hashing',
+					"LRU Cache: Implemented proper LRU eviction with O(1) operations",
+					"Memory-bounded with configurable max size",
+					"Optional TTL support",
+					"Full statistics (hits, misses, hit rate)",
+					"Snapshot Cache V2: Refactored image cache using new LRU implementation",
+				],
+			},
+			{
+				type: "added",
+				items: [
+					'Extended <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">CSSProperties</code> type with <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">borderStyle: &quot;dotted&quot; | &quot;double&quot; | &quot;none&quot;</code>',
+					'Presets - Universal Theme Support: Fixed <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">colorScheme</code> propagation and implementation across all presets',
+					'Unified light/dark theme behavior in <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">docs</code>, <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">blog</code>, <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">minimal</code>, and <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">social</code>',
+					'Added missing theme support to <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">minimal</code> and <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">social</code> presets',
+					"Improved light-mode contrast for secondary text and metadata",
+					'Docs Preset - Enhanced Customization: Added <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">detailsOG</code> prop to toggle background grid and gradient effects',
+				],
+			},
+			{
+				type: "fixed",
+				items: [
+					'<code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">SnapshotCache.getHash()</code> is now sync (async version deprecated)',
+					'Presets - Layout Refinement: Fixed title wrapping and alignment issues in <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">docs</code> preset',
+					'Added <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">flex-col</code> and <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">break-all</code> to <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">h1</code> for better word breaking',
+					"Expanded content container width to match headers/badges",
+					'Core - Prop Propagation: Fixed bug in <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">ogx()</code> where <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">colorScheme</code> was not passed to preset functions',
+				],
+			},
+		],
+	},
+	{
+		scope: "ogxjs-core",
 		version: "core-v0.1.2",
 		date: "2025-12-30",
 		title: "Security Patch",
@@ -31,16 +80,9 @@ export const releases: Release[] = [
 			{
 				type: "security",
 				items: [
-					'Added automatic URL validation in <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">img()</code> helper to prevent SSRF attacks',
 					"Validates URLs by default, blocking private networks and metadata endpoints in production",
 					"Throws descriptive error for unsafe URLs",
 					'Added <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">unsafe_img()</code> helper for explicit bypass cases (use with caution)',
-				],
-			},
-			{
-				type: "added",
-				items: [
-					'Exported <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">unsafe_img()</code> function for advanced use cases',
 				],
 			},
 		],
@@ -55,15 +97,8 @@ export const releases: Release[] = [
 			{
 				type: "security",
 				items: [
-					'Sanitized error messages in <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">ogxResponse()</code> to prevent information disclosure',
 					"Production environments receive generic error messages",
 					"Development environments still show detailed errors for debugging",
-				],
-			},
-			{
-				type: "added",
-				items: [
-					'Added <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">@types/node</code> to devDependencies for proper TypeScript support',
 				],
 			},
 		],
@@ -78,7 +113,6 @@ export const releases: Release[] = [
 			{
 				type: "security",
 				items: [
-					'Sanitized error logs in <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">toOGX()</code> function to prevent information disclosure',
 					"Detailed error messages (including stack traces) now only appear in development",
 					"Production environments receive no error logs to avoid exposing internal details",
 				],
@@ -86,8 +120,6 @@ export const releases: Release[] = [
 			{
 				type: "added",
 				items: [
-					'Added <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">@types/node</code> to devDependencies for proper TypeScript support',
-					"Performance benchmarks documentation",
 					'Migration guide from <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">@vercel/og</code>',
 					"Troubleshooting documentation",
 				],
@@ -104,7 +136,6 @@ export const releases: Release[] = [
 			{
 				type: "security",
 				items: [
-					"Added URL validation to prevent SSRF attacks in production environments",
 					"Blocks localhost, private IPs (10.x, 172.16-31.x, 192.168.x), and metadata endpoints (169.254.169.254)",
 					"Allows localhost in development for local testing",
 					'Applied to <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">imgFromUrl()</code> and <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">loadFontFromUrl()</code>',
@@ -120,7 +151,6 @@ export const releases: Release[] = [
 			{
 				type: "added",
 				items: [
-					'Exported <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">validateImageUrl()</code> function for public use',
 					'Added <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">size</code> getter to <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">SnapshotCache</code> for monitoring',
 				],
 			},
@@ -136,7 +166,6 @@ export const releases: Release[] = [
 			{
 				type: "fixed",
 				items: [
-					'Replaced generic <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">Function</code> type with specific typed function <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">(props: unknown) =&gt; React.ReactNode</code>',
 					'Improved type safety in <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">toOGX</code> function',
 					"Resolves Biome linter warnings",
 				],
@@ -153,7 +182,6 @@ export const releases: Release[] = [
 			{
 				type: "added",
 				items: [
-					"Initial beta release",
 					'<code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">@ogxjs/core</code> - Core rendering engine with Tailwind JIT support',
 					'<code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">@ogxjs/next</code> - Next.js adapter with <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">ogxResponse()</code> helper',
 					'<code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">@ogxjs/react</code> - React adapter with JSX support and <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">tw</code> prop',
@@ -171,7 +199,6 @@ export const releases: Release[] = [
 			{
 				type: "performance",
 				items: [
-					"Minimal preset: ~60ms average",
 					"Docs preset: ~89ms average",
 					"Social preset: ~690ms average (with complex gradients)",
 					"Cached renders: ~0.7ms (85x faster than cold render)",

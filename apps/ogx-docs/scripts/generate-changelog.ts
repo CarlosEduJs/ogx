@@ -27,15 +27,18 @@ function parseChangelog(changelogPath: string): Release[] {
 	const sections = content.split(/(?=## \[@?)/);
 
 	for (const section of sections) {
-		// Match: ## [@ogxjs/core 0.1.2] - 2025-12-30 OR ## [0.1.0] - 2025-12-28
+		// Match: ## [@ogxjs/core 0.2.0-alpha.1] - 2026-01-01 "Turbo"
+		// OR: ## [@ogxjs/core 0.1.2] - 2025-12-30
+		// OR: ## [0.1.0] - 2025-12-28
 		const releaseMatch = section.match(
-			/## \[(@ogxjs\/(core|next|react)|[\d.]+)\s*([\d.]+)?\] - (\d{4}-\d{2}-\d{2})/,
+			/## \[(@ogxjs\/(core|next|react)|[\d.]+(?:-[\w.]+)?)\s*([\d.]+(?:-[\w.]+)?)?\] - (\d{4}-\d{2}-\d{2})(?:\s+"([^"]+)")?/,
 		);
 		if (!releaseMatch) continue;
 
-		const [, packageOrVersion, , versionPart, date] = releaseMatch;
+		const [, packageOrVersion, , versionPart, date, releaseTitle] =
+			releaseMatch;
 
-		const isGlobalRelease = /^[\d.]+$/.test(packageOrVersion);
+		const isGlobalRelease = /^[\d.]+(?:-[\w.]+)?$/.test(packageOrVersion);
 		const version = isGlobalRelease ? packageOrVersion : versionPart;
 
 		let scope: Release["scope"] = "global";
@@ -54,36 +57,41 @@ function parseChangelog(changelogPath: string): Release[] {
 			}
 		}
 
-		// Extrair título - primeira linha de texto após o header (não vazia, não ###)
-		const lines = section.split("\n");
-		let title = `Release ${version}`;
+		// Use release title from header if available (e.g., "Turbo")
+		let title = releaseTitle || `Release ${version}`;
 
-		for (let i = 1; i < lines.length; i++) {
-			const line = lines[i].trim();
-			if (
-				line &&
-				!line.startsWith("###") &&
-				!line.startsWith("##") &&
-				!line.startsWith("-") &&
-				!/^\[.+\]:/.test(line)
-			) {
-				title = line;
-				break;
+		// If no title from header, try to extract from content
+		if (!releaseTitle) {
+			const lines = section.split("\n");
+			for (let i = 1; i < lines.length; i++) {
+				const line = lines[i].trim();
+				if (
+					line &&
+					!line.startsWith("###") &&
+					!line.startsWith("##") &&
+					!line.startsWith("-") &&
+					!/^\[.+\]:/.test(line)
+				) {
+					title = line;
+					break;
+				}
 			}
 		}
 
+		// Fallback titles based on section content
 		if (title === `Release ${version}`) {
 			if (section.includes("### Security")) title = "Security Patch";
 			else if (section.includes("### Fixed")) title = "Bug Fixes";
 			else if (section.includes("### Added")) title = "New Features";
-			else if (section.includes("### Performance"))
+			else if (/### .*Performance/i.test(section))
 				title = "Performance Improvements";
 		}
 
 		const changesMap = new Map<string, string[]>();
+		// Support sections with emojis and subtitles like "### ⚡ Performance - Cache System v2"
 		const typeMatches = [
 			...section.matchAll(
-				/### (Added|Fixed|Changed|Performance|Security)\n([\s\S]*?)(?=###|$)/gi,
+				/### (?:[\p{Emoji}\s]*)(Added|Fixed|Changed|Performance|Security)(?:\s*-\s*[^\n]*)?\n([\s\S]*?)(?=###|$)/giu,
 			),
 		];
 

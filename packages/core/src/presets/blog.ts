@@ -120,7 +120,7 @@ export const blogPreset: Preset<BlogPresetProps> = (props) => {
 									[
 										"text-lg",
 										"font-medium",
-										isDark ? "text-zinc-400" : "text-zinc-500",
+										isDark ? "text-zinc-400" : "text-zinc-600",
 									],
 									[date, readingTime].filter(Boolean).join(" · "),
 								),

@@ -1,4 +1,4 @@
-import { absolute, h1, img, row, span, stack } from "../builder";
+import { h1, img, row, span, stack } from "../builder";
 import type { OGXElement, Preset } from "../types";
 
 export interface SocialPresetProps {
@@ -18,6 +18,8 @@ export interface SocialPresetProps {
 	fromColor?: string;
 	/** To color (hex) */
 	toColor?: string;
+	/** Color scheme */
+	colorScheme?: "dark" | "light";
 	/** Custom slot overrides */
 	slots?: {
 		header?: OGXElement;
@@ -35,11 +37,14 @@ export const socialPreset: Preset<SocialPresetProps> = (props) => {
 		avatar,
 		brand,
 		logo,
+		colorScheme = "dark",
 		gradient = "to-br",
 		fromColor = "oklch(65% 0.25 260)", // Vibrant Indigo-ish
 		toColor = "oklch(60% 0.3 300)", // Vibrant Purple-ish
 		slots = {},
 	} = props;
+
+	const isDark = colorScheme === "dark";
 
 	const gradientStyle = `linear-gradient(${
 		gradient === "to-r"
@@ -54,30 +59,34 @@ export const socialPreset: Preset<SocialPresetProps> = (props) => {
 	return stack(
 		["w-full", "h-full", "p-20", "relative", "overflow-hidden"],
 		[
-			// Background Gradient
-			absolute("", null, { style: { backgroundImage: gradientStyle } }),
-
-			// Subtle Background Texture (Grain/Noise-like mesh)
-			absolute(["inset-0 opacity-20", "bg-grid-white/5-32"]),
-			absolute(["bg-grain/15"]), // Quality Boost: Dithering
-
-			// Content Layout
+			// Content Layout (background applied on container to avoid extra layers)
 			stack("flex-1 justify-between relative", [
 				// Header
 				slots.header ??
 					row("items-center justify-between", [
 						row("items-center gap-4", [
-							logo ? img(logo, "w-12 h-12 rounded-xl bg-zinc-950") : null,
+							logo
+								? img(logo, [
+										"w-12 h-12 rounded-xl shadow-lg",
+										isDark ? "bg-zinc-950" : "bg-white border border-zinc-200",
+									])
+								: null,
 							brand
 								? span(
-										["text-2xl font-black text-white tracking-tighter"],
+										[
+											"text-2xl font-black tracking-tighter drop-shadow-lg",
+											isDark ? "text-white" : "text-zinc-950",
+										],
 										brand.toUpperCase(),
 									)
 								: null,
 						]),
 						// Subtle platform indicator
 						span(
-							["text-white/30 text-xs font-bold tracking-widest"],
+							[
+								isDark ? "text-white/30" : "text-black/30",
+								"text-xs font-bold tracking-widest",
+							],
 							"SOCIAL CARD",
 						),
 					]),
@@ -88,9 +97,10 @@ export const socialPreset: Preset<SocialPresetProps> = (props) => {
 						[
 							"text-7xl",
 							"font-black",
-							"text-white",
+							isDark ? "text-white" : "text-zinc-950",
 							"leading-[1.05]",
-							"tracking-tight", // Quality Boost
+							"tracking-tight",
+							"drop-shadow-lg",
 						],
 						title,
 					),
@@ -101,8 +111,10 @@ export const socialPreset: Preset<SocialPresetProps> = (props) => {
 					(handle || avatar
 						? row(
 								[
-									"items-center gap-4 p-3 pr-6 rounded-full self-start shadow-premium",
-									"bg-black/10 border border-white/10 backdrop-blur-md",
+									"items-center gap-4 p-3 pr-6 rounded-full self-start shadow-lg",
+									isDark
+										? "bg-black/20 border border-white/20 backdrop-blur-sm"
+										: "bg-white/40 border border-black/10 backdrop-blur-sm",
 								],
 								[
 									avatar
@@ -114,8 +126,9 @@ export const socialPreset: Preset<SocialPresetProps> = (props) => {
 									handle
 										? span(
 												[
-													"text-xl font-bold text-white/90 tracking-tight",
-													"w-fit truncate shrink-0",
+													"text-xl font-bold tracking-tight",
+													isDark ? "text-white/90" : "text-zinc-900/90",
+													"truncate",
 												],
 												handle,
 											)
@@ -125,5 +138,6 @@ export const socialPreset: Preset<SocialPresetProps> = (props) => {
 						: null),
 			]),
 		],
+		{ style: { backgroundImage: gradientStyle } },
 	);
 };
