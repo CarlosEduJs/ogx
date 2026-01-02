@@ -56,7 +56,7 @@ export async function ogx<T extends PresetName>(
 		throw new Error(`Unknown preset: ${preset}`);
 	}
 
-	const element = presetFn({ ...props, slots } as Parameters<
+	const element = presetFn({ ...props, slots, colorScheme } as Parameters<
 		typeof presetFn
 	>[0]);
 
@@ -141,7 +141,7 @@ export async function ogxToSVG<T extends PresetName>(
 		throw new Error(`Unknown preset: ${preset}`);
 	}
 
-	const element = presetFn({ ...props, slots } as Parameters<
+	const element = presetFn({ ...props, slots, colorScheme } as Parameters<
 		typeof presetFn
 	>[0]);
 

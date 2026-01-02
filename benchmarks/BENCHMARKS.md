@@ -1,6 +1,6 @@
 # OGX Performance Benchmarks
 
-Last updated: 2025-12-28
+Last updated: 2026-01-02
 
 ## Environment
 
@@ -12,22 +12,24 @@ Last updated: 2025-12-28
 
 | Scenario | Mean | Median | P90 | P99 | Min | Max | Std Dev |
 |----------|------|--------|-----|-----|-----|-----|---------|
-| Minimal Preset | 60.02ms | 59.49ms | 64.23ms | 67.79ms | 54.38ms | 67.79ms | ±2.75ms |
-| Social Preset | 693.12ms | 690.38ms | 759.1ms | 954.86ms | 582.54ms | 954.86ms | ±62.99ms |
-| Docs Preset | 88.92ms | 87.41ms | 103.48ms | 128.39ms | 72.2ms | 128.39ms | ±11.09ms |
-| With Cache | 0.7ms | 0.01ms | 0.01ms | 69.22ms | 0ms | 69.22ms | ±6.89ms |
+| Minimal Preset | 39.71ms | 38.86ms | 43.52ms | 45.64ms | 37.53ms | 45.64ms | ±1.96ms |
+| Social Preset | 58.65ms | 58.2ms | 62.1ms | 64.83ms | 55.64ms | 64.83ms | ±2.08ms |
+| Docs Preset | 41.25ms | 40.45ms | 44.92ms | 49.12ms | 38.94ms | 49.12ms | ±2.05ms |
+| Custom Layout | 52.47ms | 51.65ms | 56.21ms | 61.38ms | 50.14ms | 61.38ms | ±2.24ms |
+| With Cache | 0.04ms | 0.02ms | 0.07ms | 0.47ms | 0.02ms | 0.47ms | ±0.06ms |
 
 ## Key Findings
 
-- ✅ **Minimal preset:** Fastest option for simple OG images (~60.02ms average)
-- ✅ **Caching:** Extremely effective (0.7ms cached vs 60.02ms uncached)
-- ✅ **Complex layouts:** Still performant even with rich presets (~693.12ms average)
+- **Minimal preset:** Fastest option for simple OG images (~39.71ms average)
+- **Caching:** Extremely effective (0.04ms cached vs 39.71ms uncached)
+- **Complex layouts:** Still performant even with rich presets (~58.65ms average)
+- **Custom layouts:** Builder API performs similarly to presets (~52.47ms average)
 
 ## Performance Targets
 
-- ✅ Simple scenarios: **< 200ms** (achieved: 60.02ms)
-- ✅ Complex scenarios: **< 500ms** (achieved: 693.12ms)  
-- ✅ Cached renders: **< 10ms** (achieved: 0.7ms)
+- Simple scenarios: **< 200ms** (achieved: 39.71ms)
+- Complex scenarios: **< 500ms** (achieved: 58.65ms)  
+- Cached renders: **< 10ms** (achieved: 0.04ms)
 
 ## Run Benchmarks Yourself
 

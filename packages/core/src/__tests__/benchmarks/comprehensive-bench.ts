@@ -8,7 +8,16 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { fontRegistry, ogx } from "../../index.js";
+import {
+	absolute,
+	fontRegistry,
+	h1,
+	ogx,
+	p,
+	render,
+	row,
+	stack,
+} from "../../index.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(__dirname, "../../../../../");
@@ -127,6 +136,9 @@ async function benchmarkWithCache(
 		cache: true,
 	};
 
+	// Warm the cache once so the timed loop measures only cache hits
+	await ogx(config);
+
 	for (let i = 0; i < iterations; i++) {
 		const start = performance.now();
 		await ogx(config);
@@ -134,6 +146,47 @@ async function benchmarkWithCache(
 	}
 
 	return calculateStats("With Cache", times);
+}
+
+// Benchmark: Custom Layout (builder API without presets)
+async function benchmarkCustomLayout(
+	iterations: number,
+): Promise<BenchmarkResult> {
+	const times: number[] = [];
+
+	for (let i = 0; i < iterations; i++) {
+		const start = performance.now();
+
+		const element = stack(
+			"w-full h-full bg-zinc-950 p-20 items-center justify-center",
+			[
+				absolute(
+					"bg-gradient-to-br from-green-500/10 via-transparent to-purple-500/10",
+				),
+				stack("items-center gap-12", [
+					row("items-center gap-4", [
+						stack("w-16 h-16 bg-white/10 rounded-xl", []),
+					]),
+
+					stack("items-center gap-4", [
+						h1(
+							"text-white text-6xl font-bold tracking-tight text-center",
+							`Custom Layout ${i}`,
+						),
+						p(
+							"text-slate-400 text-2xl text-center",
+							"Testing builder API performance",
+						),
+					]),
+				]),
+			],
+		);
+
+		await render(element);
+		times.push(performance.now() - start);
+	}
+
+	return calculateStats("Custom Layout", times);
 }
 
 // Generate Markdown Report
@@ -161,15 +214,16 @@ ${results
 
 ## Key Findings
 
-- ✅ **Minimal preset:** Fastest option for simple OG images (~${results[0].mean}ms average)
-- ✅ **Caching:** ${results[3].mean < results[0].mean / 10 ? "Extremely effective" : "Improves performance"} (${results[3].mean}ms cached vs ${results[0].mean}ms uncached)
-- ✅ **Complex layouts:** Still performant even with rich presets (~${results[1].mean}ms average)
+- **Minimal preset:** Fastest option for simple OG images (~${results[0].mean}ms average)
+- **Caching:** ${results[4].mean < results[0].mean / 10 ? "Extremely effective" : "Improves performance"} (${results[4].mean}ms cached vs ${results[0].mean}ms uncached)
+- **Complex layouts:** Still performant even with rich presets (~${results[1].mean}ms average)
+- **Custom layouts:** Builder API performs similarly to presets (~${results[3].mean}ms average)
 
 ## Performance Targets
 
-- ✅ Simple scenarios: **< 200ms** (achieved: ${results[0].mean}ms)
-- ✅ Complex scenarios: **< 500ms** (achieved: ${results[1].mean}ms)  
-- ✅ Cached renders: **< 10ms** (achieved: ${results[3].mean}ms)
+- Simple scenarios: **< 200ms** (achieved: ${results[0].mean}ms)
+- Complex scenarios: **< 500ms** (achieved: ${results[1].mean}ms)  
+- Cached renders: **< 10ms** (achieved: ${results[4].mean}ms)
 
 ## Run Benchmarks Yourself
 
@@ -211,10 +265,13 @@ async function main() {
 	const docs = await benchmarkDocs(ITERATIONS);
 	console.log(`✓ ${docs.name}: ${docs.mean}ms (mean)`);
 
+	const custom = await benchmarkCustomLayout(ITERATIONS);
+	console.log(`✓ ${custom.name}: ${custom.mean}ms (mean)`);
+
 	const cached = await benchmarkWithCache(ITERATIONS);
 	console.log(`✓ ${cached.name}: ${cached.mean}ms (mean)\n`);
 
-	const results = [minimal, social, docs, cached];
+	const results = [minimal, social, docs, custom, cached];
 
 	// Save JSON
 	const jsonPath = join(OUTPUT_DIR, "results.json");

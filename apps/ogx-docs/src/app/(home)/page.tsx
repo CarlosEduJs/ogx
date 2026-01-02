@@ -29,11 +29,11 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const metadata: Metadata = {
 	title: "OGX - High-Performance OG Image Engine",
 	description:
-		"Generate dynamic Open Graph images with Tailwind CSS. 60ms render time, built-in caching, and seamless Next.js integration.",
+		"Generate dynamic Open Graph images with Tailwind CSS. ~40ms render time, Cache v2 with LRU, Parser v2 with O(1) lookups, and seamless Next.js integration.",
 	openGraph: {
 		title: "OGX - High-Performance OG Image Engine",
 		description:
-			"Generate dynamic Open Graph images with Tailwind CSS. 60ms render time, built-in caching, and seamless Next.js integration.",
+			"Generate dynamic Open Graph images with Tailwind CSS. ~40ms render time, Cache v2 with LRU, Parser v2 with O(1) lookups, and seamless Next.js integration.",
 		type: "website",
 		images: [
 			{
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: "OGX - High-Performance OG Image Engine",
 		description:
-			"Generate dynamic Open Graph images with Tailwind CSS. 60ms render time.",
+			"Generate dynamic Open Graph images with Tailwind CSS. ~40ms render time.",
 		images: [`${baseUrl}/og/home`],
 	},
 };
@@ -77,7 +77,7 @@ export default function HomePage() {
 							className="group flex items-center gap-2 px-4 py-1.5 rounded-full bg-fd-primary/5 border border-fd-primary/20 text-[10px] font-mono tracking-[0.2em] text-fd-primary uppercase transition-all hover:bg-fd-primary/10 cursor-default"
 						>
 							<span className="w-1.5 h-1.5 rounded-full bg-fd-primary animate-pulse" />
-							v0.1.2 Beta Runtime Ready
+							v0.2.0-alpha.1 Turbo Engine
 						</Link>
 
 						<div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 group/title">
@@ -214,12 +214,8 @@ export default function HomePage() {
 						</div>
 
 						<div className="grid grid-cols-2 gap-8 pt-4 w-full text-left">
-							<TechnicalStat icon={<Zap />} label="LATENCY" value="~50ms" />
-							<TechnicalStat
-								icon={<Cpu />}
-								label="ENGINE"
-								value="Tailwind JIT"
-							/>
+							<TechnicalStat icon={<Zap />} label="LATENCY" value="~40ms" />
+							<TechnicalStat icon={<Cpu />} label="ENGINE" value="Parser v2" />
 							<TechnicalStat
 								icon={<Layers />}
 								label="TYPES"
@@ -493,7 +489,7 @@ export default function HomePage() {
 						aria-label="OGX"
 					/>
 					<p className="text-[10px] font-mono uppercase tracking-[0.5em] text-fd-muted-foreground/40">
-						{"OGX Engine // v0.1.0 Beta"}
+						{"OGX Engine // v0.2.0-alpha.1 Turbo"}
 					</p>
 				</div>
 			</footer>
@@ -519,26 +515,26 @@ function PerformanceSection() {
 					data={[
 						{
 							scenario: "Minimal Preset",
-							mean: "60.02ms",
+							mean: "39.23ms",
 							notes:
 								"Fast and lightweight, perfect for simple images and blogs.",
 						},
 						{
 							scenario: "Social Preset",
-							mean: "693.12ms",
+							mean: "55.63ms",
 							notes:
 								"Complex gradients, multiple fonts, rich layout, shadows, brand + handle. Fast Fast Fast.",
 						},
 						{
 							scenario: "Docs Preset",
-							mean: "88.92ms",
+							mean: "46.96ms",
 							notes: "Ideal for documentation pages or content-heavy layouts.",
 						},
 						{
 							scenario: "With Cache",
-							mean: "0.7ms",
+							mean: "0.03ms",
 							notes:
-								"85x faster than cold render. Instant retrieval via snapshot caching.",
+								"~1000x faster than cold render. Instant retrieval via snapshot caching.",
 							isHighlight: true,
 						},
 					]}
@@ -596,8 +592,8 @@ function PerformanceTable({
 							<td className="p-8 text-sm text-fd-muted-foreground leading-relaxed max-w-md">
 								{row.isHighlight ? (
 									<span className="text-fd-foreground font-medium">
-										<span className="text-fd-primary">85x faster</span> than
-										cold render. Instant, even for Social Preset.
+										<span className="text-fd-primary">1000x faster</span> than
+										cold render. Instant, even for complex presets.
 									</span>
 								) : (
 									row.notes

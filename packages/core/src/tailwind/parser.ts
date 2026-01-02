@@ -22,6 +22,7 @@ const parserCache = new Map<string, CSSProperties>();
 
 /**
  * Main Tailwind parser function
+ * @deprecated Use parseTailwind from parser-v2 instead (exported from tailwind/index)
  */
 export function parseTailwind(
 	tw: string | string[],

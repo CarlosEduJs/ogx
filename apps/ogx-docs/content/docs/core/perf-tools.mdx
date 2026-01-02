@@ -1,0 +1,114 @@
+---
+title: Performance Tools
+description: Timing and benchmarking utilities
+---
+
+OGX provides built-in tools for measuring and analyzing performance.
+
+## Timer API
+
+Track execution time across multiple operations:
+
+```typescript
+import { Timer } from '@ogxjs/core';
+
+const timer = new Timer();
+
+timer.start('render');
+await ogx({ preset: 'docs', title: 'Test' });
+timer.end('render');
+
+timer.start('font-load');
+await fontRegistry.registerInter([400, 700]);
+timer.end('font-load');
+
+// Get formatted report
+console.log(timer.report());
+```
+
+## Global Timing Singleton
+
+Use the global `timing` instance for convenience:
+
+```typescript
+import { timing } from '@ogxjs/core';
+
+timing.start('total');
+// ... operations
+timing.end('total');
+
+console.log(timing.report());
+```
+
+## Quick Timing
+
+For one-off measurements:
+
+```typescript
+import { quickTime, quickTimeSync } from '@ogxjs/core';
+
+// Async timing
+const result = await quickTime(async () => {
+  return await ogx({ preset: 'minimal', title: 'Test' });
+});
+console.log(`Took ${result.duration}ms`);
+
+// Sync timing
+const syncResult = quickTimeSync(() => {
+  // synchronous operation
+  return processData();
+});
+```
+
+## Benchmarking
+
+Run statistical benchmarks with multiple iterations:
+
+```typescript
+import { benchmark, benchmarkSync } from '@ogxjs/core';
+
+// Async benchmark
+const stats = await benchmark(async () => {
+  await ogx({ preset: 'docs', title: 'Benchmark' });
+}, 100); // 100 iterations
+
+console.log(`Mean: ${stats.mean}ms`);
+console.log(`Median: ${stats.median}ms`);
+console.log(`P90: ${stats.p90}ms`);
+console.log(`Std Dev: ${stats.stdDev}ms`);
+
+// Sync benchmark
+const syncStats = benchmarkSync(() => {
+  // synchronous operation
+}, 100);
+```
+
+## TimingReport Structure
+
+All timing methods return or use this structure:
+
+```typescript
+interface TimingEntry {
+  label: string;
+  duration: number; // milliseconds
+  timestamp: number;
+}
+
+interface TimingAggregate {
+  iterations: number;
+  min: number;
+  max: number;
+  mean: number;
+  median: number;
+  p90: number;
+  p99: number;
+  stdDev: number;
+}
+```
+
+## Use Cases
+
+- **Development**: Profile slow operations during development
+- **CI/CD**: Run benchmarks to detect performance regressions
+- **Production**: Monitor render times in production (with sampling**)
+- **Optimization**: Compare different approaches or configurations

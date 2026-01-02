@@ -27,12 +27,15 @@ const png = await ogx({
 | `siteName` | `string` | No | Site name in header |
 | `logo` | `string` | No | Logo URL or base64 |
 | `colorScheme` | `'dark' \| 'light'` | No | Color theme (default: dark) |
+| `detailsOG` | `boolean` | No | Show detailed background pattern |
 
 ## Features
 
-- Grid pattern background
-- Gradient overlay for depth
-- Header with logo and site name
-- Large title with tight tracking
+- Clean header with logo and site name
+- Documentation badge indicator
+- Large title with tight tracking and max-width control
 - Description with muted color
 - Indicator bar footer
+- Light and dark color scheme support
+- Fast rendering (~47ms average)
+- Optional detailed background pattern for visual interest

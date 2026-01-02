@@ -68,6 +68,8 @@ ogx/
 └── examples/         # Example projects
 ```
 
+## Read [OGX_CODEMAP.md](OGX_CODEMAP.md) for more details on architecture and development patterns. This includes information on the Builder API, Tailwind processing, presets system, and font handling.
+
 ## Questions?
 
 Feel free to open a [Discussion](https://github.com/carlosedujs/ogx/discussions) for any questions!

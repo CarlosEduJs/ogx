@@ -54,9 +54,9 @@ export class SnapshotCache {
 	}
 
 	/**
-	 * Calculate a hash for a configuration object (sync fallback)
+	 * Calculate a hash for a configuration object (sync)
 	 * Uses djb2 algorithm - fast but has higher collision probability
-	 * @deprecated Use getHashAsync for better collision resistance
+	 * Note: Cache v2 uses FNV-1a (fnv1a/fastHash) for better performance
 	 */
 	getHash(config: any): string {
 		const str = this.serializeConfig(config);
