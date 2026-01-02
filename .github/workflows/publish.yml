@@ -7,6 +7,12 @@ on:
       - 'core-v*'
       - 'next-v*'
       - 'react-v*'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Do not publish or create release (preview only)'
+        required: false
+        default: 'true'
 
 jobs:
   publish:
@@ -14,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Required for creating GitHub releases
+    env:
+      DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == 'true' }}
     
     steps:
       - name: Checkout
@@ -30,9 +38,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
+        if: env.DRY_RUN != 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Build all packages
+        if: env.DRY_RUN != 'true'
         run: pnpm build
 
       - name: Determine package to publish
@@ -57,29 +67,88 @@ jobs:
           
           echo "Publishing: $TAG"
 
+      - name: Show dry-run mode
+        run: echo "DRY_RUN=${DRY_RUN:-false}"
+
+      - name: Generate release notes body
+        id: release_notes
+        uses: actions/github-script@v7
+        env:
+          TAG: ${{ steps.package.outputs.tag }}
+          SCOPE: ${{ steps.package.outputs.scope }}
+          PACKAGES: ${{ steps.package.outputs.packages }}
+        with:
+          script: |
+            const tag = process.env.TAG;
+            const scope = process.env.SCOPE;
+            const packages = process.env.PACKAGES;
+
+            const pkgList = packages === 'all' ? ['core', 'next', 'react'] : [packages];
+            const npmNames = {
+              core: '@ogxjs/core',
+              next: '@ogxjs/next',
+              react: '@ogxjs/react',
+            };
+
+            const { data } = await github.rest.repos.generateReleaseNotes({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: tag,
+              target_commitish: context.sha,
+            });
+
+            const packageLines = pkgList
+              .filter((pkg) => npmNames[pkg])
+              .map((pkg) => `- ${npmNames[pkg]}: https://www.npmjs.com/package/${npmNames[pkg]}`);
+
+            const body = [
+              '### Summary',
+              `- Scope: ${scope}`,
+              `- Tag: ${tag}`,
+              '',
+              '### Changelog',
+              data.body,
+              '',
+              '### Packages',
+              ...packageLines,
+              '',
+              '### Verification',
+              '- CI (lint, check, build) executed on PR before tagging',
+              '- Published from the tagged commit via pnpm',
+            ].join('\n');
+
+            core.setOutput('body', body);
+
+      - name: Preview release body
+        run: |
+          echo "--- Release body preview ---"
+          printf "%s\n" "${{ steps.release_notes.outputs.body }}"
+          echo "--- End preview ---"
+
       - name: Publish @ogxjs/core
-        if: steps.package.outputs.packages == 'core' || steps.package.outputs.packages == 'all'
+        if: env.DRY_RUN != 'true' && (steps.package.outputs.packages == 'core' || steps.package.outputs.packages == 'all')
         run: pnpm --filter @ogxjs/core publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @ogxjs/next
-        if: steps.package.outputs.packages == 'next' || steps.package.outputs.packages == 'all'
+        if: env.DRY_RUN != 'true' && (steps.package.outputs.packages == 'next' || steps.package.outputs.packages == 'all')
         run: pnpm --filter @ogxjs/next publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @ogxjs/react
-        if: steps.package.outputs.packages == 'react' || steps.package.outputs.packages == 'all'
+        if: env.DRY_RUN != 'true' && (steps.package.outputs.packages == 'react' || steps.package.outputs.packages == 'all')
         run: pnpm --filter @ogxjs/react publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
+        if: env.DRY_RUN != 'true'
         uses: softprops/action-gh-release@v1
         with:
-          generate_release_notes: true
           tag_name: ${{ steps.package.outputs.tag }}
           name: ${{ steps.package.outputs.scope }} ${{ steps.package.outputs.tag }}
+          body: ${{ steps.release_notes.outputs.body }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
