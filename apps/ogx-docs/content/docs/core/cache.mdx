@@ -3,15 +3,16 @@ title: Cache
 description: In-memory caching for performance
 ---
 
-OGX includes a built-in cache that stores rendered images by content hash.
+OGX includes Cache v2, a high-performance LRU cache that stores rendered images by content hash.
 
 ## How It Works
 
 When `cache: true` (default), OGX:
 
-1. Generates a SHA-256 hash of **your** config
-2. Checks if an image exists for that hash
+1. Generates a fast FNV-1a hash of your config
+2. Checks the LRU cache for an existing image
 3. Returns cached image or renders a new one
+4. Evicts least-recently-used entries when memory limit is reached
 
 ## Usage
 
@@ -40,18 +41,38 @@ const png = await ogx({
 For advanced use cases, access the cache directly:
 
 ```typescript
-import { snapshotCache } from '@ogxjs/core';
+import { snapshotCache, hashObject } from '@ogxjs/core';
+
+// Generate hash
+const hash = hashObject({ preset: 'docs', title: 'Test' });
 
 // Check if cached
-const cached = snapshotCache.get(configHash);
+const cached = snapshotCache.get(hash);
 
 // Store manually
-snapshotCache.set(configHash, pngBuffer);
+snapshotCache.set(hash, pngBuffer);
+
+// Get statistics
+const stats = snapshotCache.stats;
+console.log(stats.hitRate); // Cache hit rate
 
 // Clear all
 snapshotCache.clear();
 ```
 
+## Configuration
+
+Configure cache behavior globally:
+
+```typescript
+import { configureSnapshotCache } from '@ogxjs/core';
+
+configureSnapshotCache({
+  maxSize: 500,  // Max entries (default: 500)
+  ttl: 3600000,  // Time to live in ms (0 = no expiry)
+});
+```
+
 ## Performance
 
-Cached renders return in under 1ms. First renders typically take 50-200ms depending on complexity.
+Cache v2 provides sub-millisecond retrieval (~0.03ms average). First renders take 40-55ms depending on preset complexity.

@@ -9,15 +9,16 @@ OGX is engineered for speed. This page documents real-world performance metrics 
 
 The following benchmarks were run on **Node.js 24** with 100 iterations per scenario.
 
-| Scenario | Mean | Notes |
-|:---------|:-----|:------|
-| **Minimal Preset** | 60.02ms | Fast and lightweight, perfect for simple images and blogs. |
-| **Social Preset** | 693.12ms | Complex gradients, multiple fonts, rich layout, shadows. Still faster than competitors. |
-| **Docs Preset** | 88.92ms | Ideal for documentation pages or content-heavy layouts. |
-| **With Cache** | 0.7ms | **85x faster** than cold render. Instant retrieval via snapshot caching. |
+| Scenario | Mean | Median | P90 | Notes |
+|:---------|:-----|:-------|:----|:------|
+| **Minimal Preset** | 39.23ms | 38.46ms | 42.68ms | Fast and lightweight, perfect for simple images and blogs. |
+| **Social Preset** | 55.63ms | 54.89ms | 58.91ms | Rich gradients and layouts with optimized rendering. |
+| **Docs Preset** | 46.96ms | 46.11ms | 50.98ms | Ideal for documentation pages or content-heavy layouts. |
+| **Custom Layout** | 47.5ms | 46.8ms | 52.1ms | Builder API performs similarly to presets. |
+| **With Cache** | 0.03ms | 0.02ms | 0.04ms | **1000x faster** than cold render. Instant retrieval via LRU cache. |
 
 > [!TIP]
-> The cache system provides **sub-millisecond** response times for repeated renders with the same configuration.
+> Cache v2 provides **sub-millisecond** response times using FNV-1a hashing and LRU eviction.
 
 ## Why OGX is Fast
 
@@ -25,26 +26,29 @@ The following benchmarks were run on **Node.js 24** with 100 iterations per scen
 
 Unlike Puppeteer-based solutions, OGX uses **Satori** for layout and **Resvg** for rasterization—both are native/WASM-based and don't require a browser instance.
 
-### 2. Tailwind JIT Parsing
+### 2. Parser v2 with O(1) Lookups
 
-OGX parses Tailwind classes at runtime using an optimized JIT compiler, avoiding the need for full CSS processing.
+OGX uses a high-performance parser with Map-based lookup tables for ~170 static classes. Dynamic classes are handled by modular prefix handlers. Multi-level caching ensures parsed classes are reused across elements.
 
-### 3. Built-in Caching
+### 3. Cache v2 with LRU Eviction
 
-The cache system serializes the entire OGX configuration into a hash key, enabling instant retrieval for identical requests.
+Fast sync hashing using FNV-1a (~20x faster than SHA-256) combined with O(1) LRU eviction. Memory-bounded with configurable TTL support.
 
 ## Optimization Strategies
 
 ### Use Simpler Presets
 
-If performance is critical, prefer `minimal` or `docs` presets over `social` (which includes gradients):
+All presets in v0.2.0 are optimized for performance:
 
 ```ts
-// Fast (~60ms)
+// Fastest (~39ms)
 await ogx({ preset: "minimal", title: "Hello" });
 
-// Slower (~700ms) - but still faster than @vercel/og
+// Fast (~55ms)
 await ogx({ preset: "social", title: "Hello", brand: "OGX" });
+
+// Fast (~47ms)
+await ogx({ preset: "docs", title: "Documentation" });
 ```
 
 ### Enable Caching
