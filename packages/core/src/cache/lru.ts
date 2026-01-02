@@ -22,13 +22,13 @@ interface CacheNode<K, V> {
 	next: CacheNode<K, V> | null;
 }
 
-export interface LRUCacheOptions {
+export interface LRUCacheOptions<K = unknown, V = unknown> {
 	/** Maximum number of items in cache */
 	maxSize?: number;
 	/** Time-to-live in milliseconds (0 = no expiration) */
 	ttl?: number;
 	/** Callback when an item is evicted */
-	onEvict?: <K, V>(key: K, value: V) => void;
+	onEvict?: (key: K, value: V) => void;
 }
 
 export interface LRUCacheStats {
@@ -61,14 +61,14 @@ export class LRUCache<K, V> {
 	private tail: CacheNode<K, V> | null = null;
 	private readonly maxSize: number;
 	private readonly ttl: number;
-	private readonly onEvict?: <K, V>(key: K, value: V) => void;
+	private readonly onEvict?: (key: K, value: V) => void;
 
 	// Stats
 	private _hits = 0;
 	private _misses = 0;
 	private _evictions = 0;
 
-	constructor(options: LRUCacheOptions = {}) {
+	constructor(options: LRUCacheOptions<K, V> = {}) {
 		this.maxSize = options.maxSize ?? 1000;
 		this.ttl = options.ttl ?? 0;
 		this.onEvict = options.onEvict;

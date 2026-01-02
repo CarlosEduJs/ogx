@@ -145,13 +145,15 @@ function rotl(x: number, r: number): number {
 
 /**
  * Read 4 characters as a 32-bit value
+ * Safely handles bounds by returning 0 for out-of-bounds indices
  */
 function read32(str: string, i: number): number {
+	const len = str.length;
 	return (
-		str.charCodeAt(i) |
-		(str.charCodeAt(i + 1) << 8) |
-		(str.charCodeAt(i + 2) << 16) |
-		(str.charCodeAt(i + 3) << 24)
+		(i < len ? str.charCodeAt(i) : 0) |
+		((i + 1 < len ? str.charCodeAt(i + 1) : 0) << 8) |
+		((i + 2 < len ? str.charCodeAt(i + 2) : 0) << 16) |
+		((i + 3 < len ? str.charCodeAt(i + 3) : 0) << 24)
 	);
 }
 

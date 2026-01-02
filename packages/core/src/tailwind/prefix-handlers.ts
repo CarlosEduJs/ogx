@@ -710,7 +710,11 @@ function handleBackgroundGrain(value: string, ctx: ParseContext): void {
 		: 0.05;
 
 	const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(#n)' opacity='${opacityValue}'/></svg>`;
-	const base64 = Buffer.from(svg).toString("base64");
+	// Use btoa for cross-platform compatibility (Node.js, Edge, Browser)
+	const base64 =
+		typeof Buffer !== "undefined"
+			? Buffer.from(svg).toString("base64")
+			: btoa(svg);
 	const noiseUrl = `url(data:image/svg+xml;base64,${base64})`;
 
 	ctx.style.backgroundImage = ctx.style.backgroundImage
