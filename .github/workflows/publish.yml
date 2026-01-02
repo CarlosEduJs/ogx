@@ -7,12 +7,6 @@ on:
       - 'core-v*'
       - 'next-v*'
       - 'react-v*'
-  workflow_dispatch:
-    inputs:
-      dry_run:
-        description: 'Do not publish or create release (preview only)'
-        required: false
-        default: 'true'
 
 jobs:
   publish:
@@ -20,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Required for creating GitHub releases
-    env:
-      DRY_RUN: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') || (github.event_name == 'workflow_dispatch' && inputs.dry_run == 'true') }}
     
     steps:
       - name: Checkout
@@ -38,11 +30,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        if: env.DRY_RUN != 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Build all packages
-        if: env.DRY_RUN != 'true'
         run: pnpm build
 
       - name: Determine package to publish
@@ -66,9 +56,6 @@ jobs:
           fi
           
           echo "Publishing: $TAG"
-
-      - name: Show dry-run mode
-        run: echo "DRY_RUN=${DRY_RUN:-false}"
 
       - name: Generate release notes body
         id: release_notes
@@ -119,32 +106,25 @@ jobs:
 
             core.setOutput('body', body);
 
-      - name: Preview release body
-        run: |
-          echo "--- Release body preview ---"
-          printf "%s\n" "${{ steps.release_notes.outputs.body }}"
-          echo "--- End preview ---"
-
       - name: Publish @ogxjs/core
-        if: env.DRY_RUN != 'true' && (steps.package.outputs.packages == 'core' || steps.package.outputs.packages == 'all')
+        if: steps.package.outputs.packages == 'core' || steps.package.outputs.packages == 'all'
         run: pnpm --filter @ogxjs/core publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @ogxjs/next
-        if: env.DRY_RUN != 'true' && (steps.package.outputs.packages == 'next' || steps.package.outputs.packages == 'all')
+        if: steps.package.outputs.packages == 'next' || steps.package.outputs.packages == 'all'
         run: pnpm --filter @ogxjs/next publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @ogxjs/react
-        if: env.DRY_RUN != 'true' && (steps.package.outputs.packages == 'react' || steps.package.outputs.packages == 'all')
+        if: steps.package.outputs.packages == 'react' || steps.package.outputs.packages == 'all'
         run: pnpm --filter @ogxjs/react publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
-        if: env.DRY_RUN != 'true'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.package.outputs.tag }}
