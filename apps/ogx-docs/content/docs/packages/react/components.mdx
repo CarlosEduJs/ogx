@@ -1,0 +1,119 @@
+---
+title: Layout Components
+description: Pre-styled containers for building OG image layouts
+---
+
+`@ogxjs/react` exports pre-styled layout components that wrap core OGX primitives for faster development.
+
+## Box
+
+The foundation for most layouts. A flexible container with support for all Tailwind utilities.
+
+```tsx
+import { Box } from '@ogxjs/react';
+
+<Box tw="bg-zinc-900 border border-zinc-800 p-10 rounded-3xl">
+  {/* Content */}
+</Box>
+```
+
+## Stack
+
+Vertical flex layout. Automatically applies `flex flex-col`.
+
+```tsx
+import { Stack } from '@ogxjs/react';
+
+<Stack tw="gap-4 p-8">
+  <h1 tw="text-5xl font-bold">Title</h1>
+  <p tw="text-xl text-zinc-400">Description</p>
+</Stack>
+```
+
+## Row
+
+Horizontal flex layout. Automatically applies `flex flex-row`.
+
+```tsx
+import { Row } from '@ogxjs/react';
+
+<Row tw="gap-4 items-center">
+  <img src="/avatar.png" tw="w-12 h-12 rounded-full" />
+  <span tw="text-xl">Author Name</span>
+</Row>
+```
+
+## Absolute
+
+Positions content absolutely with `inset-0`. Perfect for overlays, backgrounds, and layered designs.
+
+```tsx
+import { Stack, Absolute } from '@ogxjs/react';
+
+<Stack tw="relative w-full h-full">
+  {/* Background layer */}
+  <Absolute tw="bg-gradient-to-br from-indigo-500 to-purple-600" />
+  
+  {/* Grid overlay */}
+  <Absolute tw="bg-grid-white/10" />
+  
+  {/* Content on top */}
+  <div tw="z-10 p-16">
+    <h1 tw="text-white text-6xl">Layered Content</h1>
+  </div>
+</Stack>
+```
+
+## Grid
+
+A flex-wrap container for grid-like layouts (since CSS Grid is not supported by Satori).
+
+```tsx
+import { Grid, Box } from '@ogxjs/react';
+
+<Grid tw="gap-4 p-8">
+  <Box tw="w-1/2 p-4 bg-zinc-800">Item 1</Box>
+  <Box tw="w-1/2 p-4 bg-zinc-800">Item 2</Box>
+  <Box tw="w-1/2 p-4 bg-zinc-800">Item 3</Box>
+  <Box tw="w-1/2 p-4 bg-zinc-800">Item 4</Box>
+</Grid>
+```
+
+## Semantic Wrappers
+
+### Header, Footer, Main
+
+Semantic layout wrappers with `flex` display. Use them for structured layouts.
+
+```tsx
+import { Header, Main, Footer, Stack } from '@ogxjs/react';
+
+<Stack tw="w-full h-full bg-zinc-950">
+  <Header tw="p-8 border-b border-zinc-800">
+    <img src="/logo.svg" tw="h-8" />
+  </Header>
+  
+  <Main tw="flex-1 p-16 items-center justify-center">
+    <h1 tw="text-6xl text-white">Main Content</h1>
+  </Main>
+  
+  <Footer tw="p-8 border-t border-zinc-800">
+    <span tw="text-zinc-500">© 2026 My Company</span>
+  </Footer>
+</Stack>
+```
+
+---
+
+## Component Reference
+
+| Component | Default Classes | Description |
+|-----------|-----------------|-------------|
+| `Box` | - | Basic flex container |
+| `Stack` | `flex flex-col` | Vertical layout |
+| `Row` | `flex flex-row` | Horizontal layout |
+| `Absolute` | `absolute inset-0 flex` | Overlay layer |
+| `Grid` | `flex flex-row flex-wrap` | Flex-based grid |
+| `Header` | `flex` | Semantic header |
+| `Footer` | `flex` | Semantic footer |
+| `Main` | `flex` | Semantic main |

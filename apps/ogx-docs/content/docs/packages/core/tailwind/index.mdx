@@ -1,0 +1,85 @@
+---
+title: Tailwind Support
+description: Overview of supported Tailwind CSS utilities
+---
+
+OGX supports a subset of Tailwind CSS utilities optimized for image generation. The parser uses O(1) static class lookups and multi-level caching for high performance.
+
+> [!IMPORTANT]
+> OGX supports the `dark:` prefix for conditional dark mode styles. Pass `colorScheme: 'dark'` to enable.
+
+## Supported Categories
+
+<Cards>
+  <Card title="Layout" href="/docs/packages/core/tailwind/layout" description="Flexbox, position, display" />
+  <Card title="Spacing" href="/docs/packages/core/tailwind/spacing" description="Padding, margin, gap, sizing" />
+  <Card title="Typography" href="/docs/packages/core/tailwind/typography" description="Font size, weight, alignment" />
+  <Card title="Colors" href="/docs/packages/core/tailwind/colors" description="Background, text, border colors" />
+  <Card title="Borders" href="/docs/packages/core/tailwind/borders" description="Width, radius, color" />
+  <Card title="Effects" href="/docs/packages/core/tailwind/effects" description="Shadow, opacity, overflow" />
+  <Card title="Patterns" href="/docs/packages/core/tailwind/patterns" description="Grid, dots, grain textures" />
+</Cards>
+
+---
+
+## Quick Reference
+
+### Most Used Classes
+
+```typescript
+// Layout
+'flex flex-col items-center justify-center gap-4'
+'w-full h-full p-16'
+'absolute inset-0 relative'
+
+// Typography
+'text-6xl font-bold text-white'
+'text-xl text-zinc-400'
+
+// Colors & Backgrounds
+'bg-zinc-950 bg-gradient-to-br from-indigo-500 to-purple-600'
+'text-white/80 bg-black/50'
+
+// Borders
+'border border-zinc-800 rounded-2xl'
+
+// Effects
+'shadow-xl opacity-50'
+```
+
+### Arbitrary Values
+
+Use brackets for custom values:
+
+```typescript
+'p-[32px]'           // Custom padding
+'text-[42px]'        // Custom font size
+'bg-[#1a1a1a]'       // Hex color
+'w-[300px]'          // Custom width
+'bg-[oklch(65%_0.25_260)]' // OKLCH color
+```
+
+### Dark Mode
+
+Use the `dark:` prefix for dark mode styles:
+
+```typescript
+'bg-white dark:bg-zinc-950'
+'text-zinc-900 dark:text-white'
+```
+
+Enable by passing `colorScheme: 'dark'` to render functions.
+
+---
+
+## Limitations
+
+Due to Satori's constraints, some Tailwind features are **not supported**:
+
+- CSS Grid (`grid`, `grid-cols-*`)
+- Backdrop filters (`backdrop-blur`)
+- Transforms (`rotate`, `scale`, `translate`)
+- Animations (`animate-*`)
+- Pseudo-classes (`:hover`, `:focus`)
+
+Use flexbox-based layouts with `flex-wrap` for grid-like designs.

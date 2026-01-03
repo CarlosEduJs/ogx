@@ -1,0 +1,114 @@
+---
+title: Effects
+description: Shadow, opacity, and overflow utilities
+---
+
+## Box Shadow
+
+| Class | Description |
+|-------|-------------|
+| `shadow-sm` | Small shadow |
+| `shadow` | Default shadow |
+| `shadow-md` | Medium shadow |
+| `shadow-lg` | Large shadow |
+| `shadow-xl` | Extra large shadow |
+| `shadow-2xl` | 2x extra large shadow |
+| `shadow-none` | No shadow |
+| `shadow-premium` | Multi-layered premium shadow |
+
+### Standard Shadows
+
+```typescript
+'shadow-lg'   // Large drop shadow
+'shadow-xl'   // Extra large shadow
+'shadow-2xl'  // Very large shadow
+```
+
+### Premium Shadow
+
+A special multi-layered shadow for premium, elevated designs:
+
+```typescript
+'shadow-premium'
+// Outputs: 0 20px 25px -5px rgba(0,0,0,0.1), 
+//          0 8px 10px -6px rgba(0,0,0,0.1), 
+//          0 40px 60px -15px rgba(0,0,0,0.25)
+```
+
+---
+
+## Opacity
+
+| Class | Value |
+|-------|-------|
+| `opacity-0` | 0 |
+| `opacity-5` | 0.05 |
+| `opacity-10` | 0.1 |
+| `opacity-20` | 0.2 |
+| `opacity-25` | 0.25 |
+| `opacity-30` | 0.3 |
+| `opacity-40` | 0.4 |
+| `opacity-50` | 0.5 |
+| `opacity-60` | 0.6 |
+| `opacity-70` | 0.7 |
+| `opacity-75` | 0.75 |
+| `opacity-80` | 0.8 |
+| `opacity-90` | 0.9 |
+| `opacity-95` | 0.95 |
+| `opacity-100` | 1 |
+
+```typescript
+'opacity-50'   // 50% opacity
+'opacity-75'   // 75% opacity
+```
+
+### Color Opacity
+
+Use slash syntax for color-specific opacity:
+
+```typescript
+'bg-black/50'     // 50% opacity black
+'text-white/80'   // 80% opacity white
+'border-zinc-500/20' // 20% opacity border
+```
+
+---
+
+## Overflow
+
+| Class | CSS Output |
+|-------|------------|
+| `overflow-hidden` | `overflow: hidden` |
+| `overflow-visible` | `overflow: visible` |
+
+```typescript
+'overflow-hidden rounded-xl' // Clip content to rounded corners
+```
+
+---
+
+## Example: Elevated Card
+
+```typescript
+stack('bg-white rounded-2xl shadow-xl p-8', [
+  h1('text-zinc-900 text-2xl font-bold', 'Elevated Card'),
+  p('text-zinc-500', 'With a nice shadow effect')
+])
+```
+
+## Example: Glassmorphism
+
+```typescript
+stack('bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-8', [
+  span('text-white', 'Glass effect')
+])
+```
+
+> [!NOTE]
+> `backdrop-blur` may not be fully supported in all rendering contexts due to Satori limitations.
+
+## Example: Faded Overlay
+
+```typescript
+absolute('bg-gradient-to-t from-black to-transparent opacity-60')
+```

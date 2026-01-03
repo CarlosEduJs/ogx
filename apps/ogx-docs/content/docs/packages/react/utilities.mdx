@@ -1,0 +1,120 @@
+---
+title: Utility Components
+description: Spacer, Card, Badge and other utility components
+---
+
+Utility components provide ready-to-use patterns for common UI elements.
+
+## Spacer
+
+Flexible spacing component. Use it to push items apart or add fixed spacing.
+
+### Flexible Spacer
+
+Takes up all available space, pushing other items to the edges.
+
+```tsx
+import { Row, Spacer } from '@ogxjs/react';
+
+<Row tw="w-full p-8">
+  <span tw="text-white">Left</span>
+  <Spacer />
+  <span tw="text-white">Right</span>
+</Row>
+```
+
+### Fixed Size Spacer
+
+Specify a fixed size in pixels or use Tailwind spacing scale.
+
+```tsx
+import { Stack, Spacer } from '@ogxjs/react';
+
+<Stack>
+  <span>Item 1</span>
+  <Spacer size={32} />      {/* 32px */}
+  <span>Item 2</span>
+  <Spacer size="8" />       {/* Uses w-8 class (32px) */}
+  <span>Item 3</span>
+</Stack>
+```
+
+---
+
+## Card
+
+Pre-styled card container with shadow, border, and padding.
+
+```tsx
+import { Card, Stack } from '@ogxjs/react';
+
+<Card tw="max-w-md">
+  <Stack tw="gap-2">
+    <h2 tw="text-xl font-bold text-zinc-900">Card Title</h2>
+    <p tw="text-slate-500">Card content goes here.</p>
+  </Stack>
+</Card>
+```
+
+**Default styles:** `bg-white shadow-lg rounded-2xl p-8 border border-slate-100`
+
+### Dark Mode Card
+
+Override the default styles for dark themes:
+
+```tsx
+<Card tw="bg-zinc-900 border-zinc-800">
+  <h2 tw="text-white">Dark Card</h2>
+</Card>
+```
+
+---
+
+## Badge
+
+Colored badge with multiple color variants.
+
+```tsx
+import { Badge, Row } from '@ogxjs/react';
+
+<Row tw="gap-2">
+  <Badge color="blue">New</Badge>
+  <Badge color="green">Success</Badge>
+  <Badge color="purple">Beta</Badge>
+</Row>
+```
+
+### Available Colors
+
+| Color | Preview |
+|-------|---------|
+| `blue` | Blue background with blue text |
+| `green` | Green background with green text |
+| `purple` | Purple background with purple text |
+| `slate` | Slate/gray background |
+| `emerald` | Emerald green |
+| `amber` | Amber/yellow |
+| `rose` | Rose/red |
+
+### Example: Feature Tags
+
+```tsx
+import { Badge, Row } from '@ogxjs/react';
+
+<Row tw="gap-2 flex-wrap">
+  <Badge color="blue">React</Badge>
+  <Badge color="purple">TypeScript</Badge>
+  <Badge color="emerald">Tailwind</Badge>
+  <Badge color="amber">New in v2</Badge>
+</Row>
+```
+
+---
+
+## Component Reference
+
+| Component | Props | Default Classes |
+|-----------|-------|-----------------|
+| `Spacer` | `size?: number \| string` | `flex-1` or fixed size |
+| `Card` | `tw?, children` | `bg-white shadow-lg rounded-2xl p-8 border` |
+| `Badge` | `color?: string, children` | Color-specific styles |

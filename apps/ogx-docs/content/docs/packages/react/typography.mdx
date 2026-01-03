@@ -1,0 +1,96 @@
+---
+title: Typography Components
+description: Pre-styled text components for headings and paragraphs
+---
+
+`@ogxjs/react` includes typography components with sensible defaults for common text patterns.
+
+## H1
+
+Large heading with bold styling.
+
+```tsx
+import { H1 } from '@ogxjs/react';
+
+<H1 tw="text-white">Main Heading</H1>
+```
+
+**Default styles:** `flex text-6xl font-bold`
+
+## H2
+
+Medium heading with semibold styling.
+
+```tsx
+import { H2 } from '@ogxjs/react';
+
+<H2 tw="text-zinc-300">Subheading</H2>
+```
+
+**Default styles:** `flex text-4xl font-semibold`
+
+## P
+
+Paragraph text with muted color.
+
+```tsx
+import { P } from '@ogxjs/react';
+
+<P>This is a paragraph with default styling.</P>
+```
+
+**Default styles:** `flex text-lg text-slate-400`
+
+## Span
+
+Simple inline text wrapper with no default styles.
+
+```tsx
+import { Span } from '@ogxjs/react';
+
+<Span tw="text-sm text-zinc-500">Small text</Span>
+```
+
+---
+
+## Example: Blog Card
+
+```tsx
+import { Stack, Row, H1, H2, P } from '@ogxjs/react';
+
+const BlogCard = () => (
+  <Stack tw="w-full h-full bg-zinc-950 p-16 gap-6">
+    <Row tw="gap-2">
+      <span tw="text-indigo-400 text-sm font-medium">TUTORIAL</span>
+      <span tw="text-zinc-600">•</span>
+      <span tw="text-zinc-500 text-sm">5 min read</span>
+    </Row>
+    
+    <H1 tw="text-white">Building OG Images with React</H1>
+    
+    <P tw="text-zinc-400 text-xl">
+      Learn how to create beautiful Open Graph images using 
+      familiar JSX syntax and Tailwind classes.
+    </P>
+    
+    <Row tw="gap-3 items-center mt-auto">
+      <img src="/avatar.png" tw="w-12 h-12 rounded-full" />
+      <Stack tw="gap-0">
+        <span tw="text-white font-medium">John Doe</span>
+        <span tw="text-zinc-500 text-sm">@johndoe</span>
+      </Stack>
+    </Row>
+  </Stack>
+);
+```
+
+---
+
+## Component Reference
+
+| Component | Default Classes |
+|-----------|-----------------|
+| `H1` | `flex text-6xl font-bold` |
+| `H2` | `flex text-4xl font-semibold` |
+| `P` | `flex text-lg text-slate-400` |
+| `Span` | - |

@@ -1,0 +1,123 @@
+---
+title: Layout Classes
+description: Flexbox, position, and display utilities
+---
+
+## Display
+
+| Class | CSS Output |
+|-------|------------|
+| `flex` | `display: flex` |
+| `hidden` | `display: none` |
+
+---
+
+## Flexbox Direction
+
+| Class | CSS Output |
+|-------|------------|
+| `flex-row` | `flex-direction: row` |
+| `flex-col` | `flex-direction: column` |
+| `flex-row-reverse` | `flex-direction: row-reverse` |
+| `flex-col-reverse` | `flex-direction: column-reverse` |
+
+---
+
+## Flex Wrap
+
+| Class | CSS Output |
+|-------|------------|
+| `flex-wrap` | `flex-wrap: wrap` |
+| `flex-nowrap` | `flex-wrap: nowrap` |
+
+---
+
+## Flex Grow & Shrink
+
+| Class | CSS Output |
+|-------|------------|
+| `flex-1` | `flex: 1 1 0%` |
+| `flex-auto` | `flex: 1 1 auto` |
+| `flex-initial` | `flex: 0 1 auto` |
+| `flex-none` | `flex: 0 0 auto` |
+| `grow` | `flex-grow: 1` |
+| `grow-0` | `flex-grow: 0` |
+| `shrink` | `flex-shrink: 1` |
+| `shrink-0` | `flex-shrink: 0` |
+
+---
+
+## Align Items
+
+| Class | CSS Output |
+|-------|------------|
+| `items-start` | `align-items: flex-start` |
+| `items-center` | `align-items: center` |
+| `items-end` | `align-items: flex-end` |
+| `items-baseline` | `align-items: baseline` |
+| `items-stretch` | `align-items: stretch` |
+
+---
+
+## Justify Content
+
+| Class | CSS Output |
+|-------|------------|
+| `justify-start` | `justify-content: flex-start` |
+| `justify-center` | `justify-content: center` |
+| `justify-end` | `justify-content: flex-end` |
+| `justify-between` | `justify-content: space-between` |
+| `justify-around` | `justify-content: space-around` |
+| `justify-evenly` | `justify-content: space-evenly` |
+
+---
+
+## Align Self
+
+| Class | CSS Output |
+|-------|------------|
+| `self-auto` | `align-self: auto` |
+| `self-start` | `align-self: flex-start` |
+| `self-center` | `align-self: center` |
+| `self-end` | `align-self: flex-end` |
+| `self-stretch` | `align-self: stretch` |
+| `self-baseline` | `align-self: baseline` |
+
+---
+
+## Position
+
+| Class | CSS Output |
+|-------|------------|
+| `relative` | `position: relative` |
+| `absolute` | `position: absolute` |
+
+### Inset
+
+| Class | Description |
+|-------|-------------|
+| `inset-{n}` | All sides (top, right, bottom, left) |
+| `inset-0` | `top: 0; right: 0; bottom: 0; left: 0` |
+| `top-{n}` | Top position |
+| `right-{n}` | Right position |
+| `bottom-{n}` | Bottom position |
+| `left-{n}` | Left position |
+
+---
+
+## Example: Centered Layout
+
+```typescript
+stack('flex items-center justify-center w-full h-full', [
+  span('text-6xl', 'Centered Content')
+])
+```
+
+## Example: Space Between
+
+```typescript
+row('flex justify-between items-center w-full p-8', [
+  span('text-xl', 'Left'),
+  span('text-xl', 'Right')
+])
+```

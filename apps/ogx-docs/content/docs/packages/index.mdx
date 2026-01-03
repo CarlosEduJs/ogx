@@ -1,0 +1,63 @@
+---
+title: Packages
+description: Explore the OGX package ecosystem
+---
+
+OGX is organized as a monorepo with modular packages. Each package serves a specific purpose in the OG image generation pipeline.
+
+## Package Overview
+
+<Cards>
+  <Card 
+    title="@ogxjs/core" 
+    href="/docs/packages/core"
+    description="The rendering engine. Handles layout building, Tailwind parsing, presets, and image generation."
+  />
+  <Card 
+    title="@ogxjs/next" 
+    href="/docs/packages/next"
+    description="Next.js adapter with Route Handler integration and edge runtime support."
+  />
+  <Card 
+    title="@ogxjs/react" 
+    href="/docs/packages/react"
+    description="React JSX components for building OG images with familiar syntax."
+  />
+</Cards>
+
+## Architecture
+
+The packages form a layered architecture:
+
+```
+┌─────────────────────────────────────────────┐
+│     @ogxjs/next   │    @ogxjs/react         │  ← Framework Adapters
+├─────────────────────────────────────────────┤
+│                 @ogxjs/core                 │  ← Engine
+│  ┌─────────┐  ┌─────────┐  ┌─────────────┐  │
+│  │ Builder │  │ Presets │  │  Tailwind   │  │
+│  │   API   │  │         │  │   Parser    │  │
+│  └─────────┘  └─────────┘  └─────────────┘  │
+├─────────────────────────────────────────────┤
+│           Satori (SVG) + Resvg (PNG)        │  ← Renderers
+└─────────────────────────────────────────────┘
+```
+
+- **@ogxjs/core**: The foundation. Everything you need to create OG images.
+- **@ogxjs/next**: Zero-config integration for Next.js projects.
+- **@ogxjs/react**: JSX-based component system for React developers.
+
+## Installation
+
+Install only the packages you need:
+
+```bash
+# Core only (for custom setups)
+npm install @ogxjs/core
+
+# Next.js projects
+npm install @ogxjs/next
+
+# React projects (includes core)
+npm install @ogxjs/react
+```

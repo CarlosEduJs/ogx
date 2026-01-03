@@ -1,0 +1,91 @@
+---
+title: Borders
+description: Border width, radius, and color utilities
+---
+
+## Border Width
+
+| Class | CSS Output |
+|-------|------------|
+| `border` | `border-width: 1px` |
+| `border-0` | `border-width: 0` |
+| `border-2` | `border-width: 2px` |
+| `border-4` | `border-width: 4px` |
+| `border-8` | `border-width: 8px` |
+
+```typescript
+'border'          // 1px border
+'border-2'        // 2px border
+'border border-zinc-800' // 1px with color
+```
+
+---
+
+## Border Radius
+
+| Class | Radius |
+|-------|--------|
+| `rounded` | 4px |
+| `rounded-none` | 0 |
+| `rounded-sm` | 2px |
+| `rounded-md` | 6px |
+| `rounded-lg` | 8px |
+| `rounded-xl` | 12px |
+| `rounded-2xl` | 16px |
+| `rounded-3xl` | 24px |
+| `rounded-full` | 9999px |
+
+```typescript
+'rounded-xl'      // 12px radius
+'rounded-full'    // Fully rounded (circles)
+'rounded-2xl'     // 16px radius
+```
+
+---
+
+## Border Color
+
+Use any Tailwind color for borders:
+
+```typescript
+'border-zinc-800'
+'border-white/20'
+'border-indigo-500'
+'border-[#333333]'
+```
+
+### With Opacity
+
+```typescript
+'border-white/10'   // 10% opacity
+'border-zinc-500/20' // 20% opacity
+```
+
+---
+
+## Example: Card Border
+
+```typescript
+stack('border border-zinc-800 rounded-2xl p-8 bg-zinc-950', [
+  span('text-white', 'Card Content')
+])
+```
+
+## Example: Avatar
+
+```typescript
+img({
+  src: '/avatar.png',
+  tw: 'w-16 h-16 rounded-full border-2 border-white'
+})
+```
+
+## Example: Input Style
+
+```typescript
+div({
+  tw: 'border border-zinc-700 rounded-lg px-4 py-2 bg-zinc-900'
+}, [
+  span('text-zinc-400', 'Placeholder text')
+])
+```
