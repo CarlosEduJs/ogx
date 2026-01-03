@@ -1,6 +1,6 @@
 /**
  * Integration test - generate a real PNG image
- * Run with: bun run src/__tests__/integration.test.ts
+ * Run with: pnpm tsx src/__tests__/integration.test.ts
  */
 
 import { mkdir, writeFile } from "node:fs/promises";

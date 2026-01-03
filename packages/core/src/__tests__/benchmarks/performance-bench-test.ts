@@ -1,6 +1,6 @@
 /**
  * Performance Benchmark Test
- * Run with: bun run src/__tests__/performance-bench-test.ts
+ * Run with: pnpm tsx src/__tests__/performance-bench-test.ts
  */
 
 import { fontRegistry, ogx } from "../../index";

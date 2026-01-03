@@ -2,7 +2,9 @@
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"noEmit": true,
+		"noUncheckedIndexedAccess": false,
 		"types": ["bun-types", "node"]
 	},
-	"include": ["./**/*", "../**/*"]
+	"include": ["./**/*", "../**/*"],
+	"exclude": []
 }

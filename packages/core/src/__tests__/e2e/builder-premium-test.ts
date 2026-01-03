@@ -1,5 +1,5 @@
 /**
- * Run with: bun run src/__tests__/builder-premium-test.ts
+ * Run with: pnpm tsx src/__tests__/builder-premium-test.ts
  */
 
 import { mkdir, writeFile } from "node:fs/promises";

@@ -1,6 +1,6 @@
 /**
  * Test Shadows and Per-element Dark Mode
- * Run with: bun run src/__tests__/shadow-dark-test.ts
+ * Run with: pnpm tsx src/__tests__/shadow-dark-test.ts
  */
 
 import { mkdir, writeFile } from "node:fs/promises";

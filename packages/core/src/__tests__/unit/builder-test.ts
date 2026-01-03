@@ -1,6 +1,6 @@
 /**
  * Test Builder API (h, div, span, img, stack, row)
- * Run with: bun run src/__tests__/builder-test.ts
+ * Run with: pnpm tsx src/__tests__/builder-test.ts
  */
 
 import { mkdir, writeFile } from "node:fs/promises";
