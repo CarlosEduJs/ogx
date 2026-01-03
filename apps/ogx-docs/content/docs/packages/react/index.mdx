@@ -43,16 +43,24 @@ OGX augments React's types to include a `tw` prop on standard HTML elements. Thi
 > [!NOTE]
 > Make sure to import `@ogxjs/react` or include its types in your `tsconfig.json` to get full autocomplete for the `tw` prop.
 
-## Browser Support
+## Browser Support (Live Preview)
 
-One of the best features of `@ogxjs/react` is its full browser compatibility. You can create live previews using `renderToSVG` from the browser-safe module.
+One of the best features of `@ogxjs/react` is its full browser compatibility. Unlike most OG image generators that require Node.js, you can create **live previews directly in the browser** using `renderToSVG` from the browser-safe module.
+
+This is perfect for:
+- **Interactive playgrounds** - Let users preview OG images in real-time
+- **Visual editors** - Build WYSIWYG tools for OG image creation
+- **Design systems** - Preview OG images alongside your UI components
 
 ```tsx
 import { renderToSVG } from '@ogxjs/react/svg';
 
 const svg = await renderToSVG(<MyOGImage />);
-// Use svg directly in dangerouslySetInnerHTML
+// Use svg directly in dangerouslySetInnerHTML or as an img src
 ```
+
+> [!TIP]
+> The `/svg` module has zero Node.js dependencies, making it safe to use in any browser environment.
 
 ## Next Steps
 
