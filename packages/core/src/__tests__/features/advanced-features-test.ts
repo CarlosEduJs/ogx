@@ -1,6 +1,6 @@
 /**
  * Test Advanced Features: Auto Text Fitting and Snapshot Cache
- * Run with: bun run src/__tests__/advanced-features-test.ts
+ * Run with: pnpm tsx src/__tests__/advanced-features-test.ts
  */
 
 import { mkdir, writeFile } from "node:fs/promises";

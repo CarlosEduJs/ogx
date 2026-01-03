@@ -1,6 +1,6 @@
 /**
  * Test custom theme support
- * Run with: bun run src/__tests__/theme-test.ts
+ * Run with: pnpm tsx src/__tests__/theme-test.ts
  */
 
 import { mkdir, writeFile } from "node:fs/promises";

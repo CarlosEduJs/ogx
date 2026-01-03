@@ -1,6 +1,6 @@
 /**
  * Test Background Patterns (Grids, Dots, Lines)
- * Run with: bun run src/__tests__/patterns-test.ts
+ * Run with: pnpm tsx src/__tests__/patterns-test.ts
  */
 
 import { mkdir, writeFile } from "node:fs/promises";

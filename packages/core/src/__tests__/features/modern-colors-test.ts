@@ -1,6 +1,6 @@
 /**
  * Test OKLCH and HSL color support
- * Run with: bun run src/__tests__/modern-colors-test.ts
+ * Run with: pnpm tsx src/__tests__/modern-colors-test.ts
  */
 
 import { mkdir, writeFile } from "node:fs/promises";
