@@ -1,4 +1,15 @@
 {
 	"title": "Tailwind",
-	"pages": ["...", "colors", "patterns", "shadows", "theming"]
+	"pages": [
+		"...",
+		"layout",
+		"spacing",
+		"typography",
+		"colors",
+		"borders",
+		"effects",
+		"shadows",
+		"patterns",
+		"theming"
+	]
 }

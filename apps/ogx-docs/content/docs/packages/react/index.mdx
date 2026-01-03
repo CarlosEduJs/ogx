@@ -32,7 +32,7 @@ const png = await render(<MyOGImage />);
 
 ## The `tw` Prop
 
-OGX augments React's types to include a `tw` prop on standard HTML elements. This allows you to use Tailwind CSS utility classes directly, just like you would in a normal React application.
+OGX augments React's types to include a `tw` prop on standard HTML elements. This allows you to use Tailwind CSS utility classes directly.
 
 ```tsx
 <div tw="bg-blue-500 p-8 rounded-xl shadow-2xl">
@@ -43,46 +43,21 @@ OGX augments React's types to include a `tw` prop on standard HTML elements. Thi
 > [!NOTE]
 > Make sure to import `@ogxjs/react` or include its types in your `tsconfig.json` to get full autocomplete for the `tw` prop.
 
-## Layout Components
+## Browser Support
 
-To make building OG images even faster, `@ogxjs/react` exports several pre-styled layout components that wrap core OGX primitives.
-
-### `Box`
-The foundation for most layouts. A flexible container with support for all Tailwind utilities.
-
-```tsx
-import { Box } from '@ogxjs/react';
-
-<Box tw="bg-zinc-900 border border-zinc-800 p-10 rounded-3xl">
-  {/* Content */}
-</Box>
-```
-
-### `Stack` and `Row`
-Specialized containers for vertical and horizontal layouts.
-
-```tsx
-import { Stack, Row } from '@ogxjs/react';
-
-<Stack tw="gap-4">
-  <h1 tw="text-5xl">Title</h1>
-  <Row tw="gap-2 items-center">
-    <img src="/avatar.png" tw="w-10 h-10 rounded-full" />
-    <span tw="text-xl">Author Name</span>
-  </Row>
-</Stack>
-```
-
-## Browser Support (Live Preview)
-
-One of the best features of `@ogxjs/react` is its full browser compatibility. You can create live previews in your UI using `renderToSVG` from the browser-safe module.
+One of the best features of `@ogxjs/react` is its full browser compatibility. You can create live previews using `renderToSVG` from the browser-safe module.
 
 ```tsx
 import { renderToSVG } from '@ogxjs/react/svg';
-import { MyOGImage } from './components';
 
 const svg = await renderToSVG(<MyOGImage />);
 // Use svg directly in dangerouslySetInnerHTML
 ```
 
-Check out the [Vanilla React Example](/docs/examples/react-vanilla) to see it in action.
+## Next Steps
+
+<Cards>
+  <Card title="Layout Components" href="/docs/packages/react/components" description="Box, Stack, Row, Absolute, Grid" />
+  <Card title="Typography" href="/docs/packages/react/typography" description="H1, H2, P, Span" />
+  <Card title="Utilities" href="/docs/packages/react/utilities" description="Spacer, Card, Badge" />
+</Cards>

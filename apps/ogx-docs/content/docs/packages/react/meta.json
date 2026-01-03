@@ -1,4 +1,4 @@
 {
 	"title": "@ogxjs/react",
-	"pages": ["..."]
+	"pages": ["...", "components", "typography", "utilities"]
 }
