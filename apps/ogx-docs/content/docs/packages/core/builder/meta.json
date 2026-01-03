@@ -1,5 +1,4 @@
 {
-	"root": true,
 	"title": "Builder API",
 	"pages": ["...", "primitives", "layout", "fluent"]
 }

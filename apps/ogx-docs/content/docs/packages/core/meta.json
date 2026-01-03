@@ -1,0 +1,19 @@
+{
+	"title": "@ogxjs/core",
+	"pages": [
+		"...",
+		"ogx-function",
+		"render",
+		"fonts",
+		"assets",
+		"cache",
+		"platforms",
+		"---",
+		"builder",
+		"presets",
+		"tailwind",
+		"---",
+		"performance",
+		"perf-tools"
+	]
+}

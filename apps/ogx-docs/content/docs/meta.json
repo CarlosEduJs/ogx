@@ -1,13 +1,4 @@
 {
 	"root": true,
-	"pages": [
-		"index",
-		"getting-started",
-		"adapters",
-		"core",
-		"presets",
-		"builder",
-		"tailwind",
-		"examples"
-	]
+	"pages": ["index", "getting-started", "packages", "examples"]
 }

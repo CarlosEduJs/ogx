@@ -1,5 +1,4 @@
 {
-	"root": true,
 	"title": "Tailwind",
 	"pages": ["...", "colors", "patterns", "shadows", "theming"]
 }
