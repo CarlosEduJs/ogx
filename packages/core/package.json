@@ -1,7 +1,7 @@
 {
 	"name": "@ogxjs/core",
-	"version": "0.2.0-alpha.1",
-	"description": "High-performance Open Graph image generator with Tailwind CSS support - v0.2.0 Turbo",
+	"version": "0.3.0",
+	"description": "High-performance Open Graph image generator with Tailwind CSS support - v0.3.0 Universal Fonts",
 	"author": "Carlos Eduardo",
 	"repository": {
 		"type": "git",
@@ -43,7 +43,7 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "tsc && mkdir -p dist/fonts/inter && cp src/fonts/inter/*.ttf dist/fonts/inter/",
+		"build": "tsc",
 		"dev": "tsc --watch",
 		"check-types": "tsc --noEmit",
 		"test": "vitest run",
@@ -58,11 +58,9 @@
 		"satori": "^0.12.1"
 	},
 	"devDependencies": {
-		"@types/bun": "^1.2.4",
 		"@types/node": "^20.19.27",
 		"@vercel/og": "^0.8.6",
 		"@vitest/ui": "^4.0.16",
-		"bun-types": "^1.3.5",
 		"tsx": "^4.21.0",
 		"vitest": "^4.0.16"
 	},

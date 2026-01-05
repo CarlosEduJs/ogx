@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [@ogxjs/core 0.3.0] - 2026-01-04 "Universal Fonts"
+
+### Added
+- `loadGoogleFont(fontName, weights)` - Load any Google Font by name from CDN
+- `loadFontFromFile(path, options)` - Load custom local fonts (next/font pattern)
+- `fontRegistry.registerGoogleFont(fontName, weights)` - Register Google Fonts globally
+- `fontRegistry.registerFontFromFile(path, options)` - Register local fonts globally
+- Universal font loading system with CDN-based defaults (Bunny Fonts)
+- Support for any Google Font without bundling
+- Support for custom local fonts in Next.js projects
+
+### Changed
+- **BREAKING**: Removed bundled Inter font files from package (~340KB reduction)
+- **BREAKING**: Default font loading now uses CDN instead of bundled files
+- Deprecated `loadInterFont()` (use `loadInterFromUrl()` instead, will be removed in v1.0.0)
+- Deprecated `fontRegistry.registerInter()` (use `registerInterFromUrl()` instead, will be removed in v1.0.0)
+- Updated `ogx()` and `ogxToSVG()` to use CDN-based font loading by default
+- Updated build script to remove font file copying
+- Package size reduced from ~620KB to ~576KB
+- All tests updated to use CDN-based font loading
+
+### Fixed
+- Network dependency for font loading (now requires internet access on first render, fonts are cached)
+- Migration path: Replace `loadInterFont()` with `loadInterFromUrl()` for CDN loading
+- Migration path: Use `loadGoogleFont()` or `loadFontFromFile()` for custom fonts
+
+
 ## [@ogxjs/core 0.2.0-alpha.1] - 2026-01-02 "Turbo"
 
 ### Performance - Parser v2 "Turbo"

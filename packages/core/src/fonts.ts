@@ -108,6 +108,7 @@ export async function loadInterFromUrl(
  * Load Inter font from local file
  * Only works in Bun/Node without bundlers
  * Supports weights: 300 (Light), 400 (Regular), 500 (Medium), 600 (SemiBold), 700 (Bold)
+ * @deprecated Use loadInterFromUrl() for universal compatibility. This function will be removed in v1.0.0
  */
 export async function loadInterFont(
 	weight: 300 | 400 | 500 | 600 | 700 = 400,
@@ -145,4 +146,52 @@ export async function loadInterFont(
 
 	const data = await loadFont(path);
 	return createFont("Inter", data, { weight });
+}
+
+/**
+ * Load any Google Font by name with specified weights
+ * Uses Bunny Fonts CDN (privacy-friendly Google Fonts mirror)
+ * @param fontName - Name of the Google Font (e.g., 'Roboto', 'Poppins', 'Playfair Display')
+ * @param weights - Array of font weights to load (default: [400, 700])
+ * @returns Promise resolving to array of FontConfig objects
+ */
+export async function loadGoogleFont(
+	fontName: string,
+	weights: (100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900)[] = [400, 700],
+): Promise<FontConfig[]> {
+	// Normalize font name for URL (replace spaces with hyphens, lowercase)
+	const urlFontName = fontName.toLowerCase().replace(/\s+/g, "-");
+
+	const fontConfigs = await Promise.all(
+		weights.map(async (weight) => {
+			// Use Bunny Fonts CDN (privacy-friendly alternative to Google Fonts)
+			const url = `https://fonts.bunny.net/${urlFontName}/files/${urlFontName}-latin-${weight}-normal.woff`;
+			const data = await loadFontFromUrl(url);
+			return createFont(fontName, data, { weight });
+		}),
+	);
+
+	return fontConfigs;
+}
+
+/**
+ * Load a font from a local file path
+ * Useful for loading custom fonts or integrating with next/font/local
+ * @param path - Path to the font file (relative or absolute)
+ * @param options - Font configuration options
+ * @returns Promise resolving to FontConfig object
+ */
+export async function loadFontFromFile(
+	path: string,
+	options: {
+		name: string;
+		weight?: FontConfig["weight"];
+		style?: FontConfig["style"];
+	},
+): Promise<FontConfig> {
+	const data = await loadFont(path);
+	return createFont(options.name, data, {
+		weight: options.weight,
+		style: options.style,
+	});
 }

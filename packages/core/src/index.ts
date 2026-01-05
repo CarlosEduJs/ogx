@@ -5,13 +5,11 @@
  * Generate beautiful Open Graph images using Tailwind CSS classes.
  * Built for Node.js, Bun, and Deno.
  *
- * @version 0.2.0 "Turbo"
+ * @version 0.3.0 "Universal Fonts"
  * @see https://ogx-three.vercel.app
  */
 
-// ═══════════════════════════════════════════════════════════════════════════
 // BUILDER - Element construction
-// ═══════════════════════════════════════════════════════════════════════════
 export {
 	absolute,
 	badge,
@@ -42,9 +40,7 @@ export type {
 	SnapshotCacheOptions,
 	SnapshotCacheStats,
 } from "./cache/index";
-// ═══════════════════════════════════════════════════════════════════════════
 // CACHE - v2 with LRU + Fast Hash
-// ═══════════════════════════════════════════════════════════════════════════
 export {
 	configureSnapshotCache,
 	fastHash,
@@ -54,29 +50,23 @@ export {
 	LRUCache,
 	snapshotCache,
 } from "./cache/index";
-// ═══════════════════════════════════════════════════════════════════════════
 // TYPES
-// ═══════════════════════════════════════════════════════════════════════════
 export type { CSSProperties } from "./css";
-// ═══════════════════════════════════════════════════════════════════════════
 // FONTS - Loading and registration
-// ═══════════════════════════════════════════════════════════════════════════
 export { fontRegistry } from "./font-registry";
 export {
 	createFont,
 	loadFont,
+	loadFontFromFile,
 	loadFontFromUrl,
+	loadGoogleFont,
 	loadInterFont,
 	loadInterFromUrl,
 } from "./fonts";
-// ═══════════════════════════════════════════════════════════════════════════
 // RENDERING - SVG and PNG generation
-// ═══════════════════════════════════════════════════════════════════════════
 export { ogx, ogxToSVG } from "./ogx";
 export type { TimingAggregate, TimingEntry, TimingReport } from "./perf";
-// ═══════════════════════════════════════════════════════════════════════════
 // PERFORMANCE - Timing API
-// ═══════════════════════════════════════════════════════════════════════════
 export {
 	benchmark,
 	benchmarkSync,
@@ -91,9 +81,7 @@ export type {
 	MinimalPresetProps,
 	SocialPresetProps,
 } from "./presets";
-// ═══════════════════════════════════════════════════════════════════════════
 // PRESETS - Ready-to-use templates
-// ═══════════════════════════════════════════════════════════════════════════
 export {
 	blogPreset,
 	docsPreset,
@@ -104,9 +92,7 @@ export {
 export { render } from "./render-png";
 export { renderToSVG } from "./render-svg";
 export type { CacheStats, GradientState, ParseContext } from "./tailwind";
-// ═══════════════════════════════════════════════════════════════════════════
 // TAILWIND - Parser v2 with O(1) lookups
-// ═══════════════════════════════════════════════════════════════════════════
 export {
 	clearAllCaches,
 	getCacheStats,
@@ -116,9 +102,7 @@ export {
 	STATIC_CLASSES,
 } from "./tailwind";
 export type { Platform } from "./targets";
-// ═══════════════════════════════════════════════════════════════════════════
 // PLATFORM - Target dimensions
-// ═══════════════════════════════════════════════════════════════════════════
 export { getPlatformDimensions } from "./targets";
 export type {
 	FontConfig,
@@ -134,9 +118,7 @@ export type {
 	ThemeConfig,
 } from "./types";
 
-// ═══════════════════════════════════════════════════════════════════════════
 // UTILITIES
-// ═══════════════════════════════════════════════════════════════════════════
 export { loadAsset, toDataUri } from "./utils/assets";
 export type { FitTextOptions } from "./utils/text";
 export { calculateFittingFontSize } from "./utils/text";
