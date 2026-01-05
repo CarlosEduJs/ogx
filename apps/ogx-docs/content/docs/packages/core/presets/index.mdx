@@ -33,7 +33,7 @@ Presets are pre-designed layouts that handle common OG image patterns. They acce
 ```typescript
 import { fontRegistry, ogx } from '@ogxjs/core';
 
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 
 const png = await ogx({
   preset: 'docs',

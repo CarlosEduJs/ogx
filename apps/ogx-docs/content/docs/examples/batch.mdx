@@ -13,7 +13,7 @@ import { writeFile, mkdir } from 'fs/promises';
 
 const platforms = ['meta', 'twitter', 'instagram', 'pinterest'] as const;
 
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 await mkdir('output', { recursive: true });
 
 const results = await Promise.all(
@@ -53,7 +53,7 @@ interface Post {
 }
 
 async function generateBlogImages(posts: Post[]) {
-  await fontRegistry.registerInter([400, 700]);
+  await fontRegistry.registerInterFromUrl([400, 700]);
 
   return Promise.all(
     posts.map(async (post) => {
@@ -76,7 +76,7 @@ Track progress for large batches:
 
 ```typescript
 async function generateWithProgress(items: string[]) {
-  await fontRegistry.registerInter([400, 700]);
+  await fontRegistry.registerInterFromUrl([400, 700]);
 
   let completed = 0;
 

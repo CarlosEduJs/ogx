@@ -12,7 +12,7 @@ import { fontRegistry } from '@ogxjs/core';
 import { ogx } from '@ogxjs/core/png';
 
 // Register fonts (required once)
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 
 // Generate image (Node.js/Bun only)
 const png = await ogx({
@@ -43,7 +43,7 @@ For full control, use the `render` function with the Builder API:
 import { fontRegistry, stack, span } from '@ogxjs/core';
 import { render } from '@ogxjs/core/png';
 
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 
 const png = await render(
   stack('w-full h-full bg-zinc-950 p-16 justify-center items-center', [
