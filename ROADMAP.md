@@ -4,7 +4,7 @@
 
 ## Current State
 
-- **@ogxjs/core**: `0.2.0-alpha.1` "Turbo" - New parser, sync caching, and better performance tools.
+- **@ogxjs/core**: `0.3.0` "Universal Fonts" - Universal font loading, Google Fonts support, CDN-based by default.
 - **@ogxjs/next**: `0.1.1` - Simple adapter for Next.js Route Handlers.
 - **@ogxjs/react**: `0.1.2` - JSX components using the same `tw` prop you know.
 - **@ogxjs/tanstack-start**: `0.1.0` - Coming soon!
@@ -30,22 +30,29 @@ A CLI that lets you generate images right from your terminal or build scripts. T
 
 ---
 
-#### 2. Flexible Font System (Geist + Fallback)
-**Branch**: `feat/core-fonts`  
-**Priority**: HIGH (Phase 1)
+#### 2. ✅ Flexible Font System (Universal Fonts)
+**Branch**: `chore/reduce-core-size` (Completed)  
+**Status**: ✅ **Released in v0.3.0**
 
-Custom fonts were the #1 request. We're making it super simple to load any font via URL (Google Fonts, Fontsource, etc.) while keeping Inter as a reliable fallback if anything goes wrong.
+Custom fonts are now fully supported! Load any Google Font or use local fonts with `loadGoogleFont()` and `loadFontFromFile()`. CDN-based loading is the default, with no bundled fonts.
+
+**Completed Features**:
+- ✅ `loadGoogleFont()` - Load any Google Font by name
+- ✅ `loadFontFromFile()` - Load custom local fonts
+- ✅ Font registry helpers: `registerGoogleFont()`, `registerFontFromFile()`
+- ✅ CDN-based loading by default (no bundled fonts)
+- ✅ Package size reduced from ~620KB to ~576KB
 
 **Example**:
 ```typescript
+import { ogx, loadGoogleFont } from '@ogxjs/core';
+
+const fonts = await loadGoogleFont('Poppins', [400, 600, 700]);
+
 await ogx({
   preset: 'docs',
-  fonts: {
-    primary: { 
-      url: 'https://fonts.googleapis.com/css2?family=Geist:wght@400;700',
-      fallback: 'inter'
-    }
-  }
+  slots: { title: 'Hello' },
+  fonts
 });
 ```
 
@@ -166,7 +173,7 @@ Parity with the Next.js adapter for progressive image rendering.
 
 ### Phase 1 - Foundations (Q1 2026)
 1. **CLI Tool** - The foundation for static/CI workflows.
-2. **Flexible Fonts** - Custom font support for everyone.
+2. ✅ **Flexible Fonts** - ✅ Completed in v0.3.0 - Universal font loading with Google Fonts and local font support.
 3. **Core Polish** - Refining the "Turbo" engine.
 
 ### Phase 2 - Performance (Q1-Q2 2026)

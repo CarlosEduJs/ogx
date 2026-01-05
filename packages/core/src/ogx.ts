@@ -1,6 +1,6 @@
 import { snapshotCache } from "./cache";
 import { fontRegistry } from "./font-registry";
-import { loadInterFont } from "./fonts";
+import { loadInterFromUrl } from "./fonts";
 import { render } from "./render-png";
 import { renderToSVG } from "./render-svg";
 import type { FontConfig, OGXConfig, Platform, PresetName } from "./types";
@@ -67,11 +67,11 @@ export async function ogx<T extends PresetName>(
 	}
 	if (resolvedFonts.length === 0) {
 		resolvedFonts = [
-			await loadInterFont(300),
-			await loadInterFont(400),
-			await loadInterFont(500),
-			await loadInterFont(600),
-			await loadInterFont(700),
+			await loadInterFromUrl(300),
+			await loadInterFromUrl(400),
+			await loadInterFromUrl(500),
+			await loadInterFromUrl(600),
+			await loadInterFromUrl(700),
 		];
 	}
 
@@ -152,11 +152,11 @@ export async function ogxToSVG<T extends PresetName>(
 	}
 	if (resolvedFonts.length === 0) {
 		resolvedFonts = [
-			await loadInterFont(300),
-			await loadInterFont(400),
-			await loadInterFont(500),
-			await loadInterFont(600),
-			await loadInterFont(700),
+			await loadInterFromUrl(300),
+			await loadInterFromUrl(400),
+			await loadInterFromUrl(500),
+			await loadInterFromUrl(600),
+			await loadInterFromUrl(700),
 		];
 	}
 

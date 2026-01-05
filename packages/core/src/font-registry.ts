@@ -38,6 +38,7 @@ export class FontRegistry {
 	/**
 	 * Helper to register Inter fonts with specified weights (local files)
 	 * Only works in Bun/Node without bundlers
+	 * @deprecated Use registerInterFromUrl() for universal compatibility. This method will be removed in v1.0.0
 	 */
 	async registerInter(
 		weights: (300 | 400 | 500 | 600 | 700)[] = [400, 700],
@@ -57,6 +58,32 @@ export class FontRegistry {
 		const { loadInterFromUrl } = await import("./fonts");
 		const fonts = await Promise.all(weights.map((w) => loadInterFromUrl(w)));
 		this.register(fonts);
+	}
+
+	/**
+	 * Helper to register any Google Font by name
+	 * Works with all bundlers (Next.js, Vite, etc.)
+	 */
+	async registerGoogleFont(
+		fontName: string,
+		weights?: (100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900)[],
+	): Promise<void> {
+		const { loadGoogleFont } = await import("./fonts");
+		const fonts = await loadGoogleFont(fontName, weights);
+		this.register(fonts);
+	}
+
+	/**
+	 * Helper to register a font from a local file
+	 * Works in Node.js environments (Route Handlers, API routes)
+	 */
+	async registerFontFromFile(
+		path: string,
+		options: { name: string; weight?: number; style?: string },
+	): Promise<void> {
+		const { loadFontFromFile } = await import("./fonts");
+		const font = await loadFontFromFile(path, options as any);
+		this.register(font);
 	}
 
 	/**

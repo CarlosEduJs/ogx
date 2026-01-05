@@ -6,7 +6,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadInterFont } from "../../fonts";
+import { loadInterFromUrl } from "../../fonts";
 import {
 	absolute,
 	div,
@@ -32,8 +32,8 @@ async function main() {
 
 	// 1. Setup fonts in registry once
 	console.log("Registering fonts...");
-	fontRegistry.register(await loadInterFont(400));
-	fontRegistry.register(await loadInterFont(700));
+	fontRegistry.register(await loadInterFromUrl(400));
+	fontRegistry.register(await loadInterFromUrl(700));
 
 	// 2. Create complex layout with ergonomic API
 	console.log("Generating layout with Builder API...");
