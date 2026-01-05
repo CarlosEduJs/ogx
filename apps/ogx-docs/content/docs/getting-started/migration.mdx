@@ -139,7 +139,7 @@ OGX includes Inter font by default. No need to load font files manually:
 const font = await fetch("https://...").then(r => r.arrayBuffer());
 
 // OGX - built-in
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 ```
 
 ### 4. Caching

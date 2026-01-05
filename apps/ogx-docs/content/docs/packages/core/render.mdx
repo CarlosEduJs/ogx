@@ -13,7 +13,7 @@ Use the `/png` module for high-performance PNG generation.
 import { fontRegistry, stack, span } from '@ogxjs/core';
 import { render } from '@ogxjs/core/png';
 
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 
 const png = await render(
   stack('w-full h-full bg-zinc-950 p-16 items-center justify-center', [

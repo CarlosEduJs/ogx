@@ -47,7 +47,7 @@ import { fontRegistry } from '@ogxjs/core';
 import { ogx } from '@ogxjs/core/png';
 
 // Register fonts once
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 
 // Build a documentation-style image in seconds
 const png = await ogx({

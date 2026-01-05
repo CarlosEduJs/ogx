@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"noEmit": true,
 		"noUncheckedIndexedAccess": false,
-		"types": ["bun-types", "node"]
+		"types": ["node"]
 	},
 	"include": ["./**/*", "../**/*"],
 	"exclude": []

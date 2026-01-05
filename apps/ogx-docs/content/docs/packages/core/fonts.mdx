@@ -1,75 +1,234 @@
 ---
 title: Fonts
-description: Font registration and management
+description: Universal font loading and management
 ---
 
-OGX requires fonts to be registered before rendering. The `fontRegistry` provides a simple API for this.
+OGX v0.3.0 introduces **Universal Font Loading** - load any Google Font or custom local fonts without bundling. Fonts are loaded from CDN by default.
 
-## Strategies: CDN vs. Local
-
-OGX provides two ways to load fonts. Choosing the right one depends on your deployment environment and technical requirements.
-
-### 1. Automatic CDN Loading (Recommended for Cloud)
-
-This is the default for framework adapters like `@ogxjs/next`. It uses `fetch` to load fonts from a high-speed CDN.
+## Quick Start
 
 ```typescript
 import { fontRegistry } from '@ogxjs/core';
 
-// Fetches from https://fonts.bunny.net
+// Load any Google Font by name
+await fontRegistry.registerGoogleFont('Poppins', [400, 600, 700]);
+
+// Or use Inter (default)
 await fontRegistry.registerInterFromUrl([400, 700]);
 ```
 
-- **Pros**: Zero-config; "Works on my machine" and in production; Compatible with **Vercel Edge**, **Cloudflare Workers**, and all bundlers (Vite/Webpack).
-- **Cons**: Requires internet access during first render (or until cached); External dependency.
+---
 
-### 2. Local Font Files (Recommended for Static/Offline)
+## Loading Strategies
 
-If you have Inter font files locally in your project, use the standard `registerInter` method.
+### 1. Google Fonts (Recommended)
+
+Load any Google Font by name using Bunny Fonts CDN (privacy-friendly):
+
+```typescript
+import { loadGoogleFont, fontRegistry } from '@ogxjs/core';
+
+// Direct loading
+const fonts = await loadGoogleFont('Roboto', [400, 700]);
+
+// Or register globally
+await fontRegistry.registerGoogleFont('Playfair Display', [400, 700, 900]);
+await fontRegistry.registerGoogleFont('Inter', [400, 600]);
+```
+
+**Available fonts**: Any font from [Google Fonts](https://fonts.google.com) works automatically.
+
+**Weights**: Common weights are `100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`.
+
+### 2. Inter Font (Default Fallback)
+
+If no fonts are registered, OGX loads Inter from CDN automatically:
 
 ```typescript
 import { fontRegistry } from '@ogxjs/core';
 
-// Attempts to read files from ./fonts/inter within the package or project
-await fontRegistry.registerInter([400, 700]);
+// Explicit registration (recommended for control)
+await fontRegistry.registerInterFromUrl([400, 700]);
 ```
 
-- **Pros**: 100% offline; No external requests; Privacy-first; Slightly faster if files are on local disk.
-- **Cons**: **Bundler Treachery**—Next.js and Vite often move assets during build, causing "file not found" errors in production unless you configure `assets` correctly.
+### 3. Custom Local Fonts
+
+Load fonts from your project's file system:
+
+```typescript
+import { loadFontFromFile, fontRegistry } from '@ogxjs/core';
+import path from 'path';
+
+// Direct loading
+const brandFont = await loadFontFromFile(
+  path.join(process.cwd(), 'public/fonts/BrandFont.woff2'),
+  { name: 'BrandFont', weight: 700 }
+);
+
+// Or register globally
+await fontRegistry.registerFontFromFile(
+  './app/fonts/CustomFont.woff2',
+  { name: 'CustomFont', weight: 400 }
+);
+```
+
+> [!NOTE]
+> Local font loading only works in Node.js environments (Route Handlers, API routes). Use CDN loading for Edge runtimes.
 
 ---
 
-## Technical Background: Why this matters?
+## Usage Patterns
 
-Generating OG images on the fly usually happens in **Serverless Functions** or **Edge Runtimes**. 
+### Pattern 1: On-Demand Loading
 
-1. **Path Resolution**: In these environments, the traditional "current directory" (`__dirname`) doesn't always exist or point to where you think it does.
-2. **Bundling**: Tools like Webpack/Vite try to optimize assets, but Satori needs raw `ArrayBuffer` data. If the bundler doesn't "see" the font file, it won't be included in the deployment.
-
-> [!IMPORTANT]
-> If you are using **Next.js**, we strongly recommend **CDN Loading**. It eliminates 99% of path-related bugs in production.
-
-## Custom Local Fonts
-
-To register any other font, load the file as a buffer and pass it to the registry:
+Load fonts in each route handler:
 
 ```typescript
-import { fontRegistry, loadFont } from '@ogxjs/core';
+// app/api/og/route.tsx
+import { ogx, loadGoogleFont } from '@ogxjs/core';
 
-// loadFont is a browser-safe wrapper that uses node:fs in Node
-const data = await loadFont('./public/fonts/Custom.ttf');
+export async function GET() {
+  const fonts = await loadGoogleFont('Poppins', [400, 700]);
+  
+  const image = await ogx({
+    preset: 'blog',
+    slots: { title: 'My Post' },
+    fonts,
+  });
+  
+  return new Response(image, {
+    headers: { 'Content-Type': 'image/png' }
+  });
+}
+```
 
-fontRegistry.register({
+### Pattern 2: Global Registry (Recommended)
+
+Register fonts once and use everywhere:
+
+```typescript
+// app/lib/fonts.ts
+import { fontRegistry } from '@ogxjs/core';
+
+export async function initializeFonts() {
+  await fontRegistry.registerGoogleFont('Inter', [400, 600, 700]);
+}
+
+// app/layout.tsx
+import { initializeFonts } from './lib/fonts';
+initializeFonts();
+
+// app/api/og/route.tsx
+import { ogx } from '@ogxjs/core';
+
+export async function GET() {
+  // No fonts needed - uses registry automatically
+  const image = await ogx({
+    preset: 'blog',
+    slots: { title: 'My Post' }
+  });
+  
+  return new Response(image, {
+    headers: { 'Content-Type': 'image/png' }
+  });
+}
+```
+
+---
+
+## API Reference
+
+### `loadGoogleFont(fontName, weights)`
+
+Load any Google Font by name.
+
+```typescript
+const fonts = await loadGoogleFont('Roboto', [400, 700]);
+// Returns: FontConfig[]
+```
+
+### `loadFontFromFile(path, options)`
+
+Load a font from a local file.
+
+```typescript
+const font = await loadFontFromFile('./fonts/Custom.woff2', {
   name: 'CustomFont',
-  data,
-  weight: 400
+  weight: 400,
+  style: 'normal' // optional
+});
+// Returns: FontConfig
+```
+
+### `fontRegistry.registerGoogleFont(fontName, weights)`
+
+Register a Google Font globally.
+
+```typescript
+await fontRegistry.registerGoogleFont('Poppins', [400, 600, 700]);
+```
+
+### `fontRegistry.registerFontFromFile(path, options)`
+
+Register a local font globally.
+
+```typescript
+await fontRegistry.registerFontFromFile('./fonts/Brand.woff2', {
+  name: 'Brand',
+  weight: 700
 });
 ```
 
-## Get Registered Fonts
+### `fontRegistry.registerInterFromUrl(weights)`
 
-Access all registered fonts for custom render calls:
+Register Inter font from CDN.
+
+```typescript
+await fontRegistry.registerInterFromUrl([400, 700]);
+```
+
+### `fontRegistry.getFonts()`
+
+Get all registered fonts.
 
 ```typescript
 const fonts = fontRegistry.getFonts();
+// Returns: FontConfig[]
 ```
+
+---
+
+## Deprecated APIs
+
+> [!WARNING]
+> The following APIs are deprecated and will be removed in v1.0.0:
+
+| Deprecated | Use Instead |
+|------------|-------------|
+| `loadInterFont()` | `loadInterFromUrl()` |
+| `fontRegistry.registerInterFromUrl()` | `fontRegistry.registerInterFromUrl()` |
+
+These APIs were used to load fonts from bundled files. Since v0.3.0, fonts are loaded from CDN by default, eliminating the need for bundled font files.
+
+---
+
+## Technical Notes
+
+### CDN Provider
+
+OGX uses [Bunny Fonts](https://fonts.bunny.net) - a privacy-friendly Google Fonts mirror. No user tracking.
+
+### Caching
+
+Fonts are cached in memory after the first load. Subsequent renders reuse cached fonts.
+
+### Edge Runtime Compatibility
+
+CDN-based loading works everywhere:
+- ✅ Vercel Edge Functions
+- ✅ Cloudflare Workers
+- ✅ Node.js
+- ✅ Bun
+- ✅ Deno
+
+Local file loading (`loadFontFromFile`) requires Node.js filesystem access.

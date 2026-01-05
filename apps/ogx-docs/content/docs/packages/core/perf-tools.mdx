@@ -19,7 +19,7 @@ await ogx({ preset: 'docs', title: 'Test' });
 timer.end('render');
 
 timer.start('font-load');
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 timer.end('font-load');
 
 // Get formatted report

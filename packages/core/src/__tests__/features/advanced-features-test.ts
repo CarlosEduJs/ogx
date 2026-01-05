@@ -7,7 +7,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { snapshotCache } from "../../cache";
-import { loadInterFont } from "../../fonts";
+import { loadInterFromUrl } from "../../fonts";
 import { fontRegistry, ogx } from "../../index";
 import { calculateFittingFontSize } from "../../utils/text";
 
@@ -22,8 +22,8 @@ async function main() {
 
 	// 1. Prepare Fonts
 	console.log("Loading Inter fonts into Registry...");
-	const interRegular = await loadInterFont(400);
-	const interBold = await loadInterFont(700);
+	const interRegular = await loadInterFromUrl(400);
+	const interBold = await loadInterFromUrl(700);
 	fontRegistry.register(interRegular);
 	fontRegistry.register(interBold);
 

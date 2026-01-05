@@ -71,7 +71,7 @@ Register fonts before rendering to avoid per-request font loading:
 import { fontRegistry } from "@ogxjs/core";
 
 // Do this once at startup
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 ```
 
 ### Use Static Generation

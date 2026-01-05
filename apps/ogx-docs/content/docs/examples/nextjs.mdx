@@ -53,7 +53,7 @@ import { writeFile } from 'fs/promises';
 
 const pages = ['home', 'about', 'contact'];
 
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 
 for (const page of pages) {
   const png = await ogx({

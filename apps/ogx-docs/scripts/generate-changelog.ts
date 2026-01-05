@@ -8,7 +8,7 @@ interface Release {
 	description?: string;
 	npmLink: string;
 	changes: {
-		type: "added" | "fixed" | "changed" | "performance" | "security";
+		type: "added" | "fixed" | "changed" | "performance" | "security" | "notes";
 		items: string[];
 	}[];
 	isLatest?: boolean;
@@ -91,7 +91,7 @@ function parseChangelog(changelogPath: string): Release[] {
 		// Support sections with emojis and subtitles like "### ⚡ Performance - Cache System v2"
 		const typeMatches = [
 			...section.matchAll(
-				/### (?:[\p{Emoji}\s]*)(Added|Fixed|Changed|Performance|Security)(?:\s*-\s*[^\n]*)?\n([\s\S]*?)(?=###|$)/giu,
+				/###\s*(?:[\p{Emoji}\s])*(Added|Fixed|Changed|Performance|Security|Notes)[^\n]*\n([\s\S]*?)(?=\n###|$)/giu,
 			),
 		];
 
@@ -105,7 +105,7 @@ function parseChangelog(changelogPath: string): Release[] {
 
 			const items = changesMap.get(type)!;
 
-			const itemMatches = content.matchAll(/^[\s]*-\s+(.+?)$/gm);
+			const itemMatches = content.matchAll(/^[\s]*-\s+(.+)$/gm);
 			for (const itemMatch of itemMatches) {
 				const item = itemMatch[1].trim();
 				if (item) {
@@ -115,6 +115,10 @@ function parseChangelog(changelogPath: string): Release[] {
 						.replace(/>/g, "&gt;")
 						.replace(/"/g, "&quot;")
 						.replace(/'/g, "&#039;")
+						.replace(
+							/\*\*([^*]+)\*\*/g,
+							'<span class="px-1.5 py-0.5 rounded-md bg-red-500/20 text-red-400 text-xs font-semibold border border-red-500/30">$1</span>',
+						)
 						.replace(
 							/`([^`]+)`/g,
 							'<code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">$1</code>',

@@ -26,7 +26,7 @@ For generating PNG images in Node.js environments:
 import { render, ogx } from '@ogxjs/core/png';
 import { fontRegistry } from '@ogxjs/core';
 
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 
 const png = await ogx({
   preset: 'docs',
@@ -74,7 +74,7 @@ Simplified font loading with the `fontRegistry`:
 import { fontRegistry } from '@ogxjs/core';
 
 // Load from CDN
-await fontRegistry.registerInter([400, 700]);
+await fontRegistry.registerInterFromUrl([400, 700]);
 
 // Or load custom fonts
 await fontRegistry.register({
