@@ -79,10 +79,14 @@ export class FontRegistry {
 	 */
 	async registerFontFromFile(
 		path: string,
-		options: { name: string; weight?: number; style?: string },
+		options: {
+			name: string;
+			weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+			style?: "normal" | "italic";
+		},
 	): Promise<void> {
 		const { loadFontFromFile } = await import("./fonts");
-		const font = await loadFontFromFile(path, options as any);
+		const font = await loadFontFromFile(path, options);
 		this.register(font);
 	}
 

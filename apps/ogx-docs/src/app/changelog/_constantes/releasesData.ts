@@ -8,7 +8,7 @@ interface Release {
 	description?: string;
 	npmLink: string;
 	changes: {
-		type: "added" | "fixed" | "changed" | "performance" | "security";
+		type: "added" | "fixed" | "changed" | "performance" | "security" | "notes";
 		items: string[];
 	}[];
 	isLatest?: boolean;
@@ -54,11 +54,11 @@ export const releases: Release[] = [
 				],
 			},
 			{
-				type: "fixed",
+				type: "notes",
 				items: [
-					"Network dependency for font loading (now requires internet access on first render, fonts are cached)",
-					'Migration path: Replace <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">loadInterFont()</code> with <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">loadInterFromUrl()</code> for CDN loading',
-					'Migration path: Use <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">loadGoogleFont()</code> or <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">loadFontFromFile()</code> for custom fonts',
+					"Network dependency: Font loading now requires internet access on first render (fonts are cached after)",
+					'Migration: Replace <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">loadInterFont()</code> with <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">loadInterFromUrl()</code> for CDN loading',
+					'Migration: Use <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">loadGoogleFont()</code> or <code class="px-1.5 py-0.5 rounded-md bg-fd-secondary/80 text-fd-foreground text-xs font-mono border border-fd-border/50">loadFontFromFile()</code> for custom fonts',
 				],
 			},
 		],

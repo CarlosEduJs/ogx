@@ -28,10 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Package size reduced from ~620KB to ~576KB
 - All tests updated to use CDN-based font loading
 
-### Fixed
-- Network dependency for font loading (now requires internet access on first render, fonts are cached)
-- Migration path: Replace `loadInterFont()` with `loadInterFromUrl()` for CDN loading
-- Migration path: Use `loadGoogleFont()` or `loadFontFromFile()` for custom fonts
+### Notes
+- Network dependency: Font loading now requires internet access on first render (fonts are cached after)
+- Migration: Replace `loadInterFont()` with `loadInterFromUrl()` for CDN loading
+- Migration: Use `loadGoogleFont()` or `loadFontFromFile()` for custom fonts
 
 
 ## [@ogxjs/core 0.2.0-alpha.1] - 2026-01-02 "Turbo"

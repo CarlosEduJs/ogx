@@ -8,7 +8,7 @@ interface Release {
 	description?: string;
 	npmLink: string;
 	changes: {
-		type: "added" | "fixed" | "changed" | "performance" | "security";
+		type: "added" | "fixed" | "changed" | "performance" | "security" | "notes";
 		items: string[];
 	}[];
 	isLatest?: boolean;
@@ -91,7 +91,7 @@ function parseChangelog(changelogPath: string): Release[] {
 		// Support sections with emojis and subtitles like "### ⚡ Performance - Cache System v2"
 		const typeMatches = [
 			...section.matchAll(
-				/###\s*(?:[\p{Emoji}\s])*(Added|Fixed|Changed|Performance|Security)[^\n]*\n([\s\S]*?)(?=\n###|$)/giu,
+				/###\s*(?:[\p{Emoji}\s])*(Added|Fixed|Changed|Performance|Security|Notes)[^\n]*\n([\s\S]*?)(?=\n###|$)/giu,
 			),
 		];
 
